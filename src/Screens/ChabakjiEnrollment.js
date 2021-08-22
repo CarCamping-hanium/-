@@ -175,6 +175,7 @@ const ChabakjiEnrollment = ({navigation}) => {
             onChangeText={text => {
               setLocation(text);
             }}
+            value={location}
           />
         </View>
         <View>
@@ -189,6 +190,7 @@ const ChabakjiEnrollment = ({navigation}) => {
           </Text>
           <TextInput
             style={{
+              padding: 10,
               fontSize: 18,
               fontWeight: '300',
               marginTop: 10,
@@ -204,6 +206,7 @@ const ChabakjiEnrollment = ({navigation}) => {
             onChangeText={text => {
               setDescription(text);
             }}
+            value={description}
           />
         </View>
         <View>
@@ -228,6 +231,7 @@ const ChabakjiEnrollment = ({navigation}) => {
             onChangeText={text => {
               setComfort(text);
             }}
+            value={comfort}
           />
         </View>
         <View>
@@ -252,6 +256,7 @@ const ChabakjiEnrollment = ({navigation}) => {
             onChangeText={text => {
               setVideoLink(text);
             }}
+            value={videoLink}
           />
         </View>
         <View
@@ -267,6 +272,12 @@ const ChabakjiEnrollment = ({navigation}) => {
                 '차박린이',
                 '감사합니다. 회원님의 차박지 등록 심사가 진행될 예정입니다.',
               );
+              imageList.length = 0;
+              setImage([]);
+              setLocation('');
+              setDescription('');
+              setComfort('');
+              setVideoLink('');
               navigation.navigate('홈화면');
             }}>
             <Text style={{color: 'white'}}>등록</Text>
@@ -274,7 +285,12 @@ const ChabakjiEnrollment = ({navigation}) => {
           <TouchableOpacity
             style={styles.Cancel}
             onPress={() => {
+              imageList.length = 0;
               setImage([]);
+              setLocation('');
+              setDescription('');
+              setComfort('');
+              setVideoLink('');
               navigation.navigate('홈화면');
             }}>
             <Text style={{color: 'white'}}>취소</Text>

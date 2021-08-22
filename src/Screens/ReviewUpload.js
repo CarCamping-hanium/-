@@ -18,15 +18,22 @@ import ImagePicker from 'react-native-image-crop-picker';
 import Stars from 'react-native-stars';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 const screenWidth = Dimensions.get('window').width;
+let imageList = [];
+
 const ReviewUpload = ({navigation}) => {
   const [image, setImage] = useState([]);
+  const [reviewTitle, setReviewTitle] = useState('');
+  const [reviewDescription, setReviewDescription] = useState('');
+  const [score, setScore] = useState(0);
 
-  let imageList = [];
   const chooseImageFromLibrary = () => {
     ImagePicker.openPicker({
       width: screenWidth,
-      height: 200,
+      height: screenWidth,
       cropping: true,
+      showCropGuidelines: true,
+      compressImageMaxWidth: screenWidth,
+      compressImageMaxHeight: screenWidth,
       multiple: true,
       waitAnimationEnd: false,
       includeExif: true,
@@ -38,17 +45,20 @@ const ReviewUpload = ({navigation}) => {
       .then(response => {
         //각각의 사진들을 imageList 배열에 넣는 과정
         console.log('Response: ', response);
-        response.map(image => {
-          imageList.push(image.path);
+        response.map(img => {
+          imageList.push(img.path);
+          //imageList = [...image, img.path];
         });
         setImage(imageList);
       })
       .catch(e => console.log('Error: ', e.message));
   };
+
   const removeImage = index => {
     let new_imageList = [...image];
     new_imageList.splice(index, 1);
     setImage(new_imageList);
+    imageList = [...new_imageList];
   };
   return (
     <SafeAreaView
@@ -70,7 +80,7 @@ const ReviewUpload = ({navigation}) => {
           width: screenWidth,
         }}>
         <FlatList
-          style={{height: 200, width: screenWidth}}
+          style={{height: screenWidth, width: screenWidth}}
           horizontal={true}
           pagingEnabled={true}
           data={image}
@@ -81,7 +91,7 @@ const ReviewUpload = ({navigation}) => {
             <View>
               <Image
                 source={{uri: image[index]}}
-                style={{width: screenWidth, height: 200}}
+                style={{width: screenWidth, height: screenWidth}}
               />
               {/* <Image
                 style={{
@@ -109,15 +119,19 @@ const ReviewUpload = ({navigation}) => {
           )}
         />
         <View style={{alignItems: 'center'}}>
+          <Text style={{marginTop: 20, fontWeight: '500', fontSize: 15}}>
+            정방형(정사각형) 사진을 추천드려요!
+          </Text>
           <TouchableOpacity
             style={styles.uploadPhoto}
             onPress={chooseImageFromLibrary}>
             <Text style={{color: 'white'}}>사진 업로드</Text>
           </TouchableOpacity>
         </View>
-        <View>
+        <View style={{marginTop: 20}}>
           <TextInput
             style={{
+              padding: 10,
               fontSize: 18,
               fontWeight: '300',
               marginTop: 10,
@@ -155,7 +169,7 @@ const ReviewUpload = ({navigation}) => {
           <TouchableOpacity
             style={styles.Enroll}
             onPress={() => {
-              Alert.alert('회원님의 리뷰가 업로드 되었습니다.');
+              Alert.alert('차박린이', '회원님의 리뷰가 업로드 되었습니다.');
               navigation.navigate('리뷰 페이지');
             }}>
             <Text style={{color: 'white'}}>등록</Text>
