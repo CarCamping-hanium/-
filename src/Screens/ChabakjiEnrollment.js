@@ -95,6 +95,7 @@ const ChabakjiEnrollment = ({navigation}) => {
         onChangeText={text => {
           setName(text);
         }}
+        value={name}
       />
       <ScrollView
         style={{
@@ -274,6 +275,7 @@ const ChabakjiEnrollment = ({navigation}) => {
               );
               imageList.length = 0;
               setImage([]);
+              setName('');
               setLocation('');
               setDescription('');
               setComfort('');
@@ -287,6 +289,7 @@ const ChabakjiEnrollment = ({navigation}) => {
             onPress={() => {
               imageList.length = 0;
               setImage([]);
+              setName('');
               setLocation('');
               setDescription('');
               setComfort('');

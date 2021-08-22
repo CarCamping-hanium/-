@@ -72,6 +72,9 @@ const ReviewUpload = ({navigation}) => {
         style={styles.name}
         placeholder="리뷰 제목을 입력하세요."
         multiline={true}
+        onChangeText={text => {
+          setReviewTitle(text);
+        }}
       />
       <ScrollView
         style={{
@@ -145,6 +148,9 @@ const ReviewUpload = ({navigation}) => {
             }}
             placeholder="리뷰 내용을 입력하세요."
             multiline={true}
+            onChangeText={text => {
+              setReviewDescription(text);
+            }}
           />
         </View>
         <View style={{alignItems: 'center'}}>
@@ -169,6 +175,8 @@ const ReviewUpload = ({navigation}) => {
           <TouchableOpacity
             style={styles.Enroll}
             onPress={() => {
+              imageList.length = 0;
+              setImage([]);
               Alert.alert('차박린이', '회원님의 리뷰가 업로드 되었습니다.');
               navigation.navigate('리뷰 페이지');
             }}>
@@ -177,6 +185,7 @@ const ReviewUpload = ({navigation}) => {
           <TouchableOpacity
             style={styles.Cancel}
             onPress={() => {
+              imageList.length = 0;
               setImage([]);
               navigation.navigate('리뷰 페이지');
             }}>
