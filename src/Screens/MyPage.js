@@ -1,7 +1,17 @@
 import React, {useContext, useLayoutEffect} from 'react';
 import {UserContext} from '../Context/Context';
-import {SafeAreaView, Text, View, TouchableOpacity, Image} from 'react-native';
+import {
+  SafeAreaView,
+  Text,
+  View,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+} from 'react-native';
 import {DrawerActions} from '@react-navigation/native';
+
+const screenHeight = Dimensions.get('window').height;
+const screenWidth = Dimensions.get('window').width;
 
 const MyPage = ({navigation}) => {
   const {logout} = useContext(UserContext);
@@ -38,6 +48,7 @@ const MyPage = ({navigation}) => {
             marginTop: 35,
             backgroundColor: '#295eba',
             padding: 20,
+            borderRadius: 8,
           }}
           onPress={() => {
             navigation.navigate('내 리뷰 페이지');
@@ -47,6 +58,10 @@ const MyPage = ({navigation}) => {
           </Text>
         </TouchableOpacity>
       </View>
+      <Image
+        source={require('../Assets/Images/mypage_background.png')}
+        style={{width: screenWidth, height: screenWidth, marginTop: '15%'}}
+      />
     </SafeAreaView>
   );
 };

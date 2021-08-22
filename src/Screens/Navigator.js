@@ -95,28 +95,31 @@ const HomeScreenNavigator = navigation => {
         component={ChabakjiInfo}
         options={{title: '차박지명', headerBackTitleVisible: false}}
       />
-     <Stack.Screen
-       name="리뷰 페이지"
-       component={ReviewBoard}
-       options={{
-         title: '리뷰 페이지',
-       }}
-     />
       <Stack.Screen
-       name="리뷰 업로드"
-       component={ReviewUpload}
-       options={{
-         title: '리뷰 업로드',
-       }}
-     />
+        name="리뷰 페이지"
+        component={ReviewBoard}
+        options={{
+          title: '리뷰 페이지',
+          headerBackTitleVisible: false,
+        }}
+      />
       <Stack.Screen
-       name="리뷰 정보"
-       component={ReviewInfo}
-       options={{
-         title: '리뷰 정보',
-       }}
-     />
-   </Stack.Navigator>
+        name="리뷰 업로드"
+        component={ReviewUpload}
+        options={{
+          title: '리뷰 업로드',
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="리뷰 정보"
+        component={ReviewInfo}
+        options={{
+          title: '리뷰 정보',
+          headerBackTitleVisible: false,
+        }}
+      />
+    </Stack.Navigator>
   );
 };
 
@@ -138,11 +141,12 @@ const MyPageNavigator = navigation => {
           title: '마이 페이지',
         }}
       />
-        <Stack.Screen
+      <Stack.Screen
         name="내 리뷰 페이지"
         component={myReview}
         options={{
           title: '내가 쓴 리뷰',
+          headerBackTitleVisible: false,
         }}
       />
     </Stack.Navigator>

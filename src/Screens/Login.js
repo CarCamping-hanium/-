@@ -1,4 +1,4 @@
-import React, {useContext, useEffect} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {StackNavigationProp} from '@react-navigation/stack';
 import {UserContext} from '../Context/Context';
 import {
@@ -14,12 +14,14 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
-import {NavigationHelpersContext} from '@react-navigation/native';
 
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 const Login = ({navigation}) => {
   const {login} = useContext(UserContext);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+
   return (
     <>
       <View
@@ -62,6 +64,9 @@ const Login = ({navigation}) => {
           allowFontScaling={false}
           placeholder="이메일"
           placeholderTextColor="#777777"
+          onChangeText={text => {
+            setEmail(text);
+          }}
         />
         <TextInput
           style={{
@@ -79,6 +84,9 @@ const Login = ({navigation}) => {
           placeholder="비밀번호"
           placeholderTextColor="#777777"
           secureTextEntry={true}
+          onChangeText={text => {
+            setPassword(text);
+          }}
         />
         <TouchableOpacity
           style={{

@@ -15,37 +15,39 @@ const sort = ['추천순', '최신순'];
 const DATA = [
   {
     title: '리뷰제목1',
-    recommandcount: '5',
+    recommendcount: '5',
     starcount: '★★★★★',
   },
   {
     title: '리뷰제목2',
-    recommandcount: '1',
+    recommendcount: '1',
     starcount: '★★★★☆',
   },
   {
     title: '리뷰제목3',
-    recommandcount: '1',
+    recommendcount: '1',
     starcount: '★★★☆☆',
   },
 ];
 const myReview = ({navigation}) => {
   const Item = ({item, onPress, backgroundColor, textColor}) => (
     <TouchableOpacity
-      style={[styles.item, backgroundColor]}
+      style={[styles.Item, backgroundColor]}
       onPress={() => {
         navigation.navigate('리뷰 정보');
       }}>
-      <Text style={[styles.title, textColor]}>{item.title}</Text>
+      <Text style={[styles.Title, textColor]}>{item.title}</Text>
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
         }}>
-        <Text style={[styles.recommandcount, textColor]}>
-          추천수:{item.recommandcount}
+        <Text style={[styles.RecommendCount, textColor]}>
+          추천수 : {item.recommendcount}
         </Text>
-        <Text style={[styles.starcount, textColor]}>별점:{item.starcount}</Text>
+        <Text style={[styles.StarCount, textColor]}>
+          별점 : {item.starcount}
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -80,15 +82,14 @@ const myReview = ({navigation}) => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.maintitle}>회원님이 작성하신 리뷰</Text>
+    <SafeAreaView style={styles.Container}>
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
           //alignItems: 'center',
         }}>
-        <Text style={styles.sort}>정렬:</Text>
+        <Text style={styles.Sort}>정렬:</Text>
         <SelectDropdown
           buttonStyle={{width: 100, height: 50, backgroundColor: 'white'}}
           buttonTextStyle={{fontSize: 17}}
@@ -110,50 +111,36 @@ const myReview = ({navigation}) => {
         keyExtractor={(item, index) => {
           return `myReview-${index}`;
         }}
-        ext
-        raData={selectedId}
+        extraData={selectedId}
       />
     </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
+  Container: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
     backgroundColor: 'white',
   },
-  item: {
-    padding: 10,
-    marginVertical: 1,
+  Item: {
+    padding: 15,
+    marginVertical: 5,
     marginHorizontal: 16,
+    borderRadius: 8,
   },
-  title: {
+  Title: {
     fontSize: 15,
   },
-  recommandcount: {
+  RecommendCount: {
     fontSize: 12,
     textAlign: 'left',
   },
-  starcount: {
+  StarCount: {
     fontSize: 12,
     textAlign: 'right',
   },
-  maintitle: {
-    fontSize: 25,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    marginBottom: '5%',
-  },
-  sort: {marginTop: 10, fontSize: 20},
-  reviewUpload: {
-    width: 100,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#295eba',
-    borderRadius: 4,
-  },
+  Sort: {marginTop: 10, fontSize: 20},
 });
 
 export default myReview;

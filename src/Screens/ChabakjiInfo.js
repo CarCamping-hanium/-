@@ -45,7 +45,7 @@ const ChabakjiInfo = ({navigation}) => {
           width: screenWidth,
         }}>
         <FlatList
-          style={{height: 200, width: screenWidth}}
+          style={{height: screenWidth, width: screenWidth}}
           horizontal={true}
           pagingEnabled={true}
           data={image}
@@ -56,7 +56,7 @@ const ChabakjiInfo = ({navigation}) => {
             <View>
               <Image
                 source={{uri: image[index]}}
-                style={{width: screenWidth, height: 200}}
+                style={{width: screenWidth, height: screenWidth}}
               />
             </View>
           )}
@@ -124,10 +124,11 @@ const ChabakjiInfo = ({navigation}) => {
             alignItems: 'center',
             marginTop: 20,
           }}>
-          <TouchableOpacity style={styles.reviewShow}
-          onPress={() => {
-            navigation.navigate('리뷰 페이지');
-          }}>
+          <TouchableOpacity
+            style={styles.reviewShow}
+            onPress={() => {
+              navigation.navigate('리뷰 페이지');
+            }}>
             <Text style={{color: 'white'}}>리뷰 보기</Text>
           </TouchableOpacity>
         </View>

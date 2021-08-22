@@ -15,17 +15,44 @@ import {
   Dimensions,
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
+import {launchImageLibrary} from 'react-native-image-picker';
 
 const screenWidth = Dimensions.get('window').width;
+let imageList = [];
+
 const ChabakjiEnrollment = ({navigation}) => {
   const [image, setImage] = useState([]);
+  const [name, setName] = useState('');
+  const [location, setLocation] = useState('');
+  const [description, setDescription] = useState('');
+  const [comfort, setComfort] = useState('');
+  const [videoLink, setVideoLink] = useState('');
 
-  let imageList = [];
+  // const chooseImageFromLibrary = () => {
+  //   launchImageLibrary(
+  //     {
+  //       mediaType: 'photo',
+  //       maxHeight: 200,
+  //       maxWidth: screenWidth,
+  //       includeBase64: true,
+  //       selectionLimit: 0, //사진 수 제한 없음
+  //     },
+  //     response => {
+  //       console.warn('dd');
+  //       console.log('Response: ', response);
+  //       imageList.push(response.uri);
+  //       setImage(imageList);
+  //     },
+  //   );
+  // };
   const chooseImageFromLibrary = () => {
     ImagePicker.openPicker({
       width: screenWidth,
-      height: 200,
+      height: screenWidth,
       cropping: true,
+      showCropGuidelines: true,
+      compressImageMaxWidth: screenWidth,
+      compressImageMaxHeight: screenWidth,
       multiple: true,
       waitAnimationEnd: false,
       includeExif: true,
@@ -37,8 +64,9 @@ const ChabakjiEnrollment = ({navigation}) => {
       .then(response => {
         //각각의 사진들을 imageList 배열에 넣는 과정
         console.log('Response: ', response);
-        response.map(image => {
-          imageList.push(image.path);
+        response.map(img => {
+          imageList.push(img.path);
+          //imageList = [...image, img.path];
         });
         setImage(imageList);
       })
@@ -49,6 +77,7 @@ const ChabakjiEnrollment = ({navigation}) => {
     let new_imageList = [...image];
     new_imageList.splice(index, 1);
     setImage(new_imageList);
+    imageList = [...new_imageList];
   };
 
   return (
@@ -63,6 +92,9 @@ const ChabakjiEnrollment = ({navigation}) => {
         style={styles.name}
         placeholder="차박지 이름을 입력하세요."
         multiline={true}
+        onChangeText={text => {
+          setName(text);
+        }}
       />
       <ScrollView
         style={{
@@ -71,7 +103,7 @@ const ChabakjiEnrollment = ({navigation}) => {
           width: screenWidth,
         }}>
         <FlatList
-          style={{height: 200, width: screenWidth}}
+          style={{height: screenWidth, width: screenWidth}}
           horizontal={true}
           pagingEnabled={true}
           data={image}
@@ -82,7 +114,7 @@ const ChabakjiEnrollment = ({navigation}) => {
             <View>
               <Image
                 source={{uri: image[index]}}
-                style={{width: screenWidth, height: 200}}
+                style={{width: screenWidth, height: screenWidth}}
               />
               {/* <Image
                 style={{
@@ -110,9 +142,14 @@ const ChabakjiEnrollment = ({navigation}) => {
           )}
         />
         <View style={{alignItems: 'center'}}>
+          <Text style={{marginTop: 20, fontWeight: '500', fontSize: 15}}>
+            정방형(정사각형) 사진을 추천드려요!
+          </Text>
           <TouchableOpacity
             style={styles.uploadPhoto}
-            onPress={chooseImageFromLibrary}>
+            onPress={() => {
+              chooseImageFromLibrary();
+            }}>
             <Text style={{color: 'white'}}>사진 업로드</Text>
           </TouchableOpacity>
         </View>
@@ -135,6 +172,9 @@ const ChabakjiEnrollment = ({navigation}) => {
               width: screenWidth - 60,
             }}
             multiline={true}
+            onChangeText={text => {
+              setLocation(text);
+            }}
           />
         </View>
         <View>
@@ -161,6 +201,9 @@ const ChabakjiEnrollment = ({navigation}) => {
               borderBottomWidth: 1,
             }}
             multiline={true}
+            onChangeText={text => {
+              setDescription(text);
+            }}
           />
         </View>
         <View>
@@ -182,6 +225,9 @@ const ChabakjiEnrollment = ({navigation}) => {
               width: screenWidth - 60,
             }}
             multiline={true}
+            onChangeText={text => {
+              setComfort(text);
+            }}
           />
         </View>
         <View>
@@ -203,6 +249,9 @@ const ChabakjiEnrollment = ({navigation}) => {
               width: screenWidth - 60,
             }}
             multiline={true}
+            onChangeText={text => {
+              setVideoLink(text);
+            }}
           />
         </View>
         <View
@@ -215,6 +264,7 @@ const ChabakjiEnrollment = ({navigation}) => {
             style={styles.Enroll}
             onPress={() => {
               Alert.alert(
+                '차박린이',
                 '감사합니다. 회원님의 차박지 등록 심사가 진행될 예정입니다.',
               );
               navigation.navigate('홈화면');

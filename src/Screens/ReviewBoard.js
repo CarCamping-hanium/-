@@ -31,20 +31,22 @@ const DATA = [
 const ReviewBoard = ({navigation}) => {
   const Item = ({item, onPress, backgroundColor, textColor}) => (
     <TouchableOpacity
-      style={[styles.item, backgroundColor]}
+      style={[styles.Item, backgroundColor]}
       onPress={() => {
         navigation.navigate('리뷰 정보');
       }}>
-      <Text style={[styles.title, textColor]}>{item.title}</Text>
+      <Text style={[styles.Title, textColor]}>{item.title}</Text>
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'space-between',
         }}>
-        <Text style={[styles.recommandcount, textColor]}>
-          추천수:{item.recommandcount}
+        <Text style={[styles.RecommendCount, textColor]}>
+          추천수 : {item.recommandcount}
         </Text>
-        <Text style={[styles.starcount, textColor]}>별점:{item.starcount}</Text>
+        <Text style={[styles.Starcount, textColor]}>
+          별점 : {item.starcount}
+        </Text>
       </View>
     </TouchableOpacity>
   );
@@ -79,14 +81,14 @@ const ReviewBoard = ({navigation}) => {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
-      <Text style={styles.maintitle}>(차박지이름)에 달린 리뷰</Text>
+    <SafeAreaView style={styles.Container}>
+      <Text style={styles.MainTitle}>(차박지이름)에 달린 리뷰</Text>
       <View
         style={{
           flexDirection: 'row',
           justifyContent: 'center',
         }}>
-        <Text style={styles.sort}>정렬:</Text>
+        <Text style={styles.Sort}>정렬:</Text>
         <SelectDropdown
           buttonStyle={{width: 100, height: 50}}
           buttonTextStyle={{fontSize: 17}}
@@ -114,7 +116,7 @@ const ReviewBoard = ({navigation}) => {
       <View
         style={{justifyContent: 'center', alignItems: 'center', bottom: 40}}>
         <TouchableOpacity
-          style={styles.reviewUpload}
+          style={styles.ReviewUpload}
           onPress={() => {
             navigation.navigate('리뷰 업로드');
           }}>
@@ -126,40 +128,41 @@ const ReviewBoard = ({navigation}) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
+  Container: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
   },
-  item: {
-    padding: 10,
-    marginVertical: 1,
+  Item: {
+    padding: 15,
+    marginVertical: 5,
     marginHorizontal: 16,
+    borderRadius: 8,
   },
-  title: {
+  Title: {
     fontSize: 15,
   },
-  recommandcount: {
+  RecommendCount: {
     fontSize: 12,
     textAlign: 'left',
   },
-  starcount: {
+  Starcount: {
     fontSize: 12,
     textAlign: 'right',
   },
-  maintitle: {
+  MainTitle: {
     fontSize: 25,
     textAlign: 'center',
     fontWeight: 'bold',
     marginBottom: '5%',
   },
-  sort: {marginTop: 10, fontSize: 20},
-  reviewUpload: {
+  Sort: {marginTop: 10, fontSize: 20},
+  ReviewUpload: {
     width: 150,
     height: 50,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#295eba',
-    borderRadius: 4,
+    borderRadius: 8,
   },
 });
 
