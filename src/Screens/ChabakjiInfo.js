@@ -9,6 +9,7 @@ import {
   Dimensions,
   FlatList,
   View,
+  Linking,
 } from 'react-native';
 
 const screenWidth = Dimensions.get('window').width;
@@ -116,7 +117,11 @@ const ChabakjiInfo = ({navigation}) => {
             }}>
             관련 영상 링크 (선택사항)
           </Text>
-          <Text style={styles.content}>www.youtube.com</Text>
+          <Text
+            onPress={() => Linking.openURL('https://www.youtube.com')}
+            style={styles.videoLink}>
+            www.youtube.com
+          </Text>
         </View>
         <View
           style={{
@@ -163,13 +168,21 @@ const styles = StyleSheet.create({
     marginLeft: 30,
     width: screenWidth - 60,
   },
+  videoLink: {
+    fontSize: 18,
+    fontWeight: '300',
+    marginTop: 10,
+    marginLeft: 30,
+    width: screenWidth - 60,
+    textDecorationLine: 'underline',
+  },
   reviewShow: {
     width: 100,
     height: 40,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#295eba',
-    borderRadius: 4,
+    borderRadius: 8,
   },
 });
 

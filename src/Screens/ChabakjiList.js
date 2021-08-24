@@ -1,4 +1,4 @@
-import React, {useLayoutEffect} from 'react';
+import React, {useLayoutEffect, useState} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -10,8 +10,12 @@ import {
   FlatList,
   Image,
 } from 'react-native';
+import {Searchbar} from 'react-native-paper';
+
 const screenWidth = Dimensions.get('window').width;
 const ChabakjiList = ({navigation}) => {
+  const [searchText, setSearchText] = useState('');
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -28,7 +32,7 @@ const ChabakjiList = ({navigation}) => {
       ),
     });
   }, []);
-  
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <View style={styles.Search}>
@@ -37,6 +41,7 @@ const ChabakjiList = ({navigation}) => {
           placeholder="차박지명을 검색하세요."
           placeholderTextColor="#888888"
           autoCorrect={false}
+          autoCapitalize="none"
           allowFontScaling={false}
           clearButtonMode={'while-editing'}
         />
@@ -67,9 +72,10 @@ const styles = StyleSheet.create({
   textBox: {
     borderWidth: 2,
     borderColor: '#295eba',
-    width: screenWidth / 1.7,
+    width: '70%',
     height: 40,
     paddingLeft: 5,
+    borderRadius: 8,
   },
   searchButton: {
     backgroundColor: '#295eba',
@@ -78,6 +84,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginLeft: '5%',
+    borderRadius: 8,
   },
   List: {
     flex: 6,

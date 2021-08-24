@@ -42,7 +42,7 @@ const HomeScreen = ({navigation}) => {
           position: 'absolute',
           left: screenWidth / 4,
           top: '20%',
-          borderRadius: 4,
+          borderRadius: 8,
           backgroundColor: '#295eba',
         }}
         onPress={() => {
@@ -62,7 +62,7 @@ const HomeScreen = ({navigation}) => {
           position: 'absolute',
           right: screenWidth / 3.6,
           top: '15%',
-          borderRadius: 4,
+          borderRadius: 8,
           backgroundColor: '#295eba',
         }}
         onPress={() => {
@@ -82,7 +82,7 @@ const HomeScreen = ({navigation}) => {
           position: 'absolute',
           left: screenWidth / 3.5,
           top: '40%',
-          borderRadius: 4,
+          borderRadius: 8,
           backgroundColor: '#295eba',
         }}
         onPress={() => {
@@ -102,7 +102,7 @@ const HomeScreen = ({navigation}) => {
           position: 'absolute',
           right: screenWidth / 5,
           bottom: '50%',
-          borderRadius: 4,
+          borderRadius: 8,
           backgroundColor: '#295eba',
         }}
         onPress={() => {
@@ -122,7 +122,7 @@ const HomeScreen = ({navigation}) => {
           position: 'absolute',
           left: screenWidth / 4,
           bottom: '40%',
-          borderRadius: 4,
+          borderRadius: 8,
           backgroundColor: '#295eba',
         }}
         onPress={() => {

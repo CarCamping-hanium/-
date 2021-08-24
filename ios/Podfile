@@ -16,6 +16,8 @@ target 'Chabakrini' do
 
   pod 'RNRate', :path => '../node_modules/react-native-rate'
 
+  pod 'RNVectorIcons', :path => '../node_modules/react-native-vector-icons'
+
   target 'ChabakriniTests' do
     inherit! :complete
     # Pods for testing

@@ -119,31 +119,41 @@ const ChabakjiInfo = ({navigation}) => {
         </View>
         <View
           style={{
-            marginLeft: 20,
-            marginBottom: 20,
-            marginTop: 50,
             alignItems: 'center',
+            marginTop: 80,
+          }}>
+          <Text
+            style={{
+              fontWeight: 'bold',
+              fontSize: 17,
+            }}>
+            해당 리뷰가 도움이 되었다면?
+          </Text>
+        </View>
+        <View
+          style={{
+            marginBottom: 20,
+            marginTop: 30,
+            alignItems: 'center',
+            justifyContent: 'space-evenly',
             flexDirection: 'row',
           }}>
-          <View
-            style={{
-              flex: 1,
-              flexDirection: 'row',
-              alignItems: 'center',
-              justifyContent: 'space-evenly',
-            }}>
-            <Text
-              style={{
-                fontWeight: 'bold',
-                fontSize: 17,
-              }}>
-              해당 리뷰가 도움이 되었다면?{' '}
-            </Text>
-            <TouchableOpacity style={styles.recommend}>
-              <Text style={{color: 'white'}}>추천</Text>
-            </TouchableOpacity>
-          </View>
+          <TouchableOpacity style={styles.recommend}>
+            <Text style={{color: 'white', fontSize: 18}}>추천</Text>
+            <Image
+              source={require('../Assets/Images/recommend.png')}
+              style={{width: 20, height: 20}}
+            />
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.recommend}>
+            <Text style={{color: 'white', fontSize: 18}}>비추천</Text>
+            <Image
+              source={require('../Assets/Images/unrecommend.png')}
+              style={{width: 20, height: 20}}
+            />
+          </TouchableOpacity>
         </View>
+
         <View
           style={{
             marginTop: 30,
@@ -155,7 +165,7 @@ const ChabakjiInfo = ({navigation}) => {
             onPress={() => {
               navigation.navigate('리뷰 페이지');
             }}>
-            <Text style={{color: 'white'}}>리뷰 목록으로</Text>
+            <Text style={{color: 'white', fontSize: 18}}>리뷰 목록으로</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -176,11 +186,12 @@ const styles = StyleSheet.create({
   },
   recommend: {
     width: 100,
-    height: 40,
-    justifyContent: 'center',
+    height: 45,
+    justifyContent: 'space-evenly',
     alignItems: 'center',
     backgroundColor: '#295eba',
-    borderRadius: 4,
+    borderRadius: 8,
+    flexDirection: 'row',
   },
   toReviewList: {
     width: 150,
@@ -188,7 +199,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#295eba',
-    borderRadius: 4,
+    borderRadius: 8,
   },
 });
 

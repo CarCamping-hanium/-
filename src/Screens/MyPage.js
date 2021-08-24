@@ -14,8 +14,6 @@ const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 
 const MyPage = ({navigation}) => {
-  const {logout} = useContext(UserContext);
-
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
