@@ -55,7 +55,6 @@ const Login = ({navigation}) => {
             height: 40,
             paddingLeft: 16,
             borderRadius: 4,
-            //backgroundColor: '#a6bbde',
             backgroundColor: '#cccccc',
           }}
           selectionColor="black"
@@ -93,7 +92,6 @@ const Login = ({navigation}) => {
             marginTop: 8,
             width: '30%',
             height: 40,
-            paddingLeft: 16,
             borderRadius: 4,
             backgroundColor: '#295eba',
             justifyContent: 'center',
@@ -102,15 +100,13 @@ const Login = ({navigation}) => {
           onPress={() => {
             login('ijh1205@naver.com', 'password');
           }}>
-          <Text style={{color: 'white', fontWeight: 'bold', marginRight: 10}}>
-            로그인
-          </Text>
+          <Text style={{color: 'white', fontWeight: 'bold'}}>로그인</Text>
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
             navigation.navigate('회원가입');
           }}>
-          <Text style={{marginTop: 8, textDecorationLine: 'underline'}}>
+          <Text style={{marginTop: 18, textDecorationLine: 'underline'}}>
             아직 회원이 아니신가요?
           </Text>
         </TouchableOpacity>
