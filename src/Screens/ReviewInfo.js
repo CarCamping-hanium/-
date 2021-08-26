@@ -10,7 +10,8 @@ import {
   FlatList,
   View,
 } from 'react-native';
-import Stars from 'react-native-stars';
+import {Rating} from 'react-native-ratings';
+
 const screenWidth = Dimensions.get('window').width;
 const ChabakjiInfo = ({navigation}) => {
   const [image, setImage] = useState([]);
@@ -106,14 +107,19 @@ const ChabakjiInfo = ({navigation}) => {
             }}>
             별점
           </Text>
-          <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <Stars
-              display={3.5}
-              spacing={8}
-              count={5}
-              starSize={40}
-              fullStar={require('../Assets/Images/starFilled.png')}
-              emptyStar={require('../Assets/Images/starEmpty.png')}
+          <View
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              marginTop: 30,
+            }}>
+            <Rating
+              ratingCount={5}
+              imageSize={40}
+              readonly={true}
+              jumpValue={0.5}
+              showRating={true}
+              fractions={10}
             />
           </View>
         </View>

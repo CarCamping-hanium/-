@@ -118,7 +118,7 @@ const ReviewBoard = ({navigation}) => {
         <TouchableOpacity
           style={styles.ReviewUpload}
           onPress={() => {
-            navigation.navigate('리뷰 업로드');
+            navigation.navigate('리뷰 등록');
           }}>
           <Text style={{color: 'white', fontSize: 20}}>리뷰 등록</Text>
         </TouchableOpacity>

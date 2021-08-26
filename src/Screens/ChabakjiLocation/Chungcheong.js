@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import {
   View,
   Text,
@@ -10,16 +10,23 @@ import {
 } from 'react-native';
 import NaverMapView, {Marker, Path} from 'react-native-nmap';
 import Modal from '../../Components/Modal';
+import {UserContext} from '../../Context/Context';
 
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 
 const Chungcheong = ({navigation}) => {
+  const {selectedArea} = useContext(UserContext);
   const [visible, setVisible] = useState(false);
 
   const P0 = {latitude: 36.9584, longitude: 127.2846};
   const P1 = {latitude: 37.565051, longitude: 126.978567};
   const P2 = {latitude: 37.565383, longitude: 126.976292};
+
+  useEffect(() => {
+    selectedArea('충청도');
+  }, []);
+
   return (
     <SafeAreaView>
       <NaverMapView

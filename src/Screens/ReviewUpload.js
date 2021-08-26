@@ -15,8 +15,8 @@ import {
   Dimensions,
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
-import Stars from 'react-native-stars';
-import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import {Rating} from 'react-native-ratings';
+
 const screenWidth = Dimensions.get('window').width;
 let imageList = [];
 
@@ -96,18 +96,6 @@ const ReviewUpload = ({navigation}) => {
                 source={{uri: image[index]}}
                 style={{width: screenWidth, height: screenWidth}}
               />
-              {/* <Image
-                style={{
-                  position: 'absolute',
-                  right: 0,
-                  height: 25,
-                  width: 25,
-                }}
-                source={require('../Assets/Images/image_deleteButton.png')}
-                onPress={() => {
-                  console.warn('click');
-                }}
-              /> */}
               <TouchableOpacity
                 style={{
                   position: 'absolute',
@@ -153,23 +141,25 @@ const ReviewUpload = ({navigation}) => {
             }}
           />
         </View>
-        <View style={{alignItems: 'center'}}>
-          <Text>이 차박지의 점수는?</Text>
-          <Stars
-            half={true}
-            default={2.5}
-            spacing={4}
-            starSize={40}
-            count={5}
-            fullStar={require('../Assets/Images/starFilled.png')}
-            emptyStar={require('../Assets/Images/starEmpty.png')}
-            halfStar={require('../Assets/Images/starHalf.png')}
+        <View style={{alignItems: 'center', marginTop: 50}}>
+          <Text style={{marginBottom: 20, fontSize: 18}}>
+            이 차박지의 점수는?
+          </Text>
+          <Rating
+            ratingCount={5}
+            imageSize={40}
+            jumpValue={0.5}
+            showRating={true}
+            fractions={10}
+            onFinishRating={rating => {
+              setScore(rating);
+            }}
           />
         </View>
         <View
           style={{
             flexDirection: 'row',
-            marginTop: 30,
+            marginTop: 50,
             justifyContent: 'center',
           }}>
           <TouchableOpacity

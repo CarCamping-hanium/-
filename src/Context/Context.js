@@ -12,6 +12,7 @@ const UserContext = createContext(defaultContext);
 
 const UserContextProvider = ({children}) => {
   const [userInfo, setUserInfo] = useState(undefined);
+  const [area, setArea] = useState('');
 
   const login = (email, password) => {
     AsyncStorage.setItem('token', 'save your token').then(() => {
@@ -39,12 +40,17 @@ const UserContextProvider = ({children}) => {
     setUserInfo(undefined);
   };
 
+  const selectedArea = data => {
+    setArea(data);
+  };
+
   useEffect(() => {
     getUserInfo();
   }, []);
 
   return (
-    <UserContext.Provider value={{userInfo, login, getUserInfo, logout}}>
+    <UserContext.Provider
+      value={{userInfo, area, login, getUserInfo, logout, selectedArea}}>
       {children}
     </UserContext.Provider>
   );

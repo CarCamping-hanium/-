@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useContext} from 'react';
 import {
   View,
   Text,
@@ -7,11 +7,19 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import NaverMapView, {Marker, Path} from 'react-native-nmap';
+import {UserContext} from '../../Context/Context';
 
 const Jeolla = ({navigation}) => {
+  const {selectedArea} = useContext(UserContext);
+
   const P0 = {latitude: 35.8547, longitude: 127.39511886601};
   const P1 = {latitude: 37.565051, longitude: 126.978567};
   const P2 = {latitude: 37.565383, longitude: 126.976292};
+
+  useEffect(() => {
+    selectedArea('전라도');
+  }, []);
+
   return (
     <SafeAreaView>
       <NaverMapView

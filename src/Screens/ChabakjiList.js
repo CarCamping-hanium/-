@@ -10,7 +10,6 @@ import {
   FlatList,
   Image,
 } from 'react-native';
-import {Searchbar} from 'react-native-paper';
 
 const screenWidth = Dimensions.get('window').width;
 const ChabakjiList = ({navigation}) => {
@@ -75,7 +74,8 @@ const styles = StyleSheet.create({
     width: '70%',
     height: 40,
     paddingLeft: 5,
-    borderRadius: 8,
+    borderTopLeftRadius: 8,
+    borderBottomLeftRadius: 8,
   },
   searchButton: {
     backgroundColor: '#295eba',
@@ -83,8 +83,8 @@ const styles = StyleSheet.create({
     width: screenWidth / 5,
     alignItems: 'center',
     justifyContent: 'center',
-    marginLeft: '5%',
-    borderRadius: 8,
+    borderTopRightRadius: 8,
+    borderBottomRightRadius: 8,
   },
   List: {
     flex: 6,

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useContext} from 'react';
 import {
   View,
   Text,
@@ -7,11 +7,19 @@ import {
   SafeAreaView,
 } from 'react-native';
 import NaverMapView, {Marker, Path} from 'react-native-nmap';
+import {UserContext} from '../../Context/Context';
 
 const Jeju = () => {
+  const {selectedArea} = useContext(UserContext);
+
   const P0 = {latitude: 33.336819, longitude: 126.5993875};
   const P1 = {latitude: 37.565051, longitude: 126.978567};
   const P2 = {latitude: 37.565383, longitude: 126.976292};
+
+  useEffect(() => {
+    selectedArea('제주도');
+  }, []);
+
   return (
     <SafeAreaView>
       <NaverMapView

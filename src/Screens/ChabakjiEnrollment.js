@@ -190,19 +190,7 @@ const ChabakjiEnrollment = ({navigation}) => {
             설명
           </Text>
           <TextInput
-            style={{
-              padding: 10,
-              fontSize: 18,
-              fontWeight: '300',
-              marginTop: 10,
-              marginLeft: 30,
-              width: screenWidth - 60,
-              height: 200,
-              borderLeftWidth: 1,
-              borderRightWidth: 1,
-              borderTopWidth: 1,
-              borderBottomWidth: 1,
-            }}
+            style={styles.description}
             multiline={true}
             onChangeText={text => {
               setDescription(text);
@@ -322,6 +310,7 @@ const styles = StyleSheet.create({
     borderRightWidth: 2,
     borderTopWidth: 2,
     borderBottomWidth: 2,
+    borderColor: '#295eba',
   },
   uploadPhoto: {
     borderRadius: 4,
@@ -331,6 +320,20 @@ const styles = StyleSheet.create({
     backgroundColor: '#295eba',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  description: {
+    padding: 10,
+    fontSize: 18,
+    fontWeight: '300',
+    marginTop: 10,
+    marginLeft: 30,
+    width: screenWidth - 60,
+    height: 200,
+    borderLeftWidth: 1,
+    borderRightWidth: 1,
+    borderTopWidth: 1,
+    borderBottomWidth: 1,
+    borderColor: '#295eba',
   },
   Enroll: {
     borderRadius: 4,

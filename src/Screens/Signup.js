@@ -14,13 +14,40 @@ const Signup = () => {
   const [emailCheck, setEmailCheck] = useState('');
   const [password, setPassword] = useState('');
   const [passwordCheck, setPasswordCheck] = useState('');
-  const [passwordRight, setPasswordRight] = useState('');
+  const [passwordRight, setPasswordRight] = useState(''); //비밀번호가 일치하는지 아닌지 출력
   const [nickname, setNickname] = useState('');
   const [nicknameCheck, setNicknameCheck] = useState('');
-  const [msgColor, setMsgColor] = useState('');
+  const [msgColor, setMsgColor] = useState(''); //passwordRight TextColor
+
+  const checkEmail = str => {
+    var regExp =
+      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+    return regExp.test(str) ? true : false;
+  };
+
+  const emailChecking = () => {
+    if (checkEmail(email) === false) {
+      Alert.alert('이메일 형식이 유효하지 않습니다.');
+      setEmail('');
+      setEmailCheck('');
+    } else {
+      //fetch
+      Alert.alert('유효');
+    }
+  };
+
+  const checkPassword = str => {
+    var regExp = /^[A-Za-z0-9]{4,16}$/;
+    return regExp.test(str) ? true : false;
+  };
 
   const passwordChecking = () => {
-    if (password === '' || passwordCheck === '') {
+    if (!checkPassword(password)) {
+      Alert.alert(
+        '비밀번호는 영문, 숫자를 혼합하여 4자리 이상, 16자리 이하여야 합니다.',
+      );
+      setPassword('');
+      setPasswordCheck('');
       setPasswordRight('');
     } else if (password === passwordCheck) {
       setPasswordRight('비밀번호가 일치합니다.');
@@ -28,6 +55,23 @@ const Signup = () => {
     } else {
       setPasswordRight('비밀번호가 일치하지 않습니다.');
       setMsgColor('red');
+    }
+  };
+
+  const checkNickname = str => {
+    var regExp = /^[가-힣]{2,15}|[a-zA-Z]{2,15}\s[a-zA-Z]{2,8}$/;
+    return regExp.test(str) ? true : false;
+  };
+
+  const nicknameChecking = () => {
+    if (!checkNickname(nickname)) {
+      Alert.alert(
+        '닉네임은 한글, 영문 대소문자 2자리 이상, 8자리 이하여야 합니다.',
+      );
+      setNickname('');
+      setNicknameCheck('');
+    } else {
+      //fetch
     }
   };
 
@@ -55,11 +99,12 @@ const Signup = () => {
       <View style={{flexDirection: 'row'}}>
         <TextInput
           style={styles.Text}
-          placeholder={'example@naver.com'}
+          placeholder={'example@example.com'}
           autoCapitalize="none"
           autoCorrect={false}
           allowFontScaling={false}
           placeholderTextColor="#777777"
+          clearButtonMode={'while-editing'}
           onChangeText={text => {
             setEmail(text);
           }}
@@ -75,7 +120,9 @@ const Signup = () => {
             justifyContent: 'center',
             alignItems: 'center',
           }}
-          onPress={() => {}}>
+          onPress={() => {
+            emailChecking();
+          }}>
           <Text style={{color: 'white'}}>중복 검사</Text>
         </TouchableOpacity>
       </View>
@@ -88,8 +135,9 @@ const Signup = () => {
         autoCorrect={false}
         allowFontScaling={false}
         secureTextEntry={true}
-        placeholder={'4자리 이상, 32자리 이하'}
+        placeholder={'영문, 숫자 포함 4~16자리'}
         placeholderTextColor="#777777"
+        clearButtonMode={'while-editing'}
         onChangeText={text => {
           setPassword(text);
         }}
@@ -118,6 +166,7 @@ const Signup = () => {
           secureTextEntry={true}
           placeholder={'비밀번호 재입력'}
           placeholderTextColor="#777777"
+          clearButtonMode={'while-editing'}
           onChangeText={text => {
             setPasswordCheck(text);
           }}
@@ -128,7 +177,7 @@ const Signup = () => {
             marginLeft: '8%',
             marginTop: 5,
             borderRadius: 4,
-            width: '20%',
+            width: '25%',
             height: 40,
             justifyContent: 'center',
             alignItems: 'center',
@@ -136,7 +185,7 @@ const Signup = () => {
           onPress={() => {
             passwordChecking();
           }}>
-          <Text style={{color: 'white'}}>중복 검사</Text>
+          <Text style={{color: 'white'}}>비밀번호 확인</Text>
         </TouchableOpacity>
       </View>
       <Text style={{marginTop: '10%', marginLeft: '8%', fontSize: 15}}>
@@ -148,8 +197,9 @@ const Signup = () => {
           autoCapitalize="none"
           autoCorrect={false}
           allowFontScaling={false}
-          placeholder={'2자리 이상, 8자리 이하'}
+          placeholder={'한글, 영문 대소문자 2~8자리'}
           placeholderTextColor="#777777"
+          clearButtonMode={'while-editing'}
           onChangeText={text => {
             setNickname(text);
           }}
@@ -164,6 +214,9 @@ const Signup = () => {
             height: 40,
             justifyContent: 'center',
             alignItems: 'center',
+          }}
+          onPress={() => {
+            nicknameChecking();
           }}>
           <Text style={{color: 'white'}}>중복 검사</Text>
         </TouchableOpacity>

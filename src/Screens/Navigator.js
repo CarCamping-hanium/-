@@ -51,6 +51,7 @@ const LoginNavigator = ({navigation}) => {
 };
 
 const HomeScreenNavigator = navigation => {
+  const {area} = useContext(UserContext);
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -88,7 +89,10 @@ const HomeScreenNavigator = navigation => {
       <Stack.Screen
         name="차박지 리스트"
         component={ChabakjiList}
-        options={{title: '선택된 지역 : ', headerBackTitleVisible: false}}
+        options={{
+          title: '선택된 지역  :  ' + area,
+          headerBackTitleVisible: false,
+        }}
       />
       <Stack.Screen
         name="차박지 정보"
@@ -104,10 +108,10 @@ const HomeScreenNavigator = navigation => {
         }}
       />
       <Stack.Screen
-        name="리뷰 업로드"
+        name="리뷰 등록"
         component={ReviewUpload}
         options={{
-          title: '리뷰 업로드',
+          title: '리뷰 등록',
           headerBackTitleVisible: false,
         }}
       />
