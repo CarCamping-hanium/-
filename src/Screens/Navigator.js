@@ -36,6 +36,8 @@ import Gyeongsang from './ChabakjiLocation/Gyeongsang';
 import Jeolla from './ChabakjiLocation/Jeolla';
 import ChabakjiInfo from './ChabakjiInfo';
 import MyReviewInfo from './MyReviewInfo';
+import MyPointHistory from './MyPointHistory';
+import PointRanking from './PointRanking';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -156,6 +158,22 @@ const MyPageNavigator = navigation => {
         component={MyPage}
         options={{
           title: '마이 페이지',
+        }}
+      />
+      <Stack.Screen
+        name="MyPointHistory"
+        component={MyPointHistory}
+        options={{
+          title: '포인트 적립 내역',
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="PointRanking"
+        component={PointRanking}
+        options={{
+          title: '포인트 랭킹',
+          headerBackTitleVisible: false,
         }}
       />
       <Stack.Screen

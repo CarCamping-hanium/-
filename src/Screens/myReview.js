@@ -71,7 +71,7 @@ const myReview = ({navigation}) => {
         <TouchableOpacity
           style={{marginRight: 15}}
           onPress={() => {
-            navigation.navigate('HomeScreen');
+            navigation.navigate('MyPage');
           }}>
           <Image
             style={{height: 30, width: 30}}
@@ -93,8 +93,6 @@ const myReview = ({navigation}) => {
         <Text style={styles.Sort}>정렬 : </Text>
         <SelectDropdown
           buttonStyle={{
-            width: 80,
-            height: 50,
             backgroundColor: '#295eba',
             borderRadius: 8,
           }}

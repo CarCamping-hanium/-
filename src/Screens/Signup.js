@@ -8,15 +8,22 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
+import {check} from 'react-native-permissions';
 
 const Signup = () => {
   const [email, setEmail] = useState('');
-  const [emailCheck, setEmailCheck] = useState('');
   const [password, setPassword] = useState('');
-  const [passwordCheck, setPasswordCheck] = useState('');
-  const [passwordRight, setPasswordRight] = useState(''); //비밀번호가 일치하는지 아닌지 출력
+  const [repassword, setRepassword] = useState('');
   const [nickname, setNickname] = useState('');
-  const [nicknameCheck, setNicknameCheck] = useState('');
+
+  const [emailCheckMsg, setEmailCheckMsg] = useState('');
+  const [passwordRight, setPasswordRight] = useState(''); //비밀번호가 일치하는지 아닌지 출력
+  const [nicknameCheckMsg, setNicknameCheckMsg] = useState('');
+
+  const [emailCheck, setEmailCheck] = useState(''); //이메일 중복 확인 완료 상태 임시 저장
+  const [passwordCheck, setPasswordCheck] = useState(''); //비밀번호 중복 확인 완료 상태 임시 저장
+  const [nicknameCheck, setNicknameCheck] = useState(''); //닉네임 중복 확인 완료 상태 임시 저장
+
   const [msgColor, setMsgColor] = useState(''); //passwordRight TextColor
 
   const emailChecking = str => {
@@ -29,10 +36,22 @@ const Signup = () => {
     if (emailChecking(email) === false) {
       Alert.alert('이메일 형식이 유효하지 않습니다.');
       setEmail('');
-      setEmailCheck('');
+      setEmailCheckMsg('');
     } else {
-      //fetch
-      Alert.alert('유효');
+      fetch(
+        'http://3.36.28.39:8080/api/signUp',
+        // , {
+        //   method: 'POST',
+        //   headers: {
+        //     'Content-Type': 'application/json',
+        //   },
+        //   body: JSON.stringify(email),
+        // }
+      )
+        .then(response => response.json())
+        .then(json => {
+          console.warn(json.point);
+        });
     }
   };
 
@@ -47,9 +66,10 @@ const Signup = () => {
         '비밀번호는 영문, 숫자를 혼합하여 4자리 이상, 16자리 이하여야 합니다.',
       );
       setPassword('');
-      setPasswordCheck('');
+      setRepassword('');
       setPasswordRight('');
-    } else if (password === passwordCheck) {
+    } else if (password === repassword) {
+      setPasswordCheck(password);
       setPasswordRight('비밀번호가 일치합니다.');
       setMsgColor('#295eba');
     } else {
@@ -69,7 +89,7 @@ const Signup = () => {
         '닉네임은 한글, 영문, 숫자만 가능하며 2자리 이상, 8자리 이하여야 합니다.',
       );
       setNickname('');
-      setNicknameCheck('');
+      setNicknameCheckMsg('');
     } else {
       //fetch
     }
@@ -77,9 +97,9 @@ const Signup = () => {
 
   const signupCheckingFunction = () => {
     if (
-      emailCheck === '사용 가능한 이메일입니다.' &&
-      passwordCheck === '비밀번호가 일치합니다.' &&
-      nicknameCheck === '사용 가능한 닉네임입니다.'
+      emailCheckMsg === '사용 가능한 이메일입니다.' &&
+      passwordRight === '비밀번호가 일치합니다.' &&
+      nicknameCheckMsg === '사용 가능한 닉네임입니다.'
     ) {
       Alert.alert('차박린이', '회원가입을 축하드려요!');
     }
@@ -170,7 +190,7 @@ const Signup = () => {
           placeholderTextColor="#777777"
           clearButtonMode={'while-editing'}
           onChangeText={text => {
-            setPasswordCheck(text);
+            setRepassword(text);
           }}
         />
         <TouchableOpacity

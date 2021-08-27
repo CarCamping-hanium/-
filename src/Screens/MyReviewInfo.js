@@ -22,7 +22,7 @@ const ChabakjiInfo = ({navigation}) => {
         <TouchableOpacity
           style={{marginRight: 15}}
           onPress={() => {
-            navigation.navigate('HomeScreen');
+            navigation.navigate('MyPage');
           }}>
           <Image
             style={{height: 30, width: 30}}
