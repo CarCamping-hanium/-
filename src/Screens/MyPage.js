@@ -36,17 +36,55 @@ const MyPage = ({navigation}) => {
         justifyContent: 'flex-start',
         backgroundColor: 'white',
       }}>
-      <View style={{flexDirection: 'row'}}>
-        <Text style={{marginRight: 80, marginTop: 50, fontSize: 20}}>
+      <TouchableOpacity
+        onPress={() => {
+          navigation.navigate('MyPointHistory');
+        }}>
+        <Text
+          style={{
+            marginTop: 30,
+            fontSize: 20,
+            justifyContent: 'center',
+            alignItems: 'center',
+            borderWidth: 2,
+            borderRadius: 8,
+            borderColor: '#295eba',
+            padding: 10,
+          }}>
           내 포인트 : 50
         </Text>
+      </TouchableOpacity>
+      <View
+        style={{
+          flexDirection: 'row',
+          marginTop: 35,
+        }}>
         <TouchableOpacity
           style={{
             alignItems: 'center',
-            marginTop: 35,
+            justifyContent: 'center',
             backgroundColor: '#295eba',
-            padding: 20,
+            width: 130,
+            height: 50,
             borderRadius: 8,
+            marginHorizontal: 10,
+          }}
+          onPress={() => {
+            // navigation.navigate('MyReview');
+          }}>
+          <Text style={{fontWeight: 'bold', color: 'white'}}>
+            회원 정보 수정
+          </Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#295eba',
+            width: 130,
+            height: 50,
+            borderRadius: 8,
+            marginHorizontal: 10,
           }}
           onPress={() => {
             navigation.navigate('MyReview');
@@ -60,6 +98,20 @@ const MyPage = ({navigation}) => {
         source={require('../Assets/Images/mypage_background.png')}
         style={{width: screenWidth, height: screenWidth, marginTop: '15%'}}
       />
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-end'}}>
+        <TouchableOpacity
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#e64f49',
+            width: 130,
+            height: 50,
+            borderRadius: 8,
+          }}
+          onPress={() => {}}>
+          <Text style={{fontWeight: 'bold', color: 'white'}}>회원 탈퇴</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
