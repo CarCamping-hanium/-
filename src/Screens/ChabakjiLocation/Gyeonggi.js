@@ -68,7 +68,7 @@ const Gyeonggi = ({navigation}) => {
       <TouchableOpacity
         style={styles.openList}
         onPress={() => {
-          navigation.navigate('차박지 리스트');
+          navigation.navigate('ChabakjiList');
         }}>
         <Text
           style={{

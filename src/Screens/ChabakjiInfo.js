@@ -21,7 +21,7 @@ const ChabakjiInfo = ({navigation}) => {
         <TouchableOpacity
           style={{marginRight: 15}}
           onPress={() => {
-            navigation.navigate('홈화면');
+            navigation.navigate('HomeScreen');
           }}>
           <Image
             style={{height: 30, width: 30}}
@@ -127,14 +127,14 @@ const ChabakjiInfo = ({navigation}) => {
           style={{
             justifyContent: 'center',
             alignItems: 'center',
-            marginTop: 20,
+            marginTop: 40,
           }}>
           <TouchableOpacity
             style={styles.reviewShow}
             onPress={() => {
-              navigation.navigate('리뷰 페이지');
+              navigation.navigate('ReviewBoard');
             }}>
-            <Text style={{color: 'white'}}>리뷰 보기</Text>
+            <Text style={{color: 'white', fontSize: 20}}>리뷰 보기</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -177,8 +177,8 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline',
   },
   reviewShow: {
-    width: 100,
-    height: 40,
+    width: 150,
+    height: 50,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#295eba',

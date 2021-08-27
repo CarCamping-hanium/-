@@ -15,6 +15,7 @@ import {Rating} from 'react-native-ratings';
 const screenWidth = Dimensions.get('window').width;
 const ChabakjiInfo = ({navigation}) => {
   const [image, setImage] = useState([]);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -31,6 +32,7 @@ const ChabakjiInfo = ({navigation}) => {
       ),
     });
   }, []);
+
   return (
     <SafeAreaView
       style={{
@@ -169,7 +171,7 @@ const ChabakjiInfo = ({navigation}) => {
           <TouchableOpacity
             style={styles.toReviewList}
             onPress={() => {
-              navigation.navigate('ReviewBoard');
+              navigation.navigate('MyReview');
             }}>
             <Text style={{color: 'white', fontSize: 18}}>리뷰 목록으로</Text>
           </TouchableOpacity>

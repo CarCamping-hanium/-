@@ -71,6 +71,7 @@ const ReviewUpload = ({navigation}) => {
       <TextInput
         style={styles.name}
         placeholder="리뷰 제목을 입력하세요."
+        placeholderTextColor="#aaaaaa"
         multiline={true}
         onChangeText={text => {
           setReviewTitle(text);
@@ -129,12 +130,15 @@ const ReviewUpload = ({navigation}) => {
               marginLeft: 30,
               width: screenWidth - 60,
               height: 200,
-              borderLeftWidth: 1,
-              borderRightWidth: 1,
-              borderTopWidth: 1,
-              borderBottomWidth: 1,
+              borderLeftWidth: 2,
+              borderRightWidth: 2,
+              borderTopWidth: 2,
+              borderBottomWidth: 2,
+              borderColor: '#295eba',
+              borderRadius: 8,
             }}
             placeholder="리뷰 내용을 입력하세요."
+            placeholderTextColor="#aaaaaa"
             multiline={true}
             onChangeText={text => {
               setReviewDescription(text);
@@ -168,7 +172,7 @@ const ReviewUpload = ({navigation}) => {
               imageList.length = 0;
               setImage([]);
               Alert.alert('차박린이', '회원님의 리뷰가 업로드 되었습니다.');
-              navigation.navigate('리뷰 페이지');
+              navigation.navigate('ReviewBoard');
             }}>
             <Text style={{color: 'white'}}>등록</Text>
           </TouchableOpacity>
@@ -177,7 +181,7 @@ const ReviewUpload = ({navigation}) => {
             onPress={() => {
               imageList.length = 0;
               setImage([]);
-              navigation.navigate('리뷰 페이지');
+              navigation.navigate('ReviewBoard');
             }}>
             <Text style={{color: 'white'}}>취소</Text>
           </TouchableOpacity>
@@ -205,6 +209,8 @@ const styles = StyleSheet.create({
     borderRightWidth: 2,
     borderTopWidth: 2,
     borderBottomWidth: 2,
+    borderColor: '#295eba',
+    borderRadius: 8,
   },
   uploadPhoto: {
     borderRadius: 4,
@@ -231,16 +237,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: 50,
-  },
-  myStarStyle: {
-    color: 'yellow',
-    backgroundColor: 'transparent',
-    textShadowColor: 'black',
-    textShadowOffset: {width: 1, height: 1},
-    textShadowRadius: 2,
-  },
-  myEmptyStarStyle: {
-    color: 'white',
   },
 });
 export default ReviewUpload;

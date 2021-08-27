@@ -14,9 +14,13 @@ const UserContextProvider = ({children}) => {
   const [userInfo, setUserInfo] = useState(undefined);
   const [area, setArea] = useState('');
 
-  const login = (email, password) => {
+  const login = (email_data, password_data) => {
     AsyncStorage.setItem('token', 'save your token').then(() => {
-      setUserInfo({name: 'leejunsu', email: 'ijh1205@naver.com'});
+      setUserInfo({
+        nickname: 'leejunsu',
+        email: email_data,
+        password: password_data,
+      });
     });
   };
 
@@ -25,8 +29,9 @@ const UserContextProvider = ({children}) => {
       .then(value => {
         if (value) {
           setUserInfo({
-            name: 'leejunsu',
+            nickname: 'leejunsu',
             email: 'ijh1205@naver.com',
+            password: 'password',
           });
         }
       })

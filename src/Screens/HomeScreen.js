@@ -46,7 +46,7 @@ const HomeScreen = ({navigation}) => {
           backgroundColor: '#295eba',
         }}
         onPress={() => {
-          navigation.navigate('경기도');
+          navigation.navigate('Gyeonggi');
         }}>
         <Text
           style={{
@@ -66,7 +66,7 @@ const HomeScreen = ({navigation}) => {
           backgroundColor: '#295eba',
         }}
         onPress={() => {
-          navigation.navigate('강원도');
+          navigation.navigate('Gangwon');
         }}>
         <Text
           style={{
@@ -86,7 +86,7 @@ const HomeScreen = ({navigation}) => {
           backgroundColor: '#295eba',
         }}
         onPress={() => {
-          navigation.navigate('충청도');
+          navigation.navigate('Chungcheong');
         }}>
         <Text
           style={{
@@ -106,7 +106,7 @@ const HomeScreen = ({navigation}) => {
           backgroundColor: '#295eba',
         }}
         onPress={() => {
-          navigation.navigate('경상도');
+          navigation.navigate('Gyeongsang');
         }}>
         <Text
           style={{
@@ -126,7 +126,7 @@ const HomeScreen = ({navigation}) => {
           backgroundColor: '#295eba',
         }}
         onPress={() => {
-          navigation.navigate('전라도');
+          navigation.navigate('Jeolla');
         }}>
         <Text
           style={{

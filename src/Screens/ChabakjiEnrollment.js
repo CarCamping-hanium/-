@@ -91,7 +91,11 @@ const ChabakjiEnrollment = ({navigation}) => {
       <TextInput
         style={styles.name}
         placeholder="차박지 이름을 입력하세요."
+        placeholderTextColor="#aaaaaa"
         multiline={true}
+        autoCapitalize="none"
+        autoCorrect={false}
+        clearButtonMode="while-editing"
         onChangeText={text => {
           setName(text);
         }}
@@ -155,23 +159,23 @@ const ChabakjiEnrollment = ({navigation}) => {
           </TouchableOpacity>
         </View>
         <View style={{paddingRight: 140}}>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              fontSize: 20,
-              marginTop: '10%',
-              marginLeft: 30,
-            }}>
-            위치
-          </Text>
           <TextInput
             style={{
               fontSize: 18,
-              fontWeight: '300',
-              marginTop: 10,
+              fontWeight: '400',
+              marginTop: 30,
               marginLeft: 30,
               width: screenWidth - 60,
+              height: 40,
+              paddingLeft: 10,
+              borderWidth: 2,
+              borderColor: '#295eba',
+              borderRadius: 8,
             }}
+            placeholder="차박지 위치를 입력하세요."
+            placeholderTextColor="#aaaaaa"
+            autoCapitalize="none"
+            autoCorrect={false}
             multiline={true}
             onChangeText={text => {
               setLocation(text);
@@ -180,17 +184,12 @@ const ChabakjiEnrollment = ({navigation}) => {
           />
         </View>
         <View>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              fontSize: 20,
-              marginTop: '10%',
-              marginLeft: 30,
-            }}>
-            설명
-          </Text>
           <TextInput
             style={styles.description}
+            placeholder="차박지에 대한 설명을 입력하세요."
+            placeholderTextColor="#aaaaaa"
+            autoCapitalize="none"
+            autoCorrect={false}
             multiline={true}
             onChangeText={text => {
               setDescription(text);
@@ -199,23 +198,23 @@ const ChabakjiEnrollment = ({navigation}) => {
           />
         </View>
         <View>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              fontSize: 20,
-              marginTop: '10%',
-              marginLeft: 30,
-            }}>
-            근처 편의시설 (선택사항)
-          </Text>
           <TextInput
             style={{
               fontSize: 18,
-              fontWeight: '300',
-              marginTop: 10,
+              fontWeight: '400',
+              marginTop: 30,
               marginLeft: 30,
               width: screenWidth - 60,
+              height: 40,
+              paddingLeft: 10,
+              borderWidth: 2,
+              borderColor: '#295eba',
+              borderRadius: 8,
             }}
+            placeholder="근처 편의시설(선택 사항)"
+            placeholderTextColor="#aaaaaa"
+            autoCapitalize="none"
+            autoCorrect={false}
             multiline={true}
             onChangeText={text => {
               setComfort(text);
@@ -224,23 +223,23 @@ const ChabakjiEnrollment = ({navigation}) => {
           />
         </View>
         <View>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              fontSize: 20,
-              marginTop: '10%',
-              marginLeft: 30,
-            }}>
-            관련 영상 링크 (선택사항)
-          </Text>
           <TextInput
             style={{
               fontSize: 18,
-              fontWeight: '300',
-              marginTop: 10,
+              fontWeight: '400',
+              marginTop: 30,
               marginLeft: 30,
               width: screenWidth - 60,
+              height: 40,
+              paddingLeft: 10,
+              borderWidth: 2,
+              borderColor: '#295eba',
+              borderRadius: 8,
             }}
+            placeholder="관련 영상 링크(선택 사항)"
+            placeholderTextColor="#aaaaaa"
+            autoCapitalize="none"
+            autoCorrect={false}
             multiline={true}
             onChangeText={text => {
               setVideoLink(text);
@@ -268,7 +267,7 @@ const ChabakjiEnrollment = ({navigation}) => {
               setDescription('');
               setComfort('');
               setVideoLink('');
-              navigation.navigate('홈화면');
+              navigation.navigate('HomeScreen');
             }}>
             <Text style={{color: 'white'}}>등록</Text>
           </TouchableOpacity>
@@ -282,7 +281,7 @@ const ChabakjiEnrollment = ({navigation}) => {
               setDescription('');
               setComfort('');
               setVideoLink('');
-              navigation.navigate('홈화면');
+              navigation.navigate('HomeScreen');
             }}>
             <Text style={{color: 'white'}}>취소</Text>
           </TouchableOpacity>
@@ -311,6 +310,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 2,
     borderBottomWidth: 2,
     borderColor: '#295eba',
+    borderRadius: 8,
   },
   uploadPhoto: {
     borderRadius: 4,
@@ -324,16 +324,17 @@ const styles = StyleSheet.create({
   description: {
     padding: 10,
     fontSize: 18,
-    fontWeight: '300',
-    marginTop: 10,
+    fontWeight: '400',
+    marginTop: 30,
     marginLeft: 30,
     width: screenWidth - 60,
     height: 200,
-    borderLeftWidth: 1,
-    borderRightWidth: 1,
-    borderTopWidth: 1,
-    borderBottomWidth: 1,
+    borderLeftWidth: 2,
+    borderRightWidth: 2,
+    borderTopWidth: 2,
+    borderBottomWidth: 2,
     borderColor: '#295eba',
+    borderRadius: 8,
   },
   Enroll: {
     borderRadius: 4,

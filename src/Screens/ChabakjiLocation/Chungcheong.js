@@ -78,7 +78,7 @@ const Chungcheong = ({navigation}) => {
       <TouchableOpacity
         style={styles.openList}
         onPress={() => {
-          navigation.navigate('차박지 리스트');
+          navigation.navigate('ChabakjiList');
         }}>
         <Text
           style={{
@@ -133,7 +133,7 @@ const Chungcheong = ({navigation}) => {
             <TouchableOpacity
               style={styles.modalInfo}
               onPress={() => {
-                navigation.navigate('차박지 정보');
+                navigation.navigate('ChabakjiInfo');
                 setVisible(false);
               }}>
               <Text style={{color: 'white', fontSize: 20}}>상세 정보</Text>

@@ -63,6 +63,7 @@ const Login = ({navigation}) => {
           allowFontScaling={false}
           placeholder="이메일"
           placeholderTextColor="#777777"
+          clearButtonMode="while-editing"
           onChangeText={text => {
             setEmail(text);
           }}
@@ -82,6 +83,7 @@ const Login = ({navigation}) => {
           allowFontScaling={false}
           placeholder="비밀번호"
           placeholderTextColor="#777777"
+          clearButtonMode="while-editing"
           secureTextEntry={true}
           onChangeText={text => {
             setPassword(text);
@@ -104,7 +106,7 @@ const Login = ({navigation}) => {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            navigation.navigate('회원가입');
+            navigation.navigate('Signup');
           }}>
           <Text style={{marginTop: 18, textDecorationLine: 'underline'}}>
             아직 회원이 아니신가요?

@@ -21,7 +21,7 @@ const ChabakjiList = ({navigation}) => {
         <TouchableOpacity
           style={{marginRight: 15}}
           onPress={() => {
-            navigation.navigate('홈화면');
+            navigation.navigate('HomeScreen');
           }}>
           <Image
             style={{height: 30, width: 30}}
@@ -52,7 +52,7 @@ const ChabakjiList = ({navigation}) => {
         <TouchableOpacity
           style={{backgroundColor: 'black'}}
           onPress={() => {
-            navigation.navigate('차박지 정보');
+            navigation.navigate('ChabakjiInfo');
           }}>
           <Text>ddd</Text>
         </TouchableOpacity>

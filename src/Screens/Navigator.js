@@ -24,7 +24,7 @@ import Signup from './Signup';
 import ChabakjiEnrollment from './ChabakjiEnrollment';
 import HomeScreen from './HomeScreen';
 import MyPage from './MyPage';
-import myReview from './myReview';
+import MyReview from './MyReview';
 import ChabakjiList from './ChabakjiList';
 import ReviewBoard from './ReviewBoard';
 import ReviewUpload from './ReviewUpload';
@@ -35,6 +35,7 @@ import Chungcheong from './ChabakjiLocation/Chungcheong';
 import Gyeongsang from './ChabakjiLocation/Gyeongsang';
 import Jeolla from './ChabakjiLocation/Jeolla';
 import ChabakjiInfo from './ChabakjiInfo';
+import MyReviewInfo from './MyReviewInfo';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -43,8 +44,16 @@ const LoginNavigator = ({navigation}) => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="로그인" component={Login} />
-        <Stack.Screen name="회원가입" component={Signup} />
+        <Stack.Screen
+          name="Login"
+          component={Login}
+          options={{title: '로그인'}}
+        />
+        <Stack.Screen
+          name="Signup"
+          component={Signup}
+          options={{title: '회원가입'}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );
@@ -55,39 +64,39 @@ const HomeScreenNavigator = navigation => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="홈화면"
+        name="HomeScreen"
         component={HomeScreen}
         options={{
           title: '지역을 선택하세요',
         }}
       />
       <Stack.Screen
-        name="경기도"
+        name="Gyeonggi"
         component={Gyeonggi}
-        options={{headerBackTitleVisible: false}}
+        options={{title: '경기도', headerBackTitleVisible: false}}
       />
       <Stack.Screen
-        name="강원도"
+        name="Gangwon"
         component={Gangwon}
-        options={{headerBackTitleVisible: false}}
+        options={{title: '강원도', headerBackTitleVisible: false}}
       />
       <Stack.Screen
-        name="충청도"
+        name="Chungcheong"
         component={Chungcheong}
-        options={{headerBackTitleVisible: false}}
+        options={{title: '충청도', headerBackTitleVisible: false}}
       />
       <Stack.Screen
-        name="경상도"
+        name="Gyeongsang"
         component={Gyeongsang}
-        options={{headerBackTitleVisible: false}}
+        options={{title: '경상도', headerBackTitleVisible: false}}
       />
       <Stack.Screen
-        name="전라도"
+        name="Jeolla"
         component={Jeolla}
-        options={{headerBackTitleVisible: false}}
+        options={{title: '전라도', headerBackTitleVisible: false}}
       />
       <Stack.Screen
-        name="차박지 리스트"
+        name="ChabakjiList"
         component={ChabakjiList}
         options={{
           title: '선택된 지역  :  ' + area,
@@ -95,12 +104,12 @@ const HomeScreenNavigator = navigation => {
         }}
       />
       <Stack.Screen
-        name="차박지 정보"
+        name="ChabakjiInfo"
         component={ChabakjiInfo}
         options={{title: '차박지명', headerBackTitleVisible: false}}
       />
       <Stack.Screen
-        name="리뷰 페이지"
+        name="ReviewBoard"
         component={ReviewBoard}
         options={{
           title: '리뷰 페이지',
@@ -108,7 +117,7 @@ const HomeScreenNavigator = navigation => {
         }}
       />
       <Stack.Screen
-        name="리뷰 등록"
+        name="ReviewUpload"
         component={ReviewUpload}
         options={{
           title: '리뷰 등록',
@@ -116,7 +125,7 @@ const HomeScreenNavigator = navigation => {
         }}
       />
       <Stack.Screen
-        name="리뷰 정보"
+        name="ReviewInfo"
         component={ReviewInfo}
         options={{
           title: '리뷰 정보',
@@ -130,7 +139,11 @@ const HomeScreenNavigator = navigation => {
 const ChabakjiEnrollmentNavigator = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="차박지 등록" component={ChabakjiEnrollment} />
+      <Stack.Screen
+        name="ChabakjiEnrollment"
+        component={ChabakjiEnrollment}
+        options={{title: '차박지 등록'}}
+      />
     </Stack.Navigator>
   );
 };
@@ -139,17 +152,25 @@ const MyPageNavigator = navigation => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="개인 정보"
+        name="MyPage"
         component={MyPage}
         options={{
           title: '마이 페이지',
         }}
       />
       <Stack.Screen
-        name="내 리뷰 페이지"
-        component={myReview}
+        name="MyReview"
+        component={MyReview}
         options={{
           title: '내가 쓴 리뷰',
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="MyReviewInfo"
+        component={MyReviewInfo}
+        options={{
+          title: '리뷰 정보',
           headerBackTitleVisible: false,
         }}
       />

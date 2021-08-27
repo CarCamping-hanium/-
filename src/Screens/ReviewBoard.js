@@ -33,7 +33,7 @@ const ReviewBoard = ({navigation}) => {
     <TouchableOpacity
       style={[styles.Item, backgroundColor]}
       onPress={() => {
-        navigation.navigate('리뷰 정보');
+        navigation.navigate('ReviewInfo');
       }}>
       <Text style={[styles.Title, textColor]}>{item.title}</Text>
       <View
@@ -69,7 +69,7 @@ const ReviewBoard = ({navigation}) => {
         <TouchableOpacity
           style={{marginRight: 15}}
           onPress={() => {
-            navigation.navigate('홈화면');
+            navigation.navigate('HomeScreen');
           }}>
           <Image
             style={{height: 30, width: 30}}
@@ -88,10 +88,18 @@ const ReviewBoard = ({navigation}) => {
           flexDirection: 'row',
           justifyContent: 'center',
         }}>
-        <Text style={styles.Sort}>정렬:</Text>
+        <Text style={styles.Sort}>정렬 : </Text>
         <SelectDropdown
-          buttonStyle={{width: 100, height: 50}}
-          buttonTextStyle={{fontSize: 17}}
+          buttonStyle={{
+            width: 80,
+            height: 50,
+            backgroundColor: '#295eba',
+            borderRadius: 8,
+          }}
+          buttonTextStyle={{
+            fontSize: 17,
+            color: 'white',
+          }}
           data={sort}
           defaultValue={'추천순'}
           onSelect={(selectedItem, index) => {}}
@@ -105,6 +113,7 @@ const ReviewBoard = ({navigation}) => {
       </View>
 
       <FlatList
+        style={{marginTop: 20}}
         data={DATA}
         renderItem={renderItem}
         keyExtractor={(item, index) => {
@@ -118,7 +127,7 @@ const ReviewBoard = ({navigation}) => {
         <TouchableOpacity
           style={styles.ReviewUpload}
           onPress={() => {
-            navigation.navigate('리뷰 등록');
+            navigation.navigate('ReviewUpload');
           }}>
           <Text style={{color: 'white', fontSize: 20}}>리뷰 등록</Text>
         </TouchableOpacity>
@@ -131,6 +140,7 @@ const styles = StyleSheet.create({
   Container: {
     flex: 1,
     marginTop: StatusBar.currentHeight || 0,
+    backgroundColor: 'white',
   },
   Item: {
     padding: 15,

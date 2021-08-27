@@ -49,7 +49,7 @@ const MyPage = ({navigation}) => {
             borderRadius: 8,
           }}
           onPress={() => {
-            navigation.navigate('내 리뷰 페이지');
+            navigation.navigate('MyReview');
           }}>
           <Text style={{fontWeight: 'bold', color: 'white'}}>
             내가 쓴 리뷰 확인
