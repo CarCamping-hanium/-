@@ -10,7 +10,7 @@ import {
   View,
 } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
-const sort = ['추천순', '최신순'];
+const sort = ['추천순', '최신순', '오래된순'];
 const DATA = [
   {
     title: '리뷰제목1',
