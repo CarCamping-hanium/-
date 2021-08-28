@@ -29,7 +29,7 @@ const DATA = [
     starcount: '★★★☆☆',
   },
 ];
-const myReview = ({navigation}) => {
+const MyReview = ({navigation}) => {
   const Item = ({item, onPress, backgroundColor, textColor}) => (
     <TouchableOpacity
       style={[styles.Item, backgroundColor]}
@@ -114,7 +114,7 @@ const myReview = ({navigation}) => {
         data={DATA}
         renderItem={renderItem}
         keyExtractor={(item, index) => {
-          return `myReview-${index}`;
+          return `MyReview-${index}`;
         }}
         extraData={selectedId}
       />
@@ -148,4 +148,4 @@ const styles = StyleSheet.create({
   Sort: {marginTop: 10, fontSize: 20},
 });
 
-export default myReview;
+export default MyReview;
