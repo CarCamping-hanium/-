@@ -16,12 +16,14 @@ import {
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import {launchImageLibrary} from 'react-native-image-picker';
+import SelectDropdown from 'react-native-select-dropdown';
 
 const screenWidth = Dimensions.get('window').width;
 let imageList = [];
 
 const ChabakjiEnrollment = ({navigation}) => {
   const [image, setImage] = useState([]);
+  const [category, setCategory] = useState('');
   const [name, setName] = useState('');
   const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
@@ -158,7 +160,31 @@ const ChabakjiEnrollment = ({navigation}) => {
             <Text style={{color: 'white'}}>사진 업로드</Text>
           </TouchableOpacity>
         </View>
-        <View style={{paddingRight: 140}}>
+        <View style={{marginTop: 30}}>
+          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <SelectDropdown
+              buttonStyle={{
+                borderColor: '#295eba',
+                backgroundColor: 'white',
+                borderWidth: 2,
+                borderRadius: 8,
+                width: 100,
+                height: 50,
+              }}
+              buttonTextStyle={{fontSize: 17}}
+              data={['경기도', '강원도', '충청도', '전라도', '경상도']}
+              defaultValue={'경기도'}
+              onSelect={(selectedItem, index) => {
+                setCategory(selectedItem);
+              }}
+              buttonTextAfterSelection={(selectedItem, index) => {
+                return selectedItem;
+              }}
+              rowTextForSelection={(item, index) => {
+                return item;
+              }}
+            />
+          </View>
           <TextInput
             style={{
               fontSize: 18,
@@ -313,7 +339,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   uploadPhoto: {
-    borderRadius: 4,
+    borderRadius: 8,
     width: 100,
     height: 40,
     marginTop: 10,
@@ -337,7 +363,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   Enroll: {
-    borderRadius: 4,
+    borderRadius: 8,
     width: 100,
     height: 40,
     backgroundColor: '#295eba',
@@ -345,7 +371,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   Cancel: {
-    borderRadius: 4,
+    borderRadius: 8,
     width: 100,
     height: 40,
     backgroundColor: '#295eba',
