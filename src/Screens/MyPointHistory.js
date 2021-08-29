@@ -78,6 +78,8 @@ const MyPointHistory = ({navigation}) => {
       }}>
       <SelectDropdown
         buttonStyle={{
+          width: 130,
+          height: 50,
           marginTop: 20,
           backgroundColor: '#295eba',
           borderRadius: 8,

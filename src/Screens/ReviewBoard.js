@@ -91,12 +91,15 @@ const ReviewBoard = ({navigation}) => {
         <Text style={styles.Sort}>정렬 : </Text>
         <SelectDropdown
           buttonStyle={{
-            backgroundColor: '#295eba',
+            width: 130,
+            height: 50,
+            borderColor: '#295eba',
+            borderWidth: 2,
             borderRadius: 8,
+            backgroundColor: 'white',
           }}
           buttonTextStyle={{
             fontSize: 17,
-            color: 'white',
           }}
           data={sort}
           defaultValue={'추천순'}
