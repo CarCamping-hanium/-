@@ -8,62 +8,96 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import {check} from 'react-native-permissions';
+import axios from 'axios';
+import _ from 'lodash';
+import {response} from 'express';
 
 const Signup = () => {
-  const [email, setEmail] = useState('');
+  const [ID, setID] = useState('');
   const [password, setPassword] = useState('');
   const [repassword, setRepassword] = useState('');
   const [nickname, setNickname] = useState('');
 
-  const [emailCheckMsg, setEmailCheckMsg] = useState('');
+  const [IDCheckMsg, setIDCheckMsg] = useState('');
   const [passwordRight, setPasswordRight] = useState(''); //비밀번호가 일치하는지 아닌지 출력
   const [nicknameCheckMsg, setNicknameCheckMsg] = useState('');
 
-  const [emailCheck, setEmailCheck] = useState(''); //이메일 중복 확인 완료 상태 임시 저장
+  const [IDCheck, setIDCheck] = useState(''); //이메일 중복 확인 완료 상태 임시 저장
   const [passwordCheck, setPasswordCheck] = useState(''); //비밀번호 중복 확인 완료 상태 임시 저장
   const [nicknameCheck, setNicknameCheck] = useState(''); //닉네임 중복 확인 완료 상태 임시 저장
 
   const [msgColor, setMsgColor] = useState(''); //passwordRight TextColor
 
-  const emailChecking = str => {
-    var regExp =
-      /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+  const IDChecking = str => {
+    var regExp = /^[A-za-z0-9]{4,16}$/g;
     return regExp.test(str) ? true : false;
   };
 
-  const emailCheckingFunction = () => {
-    if (emailChecking(email) === false) {
-      Alert.alert('이메일 형식이 유효하지 않습니다.');
-      setEmail('');
-      setEmailCheckMsg('');
+  const IDCheckingFunction = () => {
+    if (IDChecking(ID) === false) {
+      Alert.alert(
+        '아이디는 영문 또는 숫자를 사용하여 4자리 이상, 16자리 이하여야 합니다.',
+      );
+      setID('');
+      setIDCheckMsg('');
     } else {
-      fetch(
-        'http://3.36.28.39:8080/api/signUp',
-        // , {
-        //   method: 'POST',
-        //   headers: {
-        //     'Content-Type': 'application/json',
-        //   },
-        //   body: JSON.stringify(email),
-        // }
-      )
-        .then(response => response.json())
+      fetch('http://3.36.28.39:8080/api/signUp/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: ID,
+          password: password,
+          nickname: nickname,
+          point: 0,
+        }),
+      })
+        .then(response => {
+          console.log(response);
+        })
         .then(json => {
-          console.warn(json.point);
+          console.warn(json);
+          if (json) {
+            alert('usable');
+          } else if (!json) {
+            alert('false');
+          } else {
+            alert('cc');
+          }
+        })
+        .catch(e => {
+          console.log(e);
         });
+      // axios
+      //   .post(
+      //     'http://3.36.28.39:8080/api/signUp',
+      //     {email: ID},
+      //     {
+      //       headers: {
+      //         'Content-Type': 'application/json',
+      //         Accept: 'application/json',
+      //       },
+      //     },
+      //   )
+      //   .then(response => {
+      //     console.log(response);
+      //   })
+      //   .catch(e => {
+      //     console.log(e);
+      //   });
     }
   };
 
   const passwordChecking = str => {
-    var regExp = /^[A-Za-z0-9]{4,16}$/;
+    var regExp = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;
     return regExp.test(str) ? true : false;
   };
 
   const passwordCheckingFunction = () => {
     if (!passwordChecking(password)) {
       Alert.alert(
-        '비밀번호는 영문, 숫자를 혼합하여 4자리 이상, 16자리 이하여야 합니다.',
+        '비밀번호는 영문, 숫자를 혼합하여 8자리 이상, 16자리 이하여야 합니다.',
       );
       setPassword('');
       setRepassword('');
@@ -97,7 +131,7 @@ const Signup = () => {
 
   const signupCheckingFunction = () => {
     if (
-      emailCheckMsg === '사용 가능한 이메일입니다.' &&
+      IDCheckMsg === '사용 가능한 아이디입니다.' &&
       passwordRight === '비밀번호가 일치합니다.' &&
       nicknameCheckMsg === '사용 가능한 닉네임입니다.'
     ) {
@@ -114,19 +148,19 @@ const Signup = () => {
         backgroundColor: 'white',
       }}>
       <Text style={{marginTop: '15%', marginLeft: '8%', fontSize: 15}}>
-        이메일 (아이디로 사용됩니다.)
+        아이디
       </Text>
       <View style={{flexDirection: 'row'}}>
         <TextInput
           style={styles.Text}
-          placeholder={'example@example.com'}
+          placeholder={'영문, 숫자 사용 4~16자리'}
           autoCapitalize="none"
           autoCorrect={false}
           allowFontScaling={false}
           placeholderTextColor="#777777"
           clearButtonMode={'while-editing'}
           onChangeText={text => {
-            setEmail(text);
+            setID(text);
           }}
         />
         <TouchableOpacity
@@ -141,7 +175,7 @@ const Signup = () => {
             alignItems: 'center',
           }}
           onPress={() => {
-            emailCheckingFunction();
+            IDCheckingFunction();
           }}>
           <Text style={{color: 'white'}}>중복 검사</Text>
         </TouchableOpacity>
@@ -157,7 +191,7 @@ const Signup = () => {
         autoCorrect={false}
         allowFontScaling={false}
         secureTextEntry={true}
-        placeholder={'영문, 숫자 포함 4~16자리'}
+        placeholder={'영문, 숫자 혼합 8~16자리'}
         placeholderTextColor="#777777"
         clearButtonMode={'while-editing'}
         onChangeText={text => {

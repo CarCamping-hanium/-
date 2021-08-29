@@ -9,6 +9,7 @@ import {
   Dimensions,
   FlatList,
   View,
+  Alert,
 } from 'react-native';
 import {Rating} from 'react-native-ratings';
 
@@ -169,11 +170,21 @@ const ChabakjiInfo = ({navigation}) => {
             alignItems: 'center',
           }}>
           <TouchableOpacity
-            style={styles.toReviewList}
+            style={styles.deleteReview}
             onPress={() => {
-              navigation.navigate('MyReview');
+              Alert.alert('리뷰를 삭제하시겠습니까?', '', [
+                {
+                  text: '삭제',
+                  onPress: () => {
+                    Alert.alert('리뷰가 삭제되었습니다.');
+                  },
+                },
+                {
+                  text: '취소',
+                },
+              ]);
             }}>
-            <Text style={{color: 'white', fontSize: 18}}>리뷰 목록으로</Text>
+            <Text style={{color: 'white', fontSize: 18}}>리뷰 삭제</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -201,12 +212,12 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     flexDirection: 'row',
   },
-  toReviewList: {
-    width: 150,
-    height: 50,
+  deleteReview: {
+    width: 100,
+    height: 45,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#295eba',
+    backgroundColor: '#e64f49',
     borderRadius: 8,
   },
 });
