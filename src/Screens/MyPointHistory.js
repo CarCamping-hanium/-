@@ -103,39 +103,20 @@ const MyPointHistory = ({navigation}) => {
             style={{
               width: screenWidth / 1.2,
               height: 60,
-              borderRadius: 8,
               alignItems: 'center',
               justifyContent: 'center',
-              backgroundColor: '#295eba',
               marginTop: 10,
+              borderRadius: 8,
+              borderColor: '#295eba',
+              borderWidth: 2,
             }}>
-            <Text style={{color: 'white'}}>
+            <Text>
               {item.date} · {item.time} · {item.path} +5
             </Text>
-            <Text style={{color: 'white', fontSize: 18}}>
-              누적 포인트 : {item.point}
-            </Text>
+            <Text style={{fontSize: 18}}>누적 포인트 : {item.point}</Text>
           </View>
         )}
       />
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-end'}}>
-        <TouchableOpacity
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            width: 160,
-            height: 60,
-            backgroundColor: '#295eba',
-            borderRadius: 8,
-          }}
-          onPress={() => {
-            navigation.navigate('PointRanking');
-          }}>
-          <Text style={{color: 'white', fontWeight: 'bold', fontSize: 17}}>
-            👑 포인트 랭킹 👑
-          </Text>
-        </TouchableOpacity>
-      </View>
     </SafeAreaView>
   );
 };
