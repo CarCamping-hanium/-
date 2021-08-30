@@ -47,26 +47,27 @@ const UserContextProvider = ({children}) => {
             //일치하면 로컬스토리지에 토큰 저장
             AsyncStorage.setItem('token', json.data).then(() => {
               AsyncStorage.getItem('token', (err, result) => {
-                console.log(result);
-                console.log(typeof result);
-              }),
                 fetch('http://3.36.28.39:8080/api/myInfo', {
                   //토큰을 기반으로 유저정보 불러옴
                   method: 'GET',
                   headers: {
-                    token: AsyncStorage.getItem('token'),
+                    token: result,
                   },
                 })
                   .then(response => response.json())
                   .then(json => {
                     console.log(json);
+                    setUserInfo({
+                      id: json.data.loginId,
+                      member_id: json.data.member_id,
+                      nickname: json.data.nickname,
+                      point: json.data.point,
+                    });
                   })
                   .catch(e => {
                     console.log(e);
-                  }),
-                setUserInfo({
-                  // nickname:
-                });
+                  });
+              });
             });
           } else {
             Alert.alert(json.msg);
@@ -83,9 +84,10 @@ const UserContextProvider = ({children}) => {
       .then(value => {
         if (value) {
           setUserInfo({
-            nickname: value.nickname,
-            email: value.email,
-            password: value.password,
+            id: value.data.loginId,
+            member_id: value.data.member_id,
+            nickname: value.data.nickname,
+            password: value.data.password,
           });
         }
       })
