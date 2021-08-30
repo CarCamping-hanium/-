@@ -105,7 +105,7 @@ const ModifyNickname = ({navigation}) => {
       <View style={{justifyContent: 'center', alignItems: 'flex-start'}}>
         <Text style={{marginTop: 30, fontSize: 20}}>현재 닉네임</Text>
         <Text style={{marginTop: 10, fontSize: 24}}>{userInfo.nickname}</Text>
-        <Text style={{marginTop: 30, fontSize: 20}}>바꿀 닉네임</Text>
+        <Text style={{marginTop: 30, fontSize: 20}}>변경할 닉네임</Text>
         <View style={{flexDirection: 'row', marginTop: 10}}>
           <TextInput
             style={styles.Text}
