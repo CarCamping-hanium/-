@@ -54,7 +54,7 @@ const Login = ({navigation}) => {
             width: '60%',
             height: 40,
             paddingLeft: 16,
-            borderRadius: 4,
+            borderRadius: 8,
             backgroundColor: '#cccccc',
           }}
           selectionColor="black"
@@ -73,7 +73,7 @@ const Login = ({navigation}) => {
             width: '60%',
             height: 40,
             paddingLeft: 16,
-            borderRadius: 4,
+            borderRadius: 8,
             backgroundColor: '#cccccc',
             marginTop: 8,
           }}
@@ -94,7 +94,7 @@ const Login = ({navigation}) => {
             marginTop: 8,
             width: '30%',
             height: 40,
-            borderRadius: 4,
+            borderRadius: 8,
             backgroundColor: '#295eba',
             justifyContent: 'center',
             alignItems: 'center',
