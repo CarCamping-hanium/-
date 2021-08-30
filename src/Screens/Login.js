@@ -61,7 +61,7 @@ const Login = ({navigation}) => {
           autoCapitalize="none"
           autoCorrect={false}
           allowFontScaling={false}
-          placeholder="이메일"
+          placeholder="아이디"
           placeholderTextColor="#777777"
           clearButtonMode="while-editing"
           onChangeText={text => {
