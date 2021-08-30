@@ -159,7 +159,7 @@ const ModifyNickname = ({navigation}) => {
 
 const styles = StyleSheet.create({
   Text: {
-    width: '50%',
+    width: 200,
     height: 40,
     backgroundColor: '#cccccc',
     paddingLeft: 16,
