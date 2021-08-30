@@ -25,6 +25,7 @@ import ChabakjiEnrollment from './ChabakjiEnrollment';
 import HomeScreen from './HomeScreen';
 import MyPage from './MyPage';
 import MyReview from './MyReview';
+import ModifyPassword from './ModifyPassword';
 import ModifyNickname from './ModifyNickname';
 import ChabakjiList from './ChabakjiList';
 import ReviewBoard from './ReviewBoard';
@@ -198,6 +199,14 @@ const MyPageNavigator = navigation => {
         component={ModifyNickname}
         options={{
           title: '닉네임 변경',
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="ModifyPassword"
+        component={ModifyPassword}
+        options={{
+          title: '비밀번호 변경',
           headerBackTitleVisible: false,
         }}
       />
