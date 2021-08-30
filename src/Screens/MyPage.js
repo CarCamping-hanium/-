@@ -146,6 +146,10 @@ const MyPage = ({navigation}) => {
                   alignItems: 'center',
                   justifyContent: 'center',
                   borderRadius: 8,
+                }}
+                onPress={() => {
+                  setVisible(false);
+                  navigation.navigate('ModifyPassword');
                 }}>
                 <Text style={{color: 'white', fontSize: 18}}>
                   비밀번호 변경
