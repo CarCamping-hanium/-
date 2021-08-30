@@ -69,7 +69,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   textBox: {
-    borderWidth: 2,
+    borderTopWidth: 2,
+    borderLeftWidth: 2,
+    borderBottomWidth: 2,
     borderColor: '#295eba',
     width: '70%',
     height: 40,

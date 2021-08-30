@@ -1,5 +1,6 @@
-import React, {useContext, useLayoutEffect} from 'react';
+import React, {useState, useContext, useLayoutEffect} from 'react';
 import {UserContext} from '../Context/Context';
+import Modal from '../Components/Modal';
 import {
   SafeAreaView,
   Text,
@@ -7,6 +8,8 @@ import {
   TouchableOpacity,
   Image,
   Dimensions,
+  TextInput,
+  Alert,
 } from 'react-native';
 import {DrawerActions} from '@react-navigation/native';
 
@@ -14,6 +17,15 @@ const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 
 const MyPage = ({navigation}) => {
+  const [password, setPassword] = useState('');
+  const [visible, setVisible] = useState(false);
+  const passwordCheckFunction = () => {
+    if (password === '1234') {
+      navigation.navigate('ModifyMember');
+    } else {
+      Alert.alert('비밀번호를 다시 확인해주세요.');
+    }
+  };
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
@@ -70,12 +82,91 @@ const MyPage = ({navigation}) => {
             marginHorizontal: 10,
           }}
           onPress={() => {
-            // navigation.navigate('MyReview');
+            setVisible(true);
           }}>
           <Text style={{fontWeight: 'bold', color: 'white'}}>
             회원 정보 수정
           </Text>
         </TouchableOpacity>
+        <Modal visible={visible}>
+          <View
+            style={{
+              height: 200,
+              width: 300,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'white',
+              borderColor: '#295eba',
+              marginTop: 10,
+              borderWidth: 3,
+              borderRadius: 10,
+            }}>
+            <Text style={{marginTop: 30, marginLeft: '8%', fontSize: 15}}>
+              현재 비밀번호를 입력하세요.
+            </Text>
+            <View style={{flexDirection: 'row'}}>
+              <TextInput
+                style={{
+                  width: '60%',
+                  height: 40,
+                  backgroundColor: 'white',
+                  paddingLeft: 20,
+                  paddingRight: 10,
+                  borderTopLeftRadius: 8,
+                  borderBottomLeftRadius: 8,
+                  marginTop: 25,
+                  borderLeftWidth: 2,
+                  borderTopWidth: 2,
+                  borderBottomWidth: 2,
+                  borderColor: '#295eba',
+                }}
+                autoCapitalize="none"
+                autoCorrect={false}
+                allowFontScaling={false}
+                placeholderTextColor="#777777"
+                clearButtonMode={'while-editing'}
+                secureTextEntry={true}
+                onChangeText={text => {
+                  setPassword(text);
+                }}
+              />
+              <TouchableOpacity
+                style={{
+                  marginTop: 25,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  backgroundColor: '#295eba',
+                  width: 50,
+                  height: 40,
+                  borderTopRightRadius: 8,
+                  borderBottomRightRadius: 8,
+                }}
+                onPress={() => {
+                  passwordCheckFunction(); //구현해야함
+                }}>
+                <Text style={{fontWeight: 'bold', color: 'white'}}>확인</Text>
+              </TouchableOpacity>
+            </View>
+            <View>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: '#295eba',
+                  width: screenWidth / 5,
+                  marginTop: 25,
+                  height: 30,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: 10,
+                  marginBottom: screenHeight / 30,
+                }}
+                onPress={() => {
+                  setVisible(false);
+                }}>
+                <Text style={{color: 'white', fontSize: 15}}>닫기</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
         <TouchableOpacity
           style={{
             alignItems: 'center',
@@ -84,7 +175,6 @@ const MyPage = ({navigation}) => {
             width: 130,
             height: 50,
             borderRadius: 8,
-            marginHorizontal: 10,
           }}
           onPress={() => {
             navigation.navigate('MyReview');

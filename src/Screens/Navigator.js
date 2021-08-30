@@ -25,6 +25,7 @@ import ChabakjiEnrollment from './ChabakjiEnrollment';
 import HomeScreen from './HomeScreen';
 import MyPage from './MyPage';
 import MyReview from './MyReview';
+import ModifyMember from './ModifyMember';
 import ChabakjiList from './ChabakjiList';
 import ReviewBoard from './ReviewBoard';
 import ReviewUpload from './ReviewUpload';
@@ -189,6 +190,14 @@ const MyPageNavigator = navigation => {
         component={MyReviewInfo}
         options={{
           title: '리뷰 정보',
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="ModifyMember"
+        component={ModifyMember}
+        options={{
+          title: '회원정보 수정',
           headerBackTitleVisible: false,
         }}
       />

@@ -4,16 +4,20 @@ import {Alert} from 'react-native';
 
 const defaultContext = {
   userInfo: {},
-  login: (email, password) => {},
+  login: (id_data, password_data) => {},
   getUserInfo: () => {},
   logout: () => {},
 };
 
 const UserContext = createContext(defaultContext);
-
 const UserContextProvider = ({children}) => {
   const [userInfo, setUserInfo] = useState(undefined);
   const [area, setArea] = useState('');
+
+  // const getTokenFromStorage = async () => {
+  //   await AsyncStorage.getItem('token');
+  // };
+  const TOKEN = AsyncStorage.getItem('token');
 
   const login = (id_data, password_data) => {
     // AsyncStorage.setItem('token', 'save your token').then(() => {
@@ -23,28 +27,55 @@ const UserContextProvider = ({children}) => {
     //     password: password_data,
     //   });
     // });
-    fetch('http://3.36.28.39:8080/api/signIn', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        email: id_data,
-        password: password_data,
-      }),
-    })
-      .then(response => response.json())
-      .then(json => {
-        Alert.alert(json.msg);
-        // AsyncStorage.setItem('token', json.data).then(() => {
-        //   setUserInfo({
-        //     //nickname: //fetch를 통해서 멤버 정보를 가져오는 get API 필요
-        //   });
-        // });
+    if (id_data === '' || password_data === '') {
+      Alert.alert('아이디 또는 비밀번호를 확인해주세요.');
+    } else {
+      fetch('http://3.36.28.39:8080/api/signIn', {
+        //서버로 아이디, 비번 보내서 일치하는지 확인
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: id_data,
+          password: password_data,
+        }),
       })
-      .catch(e => {
-        console.log(e);
-      });
+        .then(response => response.json())
+        .then(json => {
+          if (json.msg === 'success') {
+            //일치하면 로컬스토리지에 토큰 저장
+            AsyncStorage.setItem('token', json.data).then(() => {
+              AsyncStorage.getItem('token', (err, result) => {
+                console.log(result);
+                console.log(typeof result);
+              }),
+                fetch('http://3.36.28.39:8080/api/myInfo', {
+                  //토큰을 기반으로 유저정보 불러옴
+                  method: 'GET',
+                  headers: {
+                    token: AsyncStorage.getItem('token'),
+                  },
+                })
+                  .then(response => response.json())
+                  .then(json => {
+                    console.log(json);
+                  })
+                  .catch(e => {
+                    console.log(e);
+                  }),
+                setUserInfo({
+                  // nickname:
+                });
+            });
+          } else {
+            Alert.alert(json.msg);
+          }
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
   };
 
   const getUserInfo = () => {
@@ -52,9 +83,9 @@ const UserContextProvider = ({children}) => {
       .then(value => {
         if (value) {
           setUserInfo({
-            nickname: 'leejunsu',
-            email: 'ijh1205@naver.com',
-            password: 'password',
+            nickname: value.nickname,
+            email: value.email,
+            password: value.password,
           });
         }
       })
