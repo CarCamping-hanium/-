@@ -12,7 +12,7 @@ import axios from 'axios';
 import _ from 'lodash';
 import {response} from 'express';
 
-const Signup = () => {
+const Signup = ({navigation}) => {
   const [ID, setID] = useState('');
   const [password, setPassword] = useState('');
   const [repassword, setRepassword] = useState('');
@@ -41,51 +41,28 @@ const Signup = () => {
       setID('');
       setIDCheckMsg('');
     } else {
-      fetch('http://3.36.28.39:8080/api/signUp/', {
+      fetch('http://3.36.28.39:8080/api/checkLoginId', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          email: ID,
-          password: password,
-          nickname: nickname,
-          point: 0,
+          check: ID,
         }),
       })
-        .then(response => {
-          console.log(response);
-        })
+        .then(response => response.json())
         .then(json => {
-          console.warn(json);
-          if (json) {
-            alert('usable');
-          } else if (!json) {
-            alert('false');
+          if (json.data === true) {
+            Alert.alert('이미 사용중인 아이디입니다.');
           } else {
-            alert('cc');
+            Alert.alert('사용 가능한 아이디입니다.');
+            setIDCheckMsg('사용 가능한 아이디입니다.');
+            setIDCheck(ID);
           }
         })
         .catch(e => {
           console.log(e);
         });
-      // axios
-      //   .post(
-      //     'http://3.36.28.39:8080/api/signUp',
-      //     {email: ID},
-      //     {
-      //       headers: {
-      //         'Content-Type': 'application/json',
-      //         Accept: 'application/json',
-      //       },
-      //     },
-      //   )
-      //   .then(response => {
-      //     console.log(response);
-      //   })
-      //   .catch(e => {
-      //     console.log(e);
-      //   });
     }
   };
 
@@ -125,17 +102,64 @@ const Signup = () => {
       setNickname('');
       setNicknameCheckMsg('');
     } else {
-      //fetch
+      fetch('http://3.36.28.39:8080/api/checkNickName', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          check: nickname,
+        }),
+      })
+        .then(response => response.json())
+        .then(json => {
+          if (json.data === true) {
+            Alert.alert('이미 사용중인 닉네임입니다.');
+          } else {
+            Alert.alert('사용 가능한 닉네임입니다.');
+            setNicknameCheck(nickname);
+            setNicknameCheckMsg('사용 가능한 닉네임입니다.');
+          }
+        })
+        .catch(e => {
+          console.log(e);
+        });
     }
   };
 
   const signupCheckingFunction = () => {
     if (
+      ID === IDCheck &&
+      password === repassword &&
+      repassword === passwordCheck &&
+      nickname === nicknameCheck &&
       IDCheckMsg === '사용 가능한 아이디입니다.' &&
       passwordRight === '비밀번호가 일치합니다.' &&
       nicknameCheckMsg === '사용 가능한 닉네임입니다.'
     ) {
+      fetch('http://3.36.28.39:8080/api/signUp', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: ID,
+          nickname: nickname,
+          password: password,
+          point: 0,
+        }),
+      })
+        .then(response => response.json())
+        .then(json => {
+          console.log(json);
+        })
+        .catch(e => {
+          console.log(e);
+        });
       Alert.alert('차박린이', '회원가입을 축하드려요!');
+      navigation.navigate('Login');
+    } else {
+      Alert.alert('입력된 정보를 다시 확인해주세요.');
     }
   };
 
