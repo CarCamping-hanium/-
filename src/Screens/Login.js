@@ -19,7 +19,7 @@ const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 const Login = ({navigation}) => {
   const {login} = useContext(UserContext);
-  const [email, setEmail] = useState('');
+  const [ID, setID] = useState('');
   const [password, setPassword] = useState('');
 
   return (
@@ -65,7 +65,7 @@ const Login = ({navigation}) => {
           placeholderTextColor="#777777"
           clearButtonMode="while-editing"
           onChangeText={text => {
-            setEmail(text);
+            setID(text);
           }}
         />
         <TextInput
@@ -100,7 +100,7 @@ const Login = ({navigation}) => {
             alignItems: 'center',
           }}
           onPress={() => {
-            login('ijh1205@naver.com', 'password');
+            login(ID, password);
           }}>
           <Text style={{color: 'white', fontWeight: 'bold'}}>로그인</Text>
         </TouchableOpacity>
