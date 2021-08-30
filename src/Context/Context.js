@@ -14,11 +14,6 @@ const UserContextProvider = ({children}) => {
   const [userInfo, setUserInfo] = useState(undefined);
   const [area, setArea] = useState('');
 
-  // const getTokenFromStorage = async () => {
-  //   await AsyncStorage.getItem('token');
-  // };
-  const TOKEN = AsyncStorage.getItem('token');
-
   const login = (id_data, password_data) => {
     // AsyncStorage.setItem('token', 'save your token').then(() => {
     //   setUserInfo({
@@ -56,12 +51,12 @@ const UserContextProvider = ({children}) => {
                 })
                   .then(response => response.json())
                   .then(json => {
-                    console.log(json);
                     setUserInfo({
                       id: json.data.loginId,
                       member_id: json.data.member_id,
                       nickname: json.data.nickname,
                       point: json.data.point,
+                      token: result,
                     });
                   })
                   .catch(e => {
@@ -111,7 +106,15 @@ const UserContextProvider = ({children}) => {
 
   return (
     <UserContext.Provider
-      value={{userInfo, area, login, getUserInfo, logout, selectedArea}}>
+      value={{
+        userInfo,
+        setUserInfo,
+        area,
+        login,
+        getUserInfo,
+        logout,
+        selectedArea,
+      }}>
       {children}
     </UserContext.Provider>
   );
