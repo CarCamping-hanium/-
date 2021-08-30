@@ -17,15 +17,31 @@ const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 
 const MyPage = ({navigation}) => {
+  const {userInfo} = useContext(UserContext);
   const [password, setPassword] = useState('');
   const [visible, setVisible] = useState(false);
-  const passwordCheckFunction = () => {
-    if (password === '1234') {
-      navigation.navigate('ModifyMember');
-    } else {
-      Alert.alert('비밀번호를 다시 확인해주세요.');
-    }
-  };
+
+  // const passwordCheckFunction = () => {
+  //   fetch('http://3.36.28.39:8080/api/member/update/password', {
+  //     //서버로 아이디, 비번 보내서 일치하는지 확인
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-Type': 'application/json',
+  //     },
+  //     body: JSON.stringify({
+  //       email: id_data,
+  //       password: password_data,
+  //     }),
+  //   })
+  //     .then(response => response.json())
+  //     .then(json => {})
+  //     .catch(e => console.log(e));
+  //   if (password === '1234') {
+  //     navigation.navigate('ModifyMember');
+  //   } else {
+  //     Alert.alert('비밀번호를 다시 확인해주세요.');
+  //   }
+  // };
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
@@ -63,7 +79,7 @@ const MyPage = ({navigation}) => {
             borderColor: '#295eba',
             padding: 10,
           }}>
-          내 포인트 : 50
+          내 포인트 : {userInfo.point}
         </Text>
       </TouchableOpacity>
       <View
@@ -91,17 +107,70 @@ const MyPage = ({navigation}) => {
         <Modal visible={visible}>
           <View
             style={{
+              alignItems: 'center',
+              justifyContent: 'center',
               height: 200,
               width: 300,
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: 'white',
               borderColor: '#295eba',
-              marginTop: 10,
               borderWidth: 3,
               borderRadius: 10,
+              backgroundColor: 'white',
             }}>
-            <Text style={{marginTop: 30, marginLeft: '8%', fontSize: 15}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                position: 'absolute',
+                top: 40,
+              }}>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: '#295eba',
+                  width: 120,
+                  height: 50,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: 8,
+                  marginRight: 20,
+                }}
+                onPress={() => {
+                  setVisible(false);
+                  navigation.navigate('ModifyNickname');
+                }}>
+                <Text style={{color: 'white', fontSize: 18}}>닉네임 변경</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: '#295eba',
+                  width: 120,
+                  height: 50,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderRadius: 8,
+                }}>
+                <Text style={{color: 'white', fontSize: 18}}>
+                  비밀번호 변경
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View style={{position: 'absolute', bottom: 20}}>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: '#295eba',
+                  width: 100,
+                  height: 50,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: 10,
+                }}
+                onPress={() => {
+                  setVisible(false);
+                }}>
+                <Text style={{color: 'white', fontSize: 18}}>닫기</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+        {/* <Text style={{marginTop: 30, marginLeft: '8%', fontSize: 15}}>
               현재 비밀번호를 입력하세요.
             </Text>
             <View style={{flexDirection: 'row'}}>
@@ -146,27 +215,7 @@ const MyPage = ({navigation}) => {
                 }}>
                 <Text style={{fontWeight: 'bold', color: 'white'}}>확인</Text>
               </TouchableOpacity>
-            </View>
-            <View>
-              <TouchableOpacity
-                style={{
-                  backgroundColor: '#295eba',
-                  width: screenWidth / 5,
-                  marginTop: 25,
-                  height: 30,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderRadius: 10,
-                  marginBottom: screenHeight / 30,
-                }}
-                onPress={() => {
-                  setVisible(false);
-                }}>
-                <Text style={{color: 'white', fontSize: 15}}>닫기</Text>
-              </TouchableOpacity>
-            </View>
-          </View>
-        </Modal>
+              </View>*/}
         <TouchableOpacity
           style={{
             alignItems: 'center',
