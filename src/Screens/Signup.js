@@ -55,8 +55,8 @@ const Signup = ({navigation}) => {
           if (json.data === true) {
             Alert.alert('이미 사용중인 아이디입니다.');
           } else {
-            Alert.alert('사용 가능한 아이디입니다.');
             setIDCheckMsg('사용 가능한 아이디입니다.');
+            Alert.alert(IDCheckMsg);
             setIDCheck(ID);
           }
         })
