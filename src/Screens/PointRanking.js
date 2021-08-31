@@ -121,7 +121,6 @@ const PointRanking = ({navigation}) => {
             style={{
               width: screenWidth / 1.2,
               height: 60,
-              //alignItems: 'center',
               justifyContent: 'center',
               marginTop: 10,
               borderRadius: 8,
@@ -165,7 +164,6 @@ const PointRanking = ({navigation}) => {
         style={{
           width: screenWidth / 1.2,
           height: 60,
-          //alignItems: 'center',
           justifyContent: 'center',
           borderRadius: 8,
           borderColor: '#295eba',
