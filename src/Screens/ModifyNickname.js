@@ -1,3 +1,4 @@
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import React, {useState, useContext, useLayoutEffect} from 'react';
 import {
   SafeAreaView,
@@ -74,12 +75,33 @@ const ModifyNickname = ({navigation}) => {
         .then(json => {
           if (json.msg === 'success') {
             Alert.alert('닉네임이 변경되었습니다.');
-            setUserInfo({
-              id: userInfo.id,
-              member_id: userInfo.member_id,
-              nickname: nickname,
-              point: userInfo.point,
-              token: userInfo.token,
+
+            //닉네임 변경 시 로컬스토리지에 userInfo 최신화
+            AsyncStorage.getItem('token', (err, result) => {
+              fetch('http://3.36.28.39:8080/api/myInfo', {
+                //토큰을 기반으로 유저정보 불러옴
+                method: 'GET',
+                headers: {
+                  token: result,
+                },
+              })
+                .then(response => response.json())
+                .then(json => {
+                  AsyncStorage.setItem('userInfo', JSON.stringify(json)); //로컬스토리지 최신화
+                  AsyncStorage.getItem('userInfo', (err, result) => {
+                    console.log(result);
+                  });
+                  setUserInfo({
+                    id: userInfo.id,
+                    member_id: userInfo.member_id,
+                    nickname: nickname,
+                    point: userInfo.point,
+                    token: userInfo.token,
+                  });
+                })
+                .catch(e => {
+                  console.log(e);
+                });
             });
             navigation.navigate('MyPage');
           } else {
