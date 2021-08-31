@@ -10,6 +10,7 @@ import {
   Dimensions,
   TextInput,
   Alert,
+  StyleSheet,
 } from 'react-native';
 import {DrawerActions} from '@react-navigation/native';
 
@@ -19,8 +20,8 @@ const screenWidth = Dimensions.get('window').width;
 const MyPage = ({navigation}) => {
   const {userInfo} = useContext(UserContext);
   const [password, setPassword] = useState('');
-  const [visible, setVisible] = useState(false);
-
+  const [modifyVisible, setModifyVisible] = useState(false);
+  const [deleteVisible, setDeleteVisible] = useState(false);
   // const passwordCheckFunction = () => {
   //   fetch('http://3.36.28.39:8080/api/member/update/password', {
   //     //서버로 아이디, 비번 보내서 일치하는지 확인
@@ -98,13 +99,13 @@ const MyPage = ({navigation}) => {
             marginHorizontal: 10,
           }}
           onPress={() => {
-            setVisible(true);
+            setModifyVisible(true);
           }}>
           <Text style={{fontWeight: 'bold', color: 'white'}}>
             회원 정보 수정
           </Text>
         </TouchableOpacity>
-        <Modal visible={visible}>
+        <Modal visible={modifyVisible}>
           <View
             style={{
               alignItems: 'center',
@@ -133,7 +134,7 @@ const MyPage = ({navigation}) => {
                   marginRight: 20,
                 }}
                 onPress={() => {
-                  setVisible(false);
+                  setModifyVisible(false);
                   navigation.navigate('ModifyNickname');
                 }}>
                 <Text style={{color: 'white', fontSize: 18}}>닉네임 변경</Text>
@@ -148,7 +149,7 @@ const MyPage = ({navigation}) => {
                   borderRadius: 8,
                 }}
                 onPress={() => {
-                  setVisible(false);
+                  setModifyVisible(false);
                   navigation.navigate('ModifyPassword');
                 }}>
                 <Text style={{color: 'white', fontSize: 18}}>
@@ -167,59 +168,13 @@ const MyPage = ({navigation}) => {
                   borderRadius: 10,
                 }}
                 onPress={() => {
-                  setVisible(false);
+                  setModifyVisible(false);
                 }}>
                 <Text style={{color: 'white', fontSize: 18}}>닫기</Text>
               </TouchableOpacity>
             </View>
           </View>
         </Modal>
-        {/* <Text style={{marginTop: 30, marginLeft: '8%', fontSize: 15}}>
-              현재 비밀번호를 입력하세요.
-            </Text>
-            <View style={{flexDirection: 'row'}}>
-              <TextInput
-                style={{
-                  width: '60%',
-                  height: 40,
-                  backgroundColor: 'white',
-                  paddingLeft: 20,
-                  paddingRight: 10,
-                  borderTopLeftRadius: 8,
-                  borderBottomLeftRadius: 8,
-                  marginTop: 25,
-                  borderLeftWidth: 2,
-                  borderTopWidth: 2,
-                  borderBottomWidth: 2,
-                  borderColor: '#295eba',
-                }}
-                autoCapitalize="none"
-                autoCorrect={false}
-                allowFontScaling={false}
-                placeholderTextColor="#777777"
-                clearButtonMode={'while-editing'}
-                secureTextEntry={true}
-                onChangeText={text => {
-                  setPassword(text);
-                }}
-              />
-              <TouchableOpacity
-                style={{
-                  marginTop: 25,
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  backgroundColor: '#295eba',
-                  width: 50,
-                  height: 40,
-                  borderTopRightRadius: 8,
-                  borderBottomRightRadius: 8,
-                }}
-                onPress={() => {
-                  passwordCheckFunction(); //구현해야함
-                }}>
-                <Text style={{fontWeight: 'bold', color: 'white'}}>확인</Text>
-              </TouchableOpacity>
-              </View>*/}
         <TouchableOpacity
           style={{
             alignItems: 'center',
@@ -251,12 +206,85 @@ const MyPage = ({navigation}) => {
             height: 50,
             borderRadius: 8,
           }}
-          onPress={() => {}}>
+          onPress={() => {
+            setDeleteVisible(true);
+          }}>
           <Text style={{fontWeight: 'bold', color: 'white'}}>회원 탈퇴</Text>
         </TouchableOpacity>
       </View>
+      <Modal visible={deleteVisible}>
+        <View
+          style={{
+            height: 300,
+            width: 300,
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: 'white',
+            borderRadius: 8,
+            borderWidth: 3,
+            borderColor: '#295eba',
+          }}>
+          <Text style={{marginTop: 30, fontSize: 20}}>현재 비밀번호</Text>
+          <TextInput
+            style={styles.Text}
+            autoCapitalize="none"
+            autoCorrect={false}
+            allowFontScaling={false}
+            placeholder={'현재 비밀번호를 입력하세요.'}
+            placeholderTextColor="#777777"
+            clearButtonMode={'while-editing'}
+            secureTextEntry={true}
+            onChangeText={text => {
+              setPassword(text);
+            }}
+          />
+          <View style={{flexDirection: 'row', marginTop: 60}}>
+            <TouchableOpacity
+              style={{
+                backgroundColor: '#e64f49',
+                width: 100,
+                height: 50,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 10,
+              }}
+              onPress={() => {}}>
+              <Text style={{color: 'white', fontSize: 18}}>회원 탈퇴</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                backgroundColor: '#295eba',
+                width: 100,
+                height: 50,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 10,
+                marginLeft: 25,
+              }}
+              onPress={() => {
+                setDeleteVisible(false);
+              }}>
+              <Text style={{color: 'white', fontSize: 18}}>닫기</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
     </SafeAreaView>
   );
 };
+
+const styles = StyleSheet.create({
+  Text: {
+    width: 200,
+    height: 40,
+    borderWidth: 2,
+    borderColor: '#295eba',
+    backgroundColor: 'white',
+    paddingLeft: 16,
+    paddingRight: 16,
+    borderRadius: 8,
+    marginTop: 15,
+  },
+});
 
 export default MyPage;
