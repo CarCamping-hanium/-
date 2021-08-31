@@ -126,15 +126,6 @@ const PointRanking = ({navigation}) => {
               borderRadius: 8,
               borderColor: '#295eba',
               borderWidth: 2,
-              //1,2,3등은 순위에 따라 랭크에 금,은,동색이 칠해짐
-              backgroundColor:
-                rankNumber[index] === 1
-                  ? '#ffd700'
-                  : rankNumber[index] === 2
-                  ? '#c0c0c0'
-                  : rankNumber[index] === 3
-                  ? '#c49c48'
-                  : 'white',
             }}>
             <View
               style={{
@@ -143,13 +134,32 @@ const PointRanking = ({navigation}) => {
                 alignItems: 'center',
                 justifyContent: 'flex-start',
               }}>
-              <Text
+              <View
                 style={{
-                  fontSize: 24,
-                  marginLeft: 30,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  borderTopLeftRadius: 6,
+                  borderBottomLeftRadius: 6,
+                  borderRightWidth: 2,
+                  borderColor: '#295eba',
+                  height: 56,
+                  width: 70,
+                  backgroundColor:
+                    rankNumber[index] === 1
+                      ? '#ffd700'
+                      : rankNumber[index] === 2
+                      ? '#c0c0c0'
+                      : rankNumber[index] === 3
+                      ? '#c49c48'
+                      : 'white',
                 }}>
-                {rankNumber[index]}위
-              </Text>
+                <Text
+                  style={{
+                    fontSize: 24,
+                  }}>
+                  {rankNumber[index]}위
+                </Text>
+              </View>
               <Text style={{marginLeft: 30, fontSize: 20}}>
                 {item.nickname}
               </Text>
@@ -168,8 +178,6 @@ const PointRanking = ({navigation}) => {
           borderRadius: 8,
           borderColor: '#295eba',
           borderWidth: 2,
-          backgroundColor:
-            myRank === 1 ? '#ffd700' : myRank === 2 ? '#c0c0c0' : '#c49c48',
         }}>
         <View
           style={{
@@ -178,13 +186,26 @@ const PointRanking = ({navigation}) => {
             alignItems: 'center',
             justifyContent: 'flex-start',
           }}>
-          <Text
+          <View
             style={{
-              fontSize: 24,
-              marginLeft: 30,
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderTopLeftRadius: 6,
+              borderBottomLeftRadius: 6,
+              borderRightWidth: 2,
+              borderColor: '#295eba',
+              height: 56,
+              width: 70,
+              backgroundColor:
+                myRank === 1 ? '#ffd700' : myRank === 2 ? '#c0c0c0' : '#c49c48',
             }}>
-            {myRank}위
-          </Text>
+            <Text
+              style={{
+                fontSize: 24,
+              }}>
+              {myRank}위
+            </Text>
+          </View>
           <Text style={{marginLeft: 30, fontSize: 20}}>
             {userInfo.nickname}
           </Text>
