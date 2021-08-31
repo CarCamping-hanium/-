@@ -51,6 +51,7 @@ const UserContextProvider = ({children}) => {
                 })
                   .then(response => response.json())
                   .then(json => {
+                    AsyncStorage.setItem('userInfo', JSON.stringify(json));
                     setUserInfo({
                       id: json.data.loginId,
                       member_id: json.data.member_id,
@@ -75,25 +76,52 @@ const UserContextProvider = ({children}) => {
   };
 
   const getUserInfo = () => {
-    AsyncStorage.getItem('token')
-      .then(value => {
-        if (value) {
-          setUserInfo({
-            id: value.data.loginId,
-            member_id: value.data.member_id,
-            nickname: value.data.nickname,
-            password: value.data.password,
-          });
-        }
+    AsyncStorage.getItem('token', (err, result) => {
+      fetch('http://3.36.28.39:8080/api/myInfo', {
+        //토큰을 기반으로 유저정보 불러옴
+        method: 'GET',
+        headers: {
+          token: result,
+        },
       })
-      .catch(() => {
-        setUserInfo(undefined);
-      });
+        .then(response => response.json())
+        .then(json => {
+          AsyncStorage.setItem('userInfo', JSON.stringify(json));
+          setUserInfo({
+            id: json.data.loginId,
+            member_id: json.data.member_id,
+            nickname: json.data.nickname,
+            point: json.data.point,
+            token: result,
+          });
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    });
   };
 
   const logout = () => {
-    AsyncStorage.removeItem('token');
-    setUserInfo(undefined);
+    fetch('http://3.36.28.39:8080/api/logout', {
+      //토큰을 기반으로 유저정보 불러옴
+      method: 'GET',
+      headers: {
+        token: userInfo.token,
+      },
+    })
+      .then(response => response.json())
+      .then(json => {
+        if (json.msg === 'success') {
+          AsyncStorage.removeItem('token');
+          AsyncStorage.removeItem('userInfo');
+          setUserInfo(undefined);
+        } else {
+          Alert.alert(json.msg);
+        }
+      })
+      .catch(e => {
+        console.log(e);
+      });
   };
 
   const selectedArea = data => {
