@@ -7,7 +7,7 @@ const ModalComponent = ({visible, children}) => {
       visible={visible}
       transparent={true}
       onRequestClose={() => {
-        console.warn('close');
+        console.log('close');
       }}>
       <View
         style={{
