@@ -124,6 +124,11 @@ const UserContextProvider = ({children}) => {
       });
   };
 
+  const deleteMember = () => {
+    AsyncStorage.removeItem('token');
+    setUserInfo(undefined);
+  };
+
   const selectedArea = data => {
     setArea(data);
   };
@@ -142,6 +147,7 @@ const UserContextProvider = ({children}) => {
         getUserInfo,
         logout,
         selectedArea,
+        deleteMember,
       }}>
       {children}
     </UserContext.Provider>
