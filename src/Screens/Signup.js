@@ -8,9 +8,6 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
-import axios from 'axios';
-import _ from 'lodash';
-import {response} from 'express';
 
 const Signup = ({navigation}) => {
   const [ID, setID] = useState('');
@@ -56,7 +53,7 @@ const Signup = ({navigation}) => {
             Alert.alert('이미 사용중인 아이디입니다.');
           } else {
             setIDCheckMsg('사용 가능한 아이디입니다.');
-            Alert.alert(IDCheckMsg);
+            Alert.alert('사용 가능한 아이디입니다.');
             setIDCheck(ID);
           }
         })
