@@ -18,31 +18,11 @@ const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 
 const MyPage = ({navigation}) => {
-  const {userInfo} = useContext(UserContext);
+  const {userInfo, deleteMember} = useContext(UserContext);
   const [password, setPassword] = useState('');
   const [modifyVisible, setModifyVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
-  // const passwordCheckFunction = () => {
-  //   fetch('http://3.36.28.39:8080/api/member/update/password', {
-  //     //서버로 아이디, 비번 보내서 일치하는지 확인
-  //     method: 'POST',
-  //     headers: {
-  //       'Content-Type': 'application/json',
-  //     },
-  //     body: JSON.stringify({
-  //       email: id_data,
-  //       password: password_data,
-  //     }),
-  //   })
-  //     .then(response => response.json())
-  //     .then(json => {})
-  //     .catch(e => console.log(e));
-  //   if (password === '1234') {
-  //     navigation.navigate('ModifyMember');
-  //   } else {
-  //     Alert.alert('비밀번호를 다시 확인해주세요.');
-  //   }
-  // };
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerLeft: () => (
@@ -248,7 +228,39 @@ const MyPage = ({navigation}) => {
                 alignItems: 'center',
                 borderRadius: 10,
               }}
-              onPress={() => {}}>
+              onPress={() => {
+                Alert.alert('정말로 회원을 탈퇴하시겠습니까?', '', [
+                  {
+                    text: '탈퇴',
+                    onPress: () => {
+                      fetch('http://3.36.28.39:8080/api/memberDelete', {
+                        //서버로 아이디, 비번 보내서 일치하는지 확인
+                        method: 'DELETE',
+                        headers: {
+                          'Content-Type': 'application/json',
+                          token: userInfo.token,
+                        },
+                        body: JSON.stringify({
+                          check: password,
+                        }),
+                      })
+                        .then(response => response.json())
+                        .then(json => {
+                          console.log(json);
+                          if (json.msg === 'success') {
+                            deleteMember();
+                            Alert.alert('회원 탈퇴가 완료되었습니다.');
+                          } else {
+                            Alert.alert(json.msg);
+                          }
+                        });
+                    },
+                  },
+                  {
+                    text: '취소',
+                  },
+                ]);
+              }}>
               <Text style={{color: 'white', fontSize: 18}}>회원 탈퇴</Text>
             </TouchableOpacity>
             <TouchableOpacity
