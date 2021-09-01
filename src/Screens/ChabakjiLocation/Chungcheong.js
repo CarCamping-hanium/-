@@ -163,7 +163,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#295eba',
     //backgroundColor: '#3770d4',
     width: '40%',
-    height: '7%',
+    height: 50,
     borderRadius: 30,
   },
   modalInfo: {
