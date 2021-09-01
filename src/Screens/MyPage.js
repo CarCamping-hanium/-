@@ -63,11 +63,7 @@ const MyPage = ({navigation}) => {
           내 포인트 : {userInfo.point}
         </Text>
       </TouchableOpacity>
-      <View
-        style={{
-          flexDirection: 'row',
-          marginTop: 35,
-        }}>
+      <View style={{marginTop: 10}}>
         <TouchableOpacity
           style={{
             alignItems: 'center',
@@ -155,6 +151,29 @@ const MyPage = ({navigation}) => {
             </View>
           </View>
         </Modal>
+      </View>
+      <View
+        style={{
+          flexDirection: 'row',
+          marginTop: 20,
+        }}>
+        <TouchableOpacity
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            backgroundColor: '#295eba',
+            width: 130,
+            height: 50,
+            borderRadius: 8,
+            marginRight: 20,
+          }}
+          onPress={() => {
+            navigation.navigate('MyChabakji');
+          }}>
+          <Text style={{fontWeight: 'bold', color: 'white'}}>
+            내가 등록한 차박지
+          </Text>
+        </TouchableOpacity>
         <TouchableOpacity
           style={{
             alignItems: 'center',
@@ -168,15 +187,21 @@ const MyPage = ({navigation}) => {
             navigation.navigate('MyReview');
           }}>
           <Text style={{fontWeight: 'bold', color: 'white'}}>
-            내가 쓴 리뷰 확인
+            내가 등록한 리뷰
           </Text>
         </TouchableOpacity>
       </View>
       <Image
         source={require('../Assets/Images/mypage_background.png')}
-        style={{width: screenWidth, height: screenWidth, marginTop: '15%'}}
+        style={{width: screenWidth, height: screenWidth, marginTop: 20}}
       />
-      <View style={{flex: 1, alignItems: 'center', justifyContent: 'flex-end'}}>
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          marginBottom: 10,
+        }}>
         <TouchableOpacity
           style={{
             alignItems: 'center',
