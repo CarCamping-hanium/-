@@ -172,11 +172,12 @@ const ChabakjiInfo = ({navigation}) => {
           <TouchableOpacity
             style={styles.deleteReview}
             onPress={() => {
-              Alert.alert('리뷰를 삭제하시겠습니까?', '', [
+              Alert.alert('이 리뷰를 삭제하시겠습니까?', '', [
                 {
                   text: '삭제',
                   onPress: () => {
                     Alert.alert('리뷰가 삭제되었습니다.');
+                    navigation.navigate('MyReview');
                   },
                 },
                 {
@@ -213,8 +214,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   deleteReview: {
-    width: 100,
-    height: 45,
+    width: 150,
+    height: 50,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: '#e64f49',
