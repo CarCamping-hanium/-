@@ -25,6 +25,7 @@ import ChabakjiEnrollment from './ChabakjiEnrollment';
 import HomeScreen from './HomeScreen';
 import MyPage from './MyPage';
 import MyReview from './MyReview';
+import MyChabakji from './MyChabakji';
 import ModifyPassword from './ModifyPassword';
 import ModifyNickname from './ModifyNickname';
 import ChabakjiList from './ChabakjiList';
@@ -38,6 +39,7 @@ import Gyeongsang from './ChabakjiLocation/Gyeongsang';
 import Jeolla from './ChabakjiLocation/Jeolla';
 import ChabakjiInfo from './ChabakjiInfo';
 import MyReviewInfo from './MyReviewInfo';
+import MyChabakjiInfo from './MyChabakjiInfo';
 import MyPointHistory from './MyPointHistory';
 import PointRanking from './PointRanking';
 
@@ -182,7 +184,23 @@ const MyPageNavigator = navigation => {
         name="MyReview"
         component={MyReview}
         options={{
-          title: '내가 쓴 리뷰',
+          title: '내가 등록한 리뷰',
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="MyChabakji"
+        component={MyChabakji}
+        options={{
+          title: '내가 등록한 차박지',
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="MyChabakjiInfo"
+        component={MyChabakjiInfo}
+        options={{
+          title: '차박지 정보',
           headerBackTitleVisible: false,
         }}
       />
