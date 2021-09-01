@@ -7,6 +7,7 @@ import {
   SafeAreaView,
   TouchableOpacity,
   Image,
+  Dimensions,
 } from 'react-native';
 import {UserContext} from '../Context/Context';
 
@@ -45,6 +46,8 @@ import PointRanking from './PointRanking';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
+
+const screenHeight = Dimensions.get('window').height;
 
 const LoginNavigator = ({navigation}) => {
   return (
@@ -241,14 +244,42 @@ const MainNavigator = () => {
           initialRouteName="Home"
           drawerContent={props => {
             return (
-              <DrawerContentScrollView {...props}>
+              <DrawerContentScrollView>
                 <DrawerItemList {...props} />
-                <DrawerItem
+                {/* <DrawerItem
                   label="로그아웃"
                   onPress={() => {
                     logout();
                   }}
-                />
+                /> */}
+                <View style={{marginTop: screenHeight / 1.5}}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      logout();
+                    }}>
+                    <View
+                      style={{
+                        flex: 1,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}>
+                      <View
+                        style={{
+                          marginHorizontal: 16,
+                          width: 24,
+                          alignItems: 'center',
+                        }}>
+                        <Image
+                          source={require('../Assets/Images/logout.png')}
+                          style={{
+                            width: 24,
+                            height: 24,
+                          }}></Image>
+                      </View>
+                      <Text style={{color: '#505050'}}>로그아웃</Text>
+                    </View>
+                  </TouchableOpacity>
+                </View>
               </DrawerContentScrollView>
             );
           }}>
