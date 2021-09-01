@@ -171,7 +171,7 @@ const ReviewUpload = ({navigation}) => {
             onPress={() => {
               imageList.length = 0;
               setImage([]);
-              Alert.alert('차박린이', '회원님의 리뷰가 업로드 되었습니다.');
+              Alert.alert('차박린이', '회원님의 소중한 리뷰가 등록되었습니다.');
               navigation.navigate('ReviewBoard');
             }}>
             <Text style={{color: 'white'}}>등록</Text>
