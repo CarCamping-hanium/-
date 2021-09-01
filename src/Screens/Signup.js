@@ -164,156 +164,159 @@ const Signup = ({navigation}) => {
     <SafeAreaView
       style={{
         flex: 1,
-        justifyContent: 'flex-start',
-        alignItems: 'flex-start',
+        alignItems: 'center',
         backgroundColor: 'white',
       }}>
-      <Text style={{marginTop: '15%', marginLeft: '8%', fontSize: 15}}>
-        아이디
-      </Text>
-      <View style={{flexDirection: 'row'}}>
-        <TextInput
-          style={styles.Text}
-          placeholder={'영문, 숫자 사용 4~16자리'}
-          autoCapitalize="none"
-          autoCorrect={false}
-          allowFontScaling={false}
-          placeholderTextColor="#777777"
-          clearButtonMode={'while-editing'}
-          onChangeText={text => {
-            setID(text);
-          }}
-        />
-        <TouchableOpacity
-          style={{
-            backgroundColor: '#295eba',
-            marginLeft: '8%',
-            marginTop: 5,
-            borderRadius: 8,
-            width: '20%',
-            height: 40,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-          onPress={() => {
-            IDCheckingFunction();
-          }}>
-          <Text style={{color: 'white'}}>중복 검사</Text>
-        </TouchableOpacity>
-      </View>
-      <Text style={{marginTop: '10%', marginLeft: '8%', fontSize: 15}}>
-        비밀번호
-      </Text>
-      <TextInput
-        style={styles.Text}
-        // textContentType={'newPassword'}
-        blurOnSubmit={false}
-        autoCapitalize="none"
-        autoCorrect={false}
-        allowFontScaling={false}
-        secureTextEntry={true}
-        placeholder={'영문, 숫자 혼합 8~16자리'}
-        placeholderTextColor="#777777"
-        clearButtonMode={'while-editing'}
-        onChangeText={text => {
-          setPassword(text);
-        }}
-      />
-      <View style={{flexDirection: 'row'}}>
-        <Text style={{marginTop: '10%', marginLeft: '8%', fontSize: 15}}>
-          비밀번호 확인
-        </Text>
-        <Text
-          style={{
-            marginTop: '10%',
-            marginLeft: '10%',
-            fontSize: 15,
-            color: msgColor,
-            fontWeight: 'bold',
-          }}>
-          {passwordRight}
-        </Text>
-      </View>
-      <View style={{flexDirection: 'row'}}>
-        <TextInput
-          style={styles.Text}
-          autoCapitalize="none"
-          autoCorrect={false}
-          allowFontScaling={false}
-          secureTextEntry={true}
-          placeholder={'비밀번호 재입력'}
-          placeholderTextColor="#777777"
-          clearButtonMode={'while-editing'}
-          onChangeText={text => {
-            setRepassword(text);
-          }}
-        />
-        <TouchableOpacity
-          style={{
-            backgroundColor: '#295eba',
-            marginLeft: '8%',
-            marginTop: 5,
-            borderRadius: 8,
-            width: '25%',
-            height: 40,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-          onPress={() => {
-            passwordCheckingFunction();
-          }}>
-          <Text style={{color: 'white'}}>비밀번호 확인</Text>
-        </TouchableOpacity>
-      </View>
-      <Text style={{marginTop: '10%', marginLeft: '8%', fontSize: 15}}>
-        닉네임
-      </Text>
-      <View style={{flexDirection: 'row'}}>
-        <TextInput
-          style={styles.Text}
-          autoCapitalize="none"
-          autoCorrect={false}
-          allowFontScaling={false}
-          placeholder={'한글, 영문, 숫자 2~8자리'}
-          placeholderTextColor="#777777"
-          clearButtonMode={'while-editing'}
-          onChangeText={text => {
-            setNickname(text);
-          }}
-        />
-        <TouchableOpacity
-          style={{
-            backgroundColor: '#295eba',
-            marginLeft: '8%',
-            marginTop: 5,
-            borderRadius: 8,
-            width: '20%',
-            height: 40,
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}
-          onPress={() => {
-            nicknameCheckingFunction();
-          }}>
-          <Text style={{color: 'white'}}>중복 검사</Text>
-        </TouchableOpacity>
-      </View>
-      <TouchableOpacity
+      <View
         style={{
-          backgroundColor: '#295eba',
-          marginLeft: '30%',
-          borderRadius: 8,
-          width: '40%',
-          height: 50,
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: '60%',
-        }}
-        onPress={() => {
-          signupCheckingFunction();
+          justifyContent: 'flex-start',
+          alignItems: 'flex-start',
         }}>
-        <Text style={{color: 'white', fontSize: 20}}>회원가입</Text>
-      </TouchableOpacity>
+        <Text style={{marginTop: '10%', fontSize: 15}}>아이디</Text>
+        <View style={{flexDirection: 'row'}}>
+          <TextInput
+            style={styles.Text}
+            placeholder={'영문, 숫자 사용 4~16자리'}
+            autoCapitalize="none"
+            autoCorrect={false}
+            allowFontScaling={false}
+            placeholderTextColor="#777777"
+            clearButtonMode={'while-editing'}
+            onChangeText={text => {
+              setID(text);
+            }}
+          />
+          <TouchableOpacity
+            style={{
+              backgroundColor: '#295eba',
+              marginTop: 5,
+              marginLeft: 16,
+              borderRadius: 8,
+              width: 80,
+              height: 40,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onPress={() => {
+              IDCheckingFunction();
+            }}>
+            <Text style={{color: 'white'}}>중복 검사</Text>
+          </TouchableOpacity>
+        </View>
+        <Text style={{marginTop: '10%', fontSize: 15}}>비밀번호</Text>
+        <View style={{flexDirection: 'row'}}>
+          <TextInput
+            style={styles.Text}
+            autoCapitalize="none"
+            autoCorrect={false}
+            allowFontScaling={false}
+            secureTextEntry={true}
+            placeholder={'영문, 숫자 혼합 8~16자리'}
+            placeholderTextColor="#777777"
+            clearButtonMode={'while-editing'}
+            onChangeText={text => {
+              setPassword(text);
+            }}
+          />
+        </View>
+        <View style={{flexDirection: 'row'}}>
+          <Text style={{marginTop: '10%', fontSize: 15}}>비밀번호 확인</Text>
+          <Text
+            style={{
+              marginTop: '10%',
+              marginLeft: '10%',
+              fontSize: 15,
+              color: msgColor,
+              fontWeight: 'bold',
+            }}>
+            {passwordRight}
+          </Text>
+        </View>
+        <View style={{flexDirection: 'row'}}>
+          <TextInput
+            style={styles.Text}
+            autoCapitalize="none"
+            autoCorrect={false}
+            allowFontScaling={false}
+            secureTextEntry={true}
+            placeholder={'비밀번호 재입력'}
+            placeholderTextColor="#777777"
+            clearButtonMode={'while-editing'}
+            onChangeText={text => {
+              setRepassword(text);
+            }}
+          />
+          <TouchableOpacity
+            style={{
+              backgroundColor: '#295eba',
+              marginTop: 5,
+              marginLeft: 16,
+              borderRadius: 8,
+              width: '25%',
+              height: 40,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onPress={() => {
+              passwordCheckingFunction();
+            }}>
+            <Text style={{color: 'white'}}>비밀번호 확인</Text>
+          </TouchableOpacity>
+        </View>
+        <Text style={{marginTop: '10%', fontSize: 15}}>닉네임</Text>
+        <View style={{flexDirection: 'row'}}>
+          <TextInput
+            style={styles.Text}
+            autoCapitalize="none"
+            autoCorrect={false}
+            allowFontScaling={false}
+            placeholder={'한글, 영문, 숫자 2~8자리'}
+            placeholderTextColor="#777777"
+            clearButtonMode={'while-editing'}
+            onChangeText={text => {
+              setNickname(text);
+            }}
+          />
+          <TouchableOpacity
+            style={{
+              backgroundColor: '#295eba',
+              marginTop: 5,
+              marginLeft: 16,
+              borderRadius: 8,
+              width: '20%',
+              height: 40,
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            onPress={() => {
+              nicknameCheckingFunction();
+            }}>
+            <Text style={{color: 'white'}}>중복 검사</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+      <View
+        style={{
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'flex-end',
+          marginBottom: 30,
+        }}>
+        <TouchableOpacity
+          style={{
+            backgroundColor: '#295eba',
+            borderRadius: 8,
+            width: 130,
+            height: 50,
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+          onPress={() => {
+            signupCheckingFunction();
+          }}>
+          <Text style={{color: 'white', fontSize: 20}}>회원가입</Text>
+        </TouchableOpacity>
+      </View>
     </SafeAreaView>
   );
 };
@@ -326,7 +329,6 @@ const styles = StyleSheet.create({
     paddingLeft: 16,
     paddingRight: 16,
     borderRadius: 8,
-    marginLeft: '8%',
     marginTop: 5,
   },
 });
