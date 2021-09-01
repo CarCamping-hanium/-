@@ -94,6 +94,9 @@ const ReviewBoard = ({navigation}) => {
               marginBottom: 10,
               borderRadius: 12,
               justifyContent: 'center',
+            }}
+            onPress={() => {
+              navigation.navigate('ReviewInfo');
             }}>
             <Text
               style={{
