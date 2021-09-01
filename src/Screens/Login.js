@@ -23,18 +23,17 @@ const Login = ({navigation}) => {
   const [password, setPassword] = useState('');
 
   return (
-    <>
+    <SafeAreaView style={{flex: 1}}>
       <View
         style={{
-          flex: 1,
           justifyContent: 'center',
           alignItems: 'center',
           backgroundColor: 'white',
         }}>
         <Image
           style={{
-            width: screenWidth / 2,
-            height: screenWidth / 2,
+            width: 200,
+            height: 200,
             justifyContent: 'center',
             alignItems: 'center',
           }}
@@ -44,9 +43,7 @@ const Login = ({navigation}) => {
       <View
         style={{
           flex: 1,
-          justifyContent: 'center',
           alignItems: 'center',
-          paddingBottom: 300,
           backgroundColor: 'white',
         }}>
         <TextInput
@@ -56,6 +53,7 @@ const Login = ({navigation}) => {
             paddingLeft: 16,
             borderRadius: 8,
             backgroundColor: '#cccccc',
+            marginTop: 10,
           }}
           selectionColor="black"
           autoCapitalize="none"
@@ -92,7 +90,7 @@ const Login = ({navigation}) => {
         <TouchableOpacity
           style={{
             marginTop: 8,
-            width: '30%',
+            width: 120,
             height: 40,
             borderRadius: 8,
             backgroundColor: '#295eba',
@@ -113,7 +111,7 @@ const Login = ({navigation}) => {
           </Text>
         </TouchableOpacity>
       </View>
-    </>
+    </SafeAreaView>
   );
 };
 
