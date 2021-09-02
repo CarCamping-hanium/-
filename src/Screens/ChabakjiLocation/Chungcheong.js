@@ -19,7 +19,7 @@ const Chungcheong = ({navigation}) => {
   const {selectedArea} = useContext(UserContext);
   const [visible, setVisible] = useState(false);
 
-  const P0 = {latitude: 36.9584, longitude: 127.2846};
+  const P0 = {latitude: 37.455648, longitude: 126.3697234};
   const P1 = {latitude: 37.565051, longitude: 126.978567};
   const P2 = {latitude: 37.565383, longitude: 126.976292};
 
