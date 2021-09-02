@@ -1,4 +1,4 @@
-import React, {useState, useEffect,Component} from 'react';
+import React, {useState, useEffect, Component} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -13,7 +13,6 @@ import {
   Image,
   Alert,
   Dimensions,
-
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import {launchImageLibrary} from 'react-native-image-picker';
@@ -24,19 +23,15 @@ import Postcode from '@actbase/react-daum-postcode';
 const screenWidth = Dimensions.get('window').width;
 let imageList = [];
 
-
 const ChabakjiEnrollment = ({navigation}) => {
-
-  
   const [image, setImage] = useState([]);
   const [category, setCategory] = useState('');
   const [name, setName] = useState('');
-  const [location, setLocation] = useState('');
   const [description, setDescription] = useState('');
   const [comfort, setComfort] = useState('');
   const [videoLink, setVideoLink] = useState('');
   const [modifyVisible, setModifyVisible] = useState(false);
-  const[data,setData]=useState('차박지를 검색해주세요.');
+  const [location, setLocation] = useState('차박지를 검색해주세요.');
 
   // const chooseImageFromLibrary = () => {
   //   launchImageLibrary(
@@ -193,25 +188,27 @@ const ChabakjiEnrollment = ({navigation}) => {
                 return item;
               }}
             />
-            </View>
-            <View>
-          <Text
-            style={{
-              fontSize: 18,
-              fontWeight: '400',
-              marginTop: 30,
-              marginLeft: 30,
-              width: screenWidth - 60,
-              height: 40,
-              paddingLeft: 10,
-              borderWidth: 2,
-              borderColor: '#295eba',
-              borderRadius: 8,
-  paddingTop:5,
-            }}     
-          > {data}</Text>
+          </View>
+          <View>
+            <Text
+              style={{
+                fontSize: 18,
+                fontWeight: '400',
+                marginTop: 30,
+                marginLeft: 30,
+                width: screenWidth - 60,
+                height: 40,
+                paddingLeft: 10,
+                borderWidth: 2,
+                borderColor: '#295eba',
+                borderRadius: 8,
+                paddingTop: 5,
+              }}>
+              {' '}
+              {location}
+            </Text>
+          </View>
         </View>
-      </View>
         <TouchableOpacity
           style={{
             alignItems: 'center',
@@ -221,17 +218,17 @@ const ChabakjiEnrollment = ({navigation}) => {
             height: 50,
             borderRadius: 8,
             marginHorizontal: 10,
-            marginTop:'10%',
-            marginLeft:'35%',
+            marginTop: '10%',
+            marginLeft: '35%',
           }}
           onPress={() => {
             setModifyVisible(true);
-          }}>      
+          }}>
           <Text style={{fontWeight: 'bold', color: 'white'}}>
             위치 검색하기
           </Text>
         </TouchableOpacity>
-        <Modal visible={modifyVisible}>     
+        <Modal visible={modifyVisible}>
           <View
             style={{
               alignItems: 'center',
@@ -242,31 +239,31 @@ const ChabakjiEnrollment = ({navigation}) => {
               borderWidth: 3,
               borderRadius: 10,
               backgroundColor: 'white',
-            }}>    
-              <Postcode
-          style={{ width: 300, height: 590 }}
-          jsOptions={{ animated: true, hideMapBtn: true }}
-          onSelected={data => {       
-          setData(data.address);
-          console.log(data.address);
-          setModifyVisible(false);
-          }}
-        />     
-              <TouchableOpacity
-                style={{
-                  backgroundColor: '#295eba',
-                  width: 100,
-                  height: 50,
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  borderRadius: 10,
-                }}
-                onPress={() => {
-                  setModifyVisible(false);
-                }}>
-                <Text style={{color: 'white', fontSize: 18}}>닫기</Text>
-              </TouchableOpacity>
-            </View>
+            }}>
+            <Postcode
+              style={{width: 300, height: 590}}
+              jsOptions={{animated: true, hideMapBtn: true}}
+              onSelected={data => {
+                setLocation(data.address);
+                console.log(data.address);
+                setModifyVisible(false);
+              }}
+            />
+            <TouchableOpacity
+              style={{
+                backgroundColor: '#295eba',
+                width: 100,
+                height: 50,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 10,
+              }}
+              onPress={() => {
+                setModifyVisible(false);
+              }}>
+              <Text style={{color: 'white', fontSize: 18}}>닫기</Text>
+            </TouchableOpacity>
+          </View>
         </Modal>
         <View>
           <TextInput
@@ -348,7 +345,7 @@ const ChabakjiEnrollment = ({navigation}) => {
               imageList.length = 0;
               setImage([]);
               setName('');
-              setLocation('');
+              setLocation('차박지를 검색해주세요.');
               setDescription('');
               setComfort('');
               setVideoLink('');
@@ -362,7 +359,7 @@ const ChabakjiEnrollment = ({navigation}) => {
               imageList.length = 0;
               setImage([]);
               setName('');
-              setLocation('');
+              setLocation('차박지를 검색해주세요.');
               setDescription('');
               setComfort('');
               setVideoLink('');
