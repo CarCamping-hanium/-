@@ -193,7 +193,6 @@ const ReviewUpload = ({navigation}) => {
 
 const styles = StyleSheet.create({
   header: {
-    //ㅇ
     fontSize: 30,
     fontWeight: 'bold',
   },
