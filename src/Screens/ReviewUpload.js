@@ -213,7 +213,7 @@ const styles = StyleSheet.create({
     borderRadius: 8,
   },
   uploadPhoto: {
-    borderRadius: 4,
+    borderRadius: 8,
     width: 100,
     height: 40,
     marginTop: 10,
@@ -222,7 +222,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   Enroll: {
-    borderRadius: 4,
+    borderRadius: 8,
     width: 100,
     height: 40,
     backgroundColor: '#295eba',
@@ -230,7 +230,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   Cancel: {
-    borderRadius: 4,
+    borderRadius: 8,
     width: 100,
     height: 40,
     backgroundColor: '#295eba',

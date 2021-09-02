@@ -224,9 +224,7 @@ const ChabakjiEnrollment = ({navigation}) => {
           onPress={() => {
             setModifyVisible(true);
           }}>
-          <Text style={{fontWeight: 'bold', color: 'white'}}>
-            위치 검색하기
-          </Text>
+          <Text style={{color: 'white'}}>위치 검색하기</Text>
         </TouchableOpacity>
         <Modal visible={modifyVisible}>
           <View
