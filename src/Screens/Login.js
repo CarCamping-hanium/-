@@ -14,6 +14,7 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
+import SplashScreen from 'react-native-splash-screen';
 
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
@@ -22,6 +23,9 @@ const Login = ({navigation}) => {
   const [ID, setID] = useState('');
   const [password, setPassword] = useState('');
 
+  useEffect(() => {
+    SplashScreen.hide();
+  }, []);
   return (
     <SafeAreaView style={{flex: 1}}>
       <View

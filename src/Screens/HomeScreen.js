@@ -1,4 +1,4 @@
-import React, {useLayoutEffect} from 'react';
+import React, {useLayoutEffect, useEffect} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -8,6 +8,7 @@ import {
   Dimensions,
 } from 'react-native';
 import {DrawerActions} from '@react-navigation/native';
+import SplashScreen from 'react-native-splash-screen';
 
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
@@ -24,6 +25,10 @@ const HomeScreen = ({navigation}) => {
         </TouchableOpacity>
       ),
     });
+  }, []);
+
+  useEffect(() => {
+    SplashScreen.hide();
   }, []);
   return (
     <SafeAreaView
