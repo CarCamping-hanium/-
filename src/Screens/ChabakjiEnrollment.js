@@ -161,7 +161,7 @@ const ChabakjiEnrollment = ({navigation}) => {
             onPress={() => {
               chooseImageFromLibrary();
             }}>
-            <Text style={{color: 'white'}}>사진 업로드</Text>
+            <Text style={{color: 'white', fontSize: 15}}>사진 업로드</Text>
           </TouchableOpacity>
         </View>
         <View
@@ -230,7 +230,7 @@ const ChabakjiEnrollment = ({navigation}) => {
             onPress={() => {
               setModifyVisible(true);
             }}>
-            <Text style={{color: 'white'}}>위치 검색하기</Text>
+            <Text style={{color: 'white', fontSize: 15}}>위치 검색하기</Text>
           </TouchableOpacity>
         </View>
         <Modal visible={modifyVisible}>
@@ -356,7 +356,7 @@ const ChabakjiEnrollment = ({navigation}) => {
               setVideoLink('');
               navigation.navigate('HomeScreen');
             }}>
-            <Text style={{color: 'white'}}>등록</Text>
+            <Text style={{color: 'white', fontSize: 15}}>등록</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.Cancel}
@@ -370,7 +370,7 @@ const ChabakjiEnrollment = ({navigation}) => {
               setVideoLink('');
               navigation.navigate('HomeScreen');
             }}>
-            <Text style={{color: 'white'}}>취소</Text>
+            <Text style={{color: 'white', fontSize: 15}}>취소</Text>
           </TouchableOpacity>
         </View>
       </ScrollView>
@@ -384,7 +384,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   name: {
-    fontSize: 15,
+    fontSize: 18,
     fontWeight: '500',
     alignItems: 'center',
     justifyContent: 'center',
@@ -401,8 +401,8 @@ const styles = StyleSheet.create({
   },
   uploadPhoto: {
     borderRadius: 8,
-    width: 100,
-    height: 40,
+    width: 120,
+    height: 50,
     marginTop: 10,
     backgroundColor: '#295eba',
     justifyContent: 'center',
