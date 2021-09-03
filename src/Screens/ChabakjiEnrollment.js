@@ -31,7 +31,9 @@ const ChabakjiEnrollment = ({navigation}) => {
   const [comfort, setComfort] = useState('');
   const [videoLink, setVideoLink] = useState('');
   const [modifyVisible, setModifyVisible] = useState(false);
-  const [location, setLocation] = useState('차박지를 검색해주세요.');
+  const [location, setLocation] = useState(
+    '아래 버튼을 눌러 차박지를 검색해주세요.',
+  );
 
   // const chooseImageFromLibrary = () => {
   //   launchImageLibrary(
@@ -55,16 +57,14 @@ const ChabakjiEnrollment = ({navigation}) => {
     ImagePicker.openPicker({
       width: screenWidth,
       height: screenWidth,
-      cropping: true,
-      showCropGuidelines: true,
-      compressImageMaxWidth: screenWidth,
-      compressImageMaxHeight: screenWidth,
-      multiple: true,
+      // compressImageMaxWidth: screenWidth,
+      // compressImageMaxHeight: screenWidth,
+      multiple: true, //사진 여러장 불러오기
       waitAnimationEnd: false,
       includeExif: true,
-      forceJpg: true,
-      maxFiles: 10,
-      compressImageQuality: 0.8,
+      forceJpg: true, //ios live photo를 jpg로 바꿔줌
+      maxFiles: 10, //사진 최대 10장까지
+      compressImageQuality: 1, //이미지 압축 0~1
       mediaType: 'photo',
     })
       .then(response => {
@@ -152,7 +152,7 @@ const ChabakjiEnrollment = ({navigation}) => {
             </View>
           )}
         />
-        <View style={{alignItems: 'center'}}>
+        <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <Text style={{marginTop: 20, fontWeight: '500', fontSize: 15}}>
             정방형(정사각형) 사진을 추천드려요!
           </Text>
@@ -164,7 +164,12 @@ const ChabakjiEnrollment = ({navigation}) => {
             <Text style={{color: 'white'}}>사진 업로드</Text>
           </TouchableOpacity>
         </View>
-        <View style={{marginTop: 30}}>
+        <View
+          style={{
+            marginTop: 30,
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}>
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <SelectDropdown
               buttonStyle={{
@@ -189,43 +194,45 @@ const ChabakjiEnrollment = ({navigation}) => {
               }}
             />
           </View>
-          <View>
+          <View
+            style={{
+              marginTop: 30,
+              alignItems: 'center',
+              justifyContent: 'center',
+              borderWidth: 2,
+              borderColor: '#295eba',
+              borderRadius: 8,
+              width: screenWidth - 40,
+              height: 40,
+            }}>
             <Text
               style={{
+                color: '#aaaaaa',
                 fontSize: 18,
                 fontWeight: '400',
-                marginTop: 30,
-                marginLeft: 30,
-                width: screenWidth - 60,
-                height: 40,
-                paddingLeft: 10,
-                borderWidth: 2,
-                borderColor: '#295eba',
-                borderRadius: 8,
-                paddingTop: 5,
               }}>
-              {' '}
               {location}
             </Text>
           </View>
         </View>
-        <TouchableOpacity
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: '#295eba',
-            width: '30%',
-            height: 50,
-            borderRadius: 8,
-            marginHorizontal: 10,
-            marginTop: '10%',
-            marginLeft: '35%',
-          }}
-          onPress={() => {
-            setModifyVisible(true);
-          }}>
-          <Text style={{color: 'white'}}>위치 검색하기</Text>
-        </TouchableOpacity>
+        <View style={{alignItems: 'center', justifyContent: 'center'}}>
+          <TouchableOpacity
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#295eba',
+              width: 120,
+              height: 50,
+              borderRadius: 8,
+              marginHorizontal: 10,
+              marginTop: 30,
+            }}
+            onPress={() => {
+              setModifyVisible(true);
+            }}>
+            <Text style={{color: 'white'}}>위치 검색하기</Text>
+          </TouchableOpacity>
+        </View>
         <Modal visible={modifyVisible}>
           <View
             style={{
