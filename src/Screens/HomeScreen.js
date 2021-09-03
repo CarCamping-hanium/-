@@ -28,7 +28,9 @@ const HomeScreen = ({navigation}) => {
   }, []);
 
   useEffect(() => {
-    SplashScreen.hide();
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 2000);
   }, []);
   return (
     <SafeAreaView

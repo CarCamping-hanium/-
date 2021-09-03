@@ -24,7 +24,9 @@ const Login = ({navigation}) => {
   const [password, setPassword] = useState('');
 
   useEffect(() => {
-    SplashScreen.hide();
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 2000);
   }, []);
   return (
     <SafeAreaView style={{flex: 1}}>
