@@ -1,5 +1,4 @@
 package com.chabakrini; // 패키지 이름 수정
-
 import android.content.Intent;
 import android.os.Bundle;
 import androidx.appcompat.app.AppCompatActivity;
