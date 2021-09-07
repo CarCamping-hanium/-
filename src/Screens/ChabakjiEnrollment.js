@@ -443,8 +443,7 @@ const ChabakjiEnrollment = ({navigation}) => {
                         '차박린이',
                         '감사합니다. 회원님의 차박지 등록 심사가 진행될 예정입니다.',
                       );
-                      imageList.length = 0;
-                      setImage([]);
+                      setImage('');
                       setName('');
                       setLocation('아래 버튼을 눌러 차박지를 검색해주세요.');
                       setDescription('');
@@ -465,8 +464,7 @@ const ChabakjiEnrollment = ({navigation}) => {
           <TouchableOpacity
             style={styles.Cancel}
             onPress={() => {
-              imageList.length = 0;
-              setImage([]);
+              setImage('');
               setName('');
               setLocation('아래 버튼을 눌러 차박지를 검색해주세요.');
               setDescription('');
