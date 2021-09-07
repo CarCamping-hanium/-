@@ -24,7 +24,8 @@ const Signup = ({navigation}) => {
   const [nicknameCheck, setNicknameCheck] = useState(''); //닉네임 중복 확인 완료 상태 임시 저장
 
   const [msgColor, setMsgColor] = useState(''); //passwordRight TextColor
-  const [checkPasswordBoxColor, setCheckPasswordBoxColor] = useState('');
+  const [checkPasswordBoxColor, setCheckPasswordBoxColor] =
+    useState('transparent');
 
   const IDChecking = str => {
     var regExp = /^[A-za-z0-9]{4,16}$/g;
