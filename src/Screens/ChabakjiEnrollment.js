@@ -20,10 +20,12 @@ import SelectDropdown from 'react-native-select-dropdown';
 import Modal from '../Components/Modal';
 import Postcode from '@actbase/react-daum-postcode';
 import {UserContext} from '../Context/Context';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const screenWidth = Dimensions.get('window').width;
 
 const ChabakjiEnrollment = ({navigation}) => {
+  const [changedImage, setChangedImage] = useState(''); //S3에 의해 변환된 후의 주소
   const [image, setImage] = useState(''); //image
   const [category, setCategory] = useState(''); //region
   const [name, setName] = useState(''); //name
@@ -35,7 +37,7 @@ const ChabakjiEnrollment = ({navigation}) => {
     //address
     '아래 버튼을 눌러 차박지를 검색해주세요.',
   );
-  const {userInfo} = useContext(UserContext);
+  const {userInfo, setUserInfo} = useContext(UserContext);
 
   // const chooseImageFromLibrary = () => {
   //   launchImageLibrary(
@@ -108,6 +110,7 @@ const ChabakjiEnrollment = ({navigation}) => {
         // });
         console.log('Response: ', response);
         setImage(response);
+        uploadPhoto();
       })
       .catch(e => console.log('Error: ', e.message));
   };
@@ -122,7 +125,7 @@ const ChabakjiEnrollment = ({navigation}) => {
 
   const uploadPhoto = () => {
     const formData = new FormData();
-    formData.append('image', {
+    formData.append('images', {
       name: image.filename,
       type: 'image/jpeg',
       uri: image.path,
@@ -136,8 +139,10 @@ const ChabakjiEnrollment = ({navigation}) => {
       },
       body: formData,
     })
-      .then(response => {
-        console.log(response);
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+        setChangedImage(json.data);
       })
       .catch(e => {
         console.log(e);
@@ -249,8 +254,8 @@ const ChabakjiEnrollment = ({navigation}) => {
                 height: 50,
               }}
               buttonTextStyle={{fontSize: 17}}
-              data={['경기도', '강원도', '충청도', '전라도', '경상도']}
-              defaultValue={'경기도'}
+              data={['지역', '경기도', '강원도', '충청도', '전라도', '경상도']}
+              defaultValue={'지역'}
               onSelect={(selectedItem, index) => {
                 setCategory(selectedItem);
               }}
@@ -414,10 +419,11 @@ const ChabakjiEnrollment = ({navigation}) => {
                 image === null ||
                 location === '아래 버튼을 눌러 차박지를 검색해주세요.' ||
                 description === '' ||
-                comfort === '' ||
                 name === ''
               ) {
                 Alert.alert('입력되지 않은 정보가 있습니다.');
+              } else if (category === '지역') {
+                Alert.alert('지역을 선택하세요.');
               } else {
                 fetch('http://3.36.28.39:8080/api/camping/register', {
                   method: 'POST',
@@ -429,7 +435,7 @@ const ChabakjiEnrollment = ({navigation}) => {
                     address: location,
                     explanation: description,
                     facilities: comfort,
-                    image: image,
+                    images: changedImage,
                     name: name,
                     region: category,
                     videoLink: videoLink,
@@ -449,6 +455,35 @@ const ChabakjiEnrollment = ({navigation}) => {
                       setDescription('');
                       setComfort('');
                       setVideoLink('');
+                      AsyncStorage.getItem('token', (err, result) => {
+                        fetch('http://3.36.28.39:8080/api/myInfo', {
+                          //토큰을 기반으로 유저정보 불러옴
+                          method: 'GET',
+                          headers: {
+                            token: result,
+                          },
+                        })
+                          .then(response => response.json())
+                          .then(json => {
+                            AsyncStorage.setItem(
+                              'userInfo',
+                              JSON.stringify(json),
+                            ); //로컬스토리지 최신화
+                            AsyncStorage.getItem('userInfo', (err, result) => {
+                              console.log(result);
+                            });
+                            setUserInfo({
+                              id: userInfo.id,
+                              member_id: userInfo.member_id,
+                              nickname: userInfo.nickname,
+                              point: userInfo.point,
+                              token: userInfo.token,
+                            });
+                          })
+                          .catch(e => {
+                            console.log(e);
+                          });
+                      });
                       navigation.navigate('HomeScreen');
                     } else {
                       Alert.alert(json.msg);
