@@ -24,6 +24,7 @@ const Signup = ({navigation}) => {
   const [nicknameCheck, setNicknameCheck] = useState(''); //닉네임 중복 확인 완료 상태 임시 저장
 
   const [msgColor, setMsgColor] = useState(''); //passwordRight TextColor
+  const [checkPasswordBoxColor, setCheckPasswordBoxColor] = useState('');
 
   const IDChecking = str => {
     var regExp = /^[A-za-z0-9]{4,16}$/g;
@@ -80,9 +81,11 @@ const Signup = ({navigation}) => {
       setPasswordCheck(password);
       setPasswordRight('비밀번호가 일치합니다.');
       setMsgColor('#295eba');
+      setCheckPasswordBoxColor('transparent');
     } else {
       setPasswordRight('비밀번호가 일치하지 않습니다.');
       setMsgColor('red');
+      setCheckPasswordBoxColor('red');
     }
   };
 
@@ -234,7 +237,17 @@ const Signup = ({navigation}) => {
         </View>
         <View style={{flexDirection: 'row'}}>
           <TextInput
-            style={styles.Text}
+            style={{
+              width: '50%',
+              height: 40,
+              backgroundColor: '#cccccc',
+              paddingLeft: 16,
+              paddingRight: 16,
+              borderRadius: 8,
+              marginTop: 5,
+              borderColor: checkPasswordBoxColor,
+              borderWidth: 2,
+            }}
             autoCapitalize="none"
             autoCorrect={false}
             allowFontScaling={false}
