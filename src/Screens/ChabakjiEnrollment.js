@@ -1,4 +1,4 @@
-import React, {useState, useEffect, Component} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -19,21 +19,23 @@ import {launchImageLibrary} from 'react-native-image-picker';
 import SelectDropdown from 'react-native-select-dropdown';
 import Modal from '../Components/Modal';
 import Postcode from '@actbase/react-daum-postcode';
+import {UserContext} from '../Context/Context';
 
 const screenWidth = Dimensions.get('window').width;
-let imageList = [];
 
 const ChabakjiEnrollment = ({navigation}) => {
-  const [image, setImage] = useState([]);
-  const [category, setCategory] = useState('');
-  const [name, setName] = useState('');
-  const [description, setDescription] = useState('');
-  const [comfort, setComfort] = useState('');
-  const [videoLink, setVideoLink] = useState('');
+  const [image, setImage] = useState(''); //image
+  const [category, setCategory] = useState(''); //region
+  const [name, setName] = useState(''); //name
+  const [description, setDescription] = useState(''); //explanation
+  const [comfort, setComfort] = useState(''); //facilities
+  const [videoLink, setVideoLink] = useState(''); //videoLink
   const [modifyVisible, setModifyVisible] = useState(false);
   const [location, setLocation] = useState(
+    //address
     '아래 버튼을 눌러 차박지를 검색해주세요.',
   );
+  const {userInfo} = useContext(UserContext);
 
   // const chooseImageFromLibrary = () => {
   //   launchImageLibrary(
@@ -53,37 +55,93 @@ const ChabakjiEnrollment = ({navigation}) => {
   //   );
   // };
 
+  const showImage = () => {
+    if (image === '') {
+      return (
+        <View>
+          <Image
+            source={require('../Assets/Images/wait_photo.png')}
+            style={{width: screenWidth, height: screenWidth}}
+          />
+        </View>
+      );
+    } else {
+      return (
+        <View>
+          <Image
+            source={{uri: image.sourceURL}}
+            style={{width: screenWidth, height: screenWidth}}
+          />
+          <TouchableOpacity
+            style={{
+              position: 'absolute',
+              right: 0,
+            }}
+            onPress={() => {
+              removeImage();
+            }}>
+            <Text style={{fontSize: 30}}>❎</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
+  };
+
   const chooseImageFromLibrary = () => {
     ImagePicker.openPicker({
       width: screenWidth,
       height: screenWidth,
-      // compressImageMaxWidth: screenWidth,
-      // compressImageMaxHeight: screenWidth,
-      multiple: true, //사진 여러장 불러오기
+      cropping: true,
       waitAnimationEnd: false,
       includeExif: true,
       forceJpg: true, //ios live photo를 jpg로 바꿔줌
-      maxFiles: 10, //사진 최대 10장까지
       compressImageQuality: 1, //이미지 압축 0~1
       mediaType: 'photo',
+      includeBase64: true,
     })
       .then(response => {
         //각각의 사진들을 imageList 배열에 넣는 과정
+        // response.map(img => {
+        //   imageList.push(img.path);
+        //   console.log(typeof img.path);
+        //   //imageList = [...image, img.path];
+        // });
         console.log('Response: ', response);
-        response.map(img => {
-          imageList.push(img.path);
-          //imageList = [...image, img.path];
-        });
-        setImage(imageList);
+        setImage(response);
       })
       .catch(e => console.log('Error: ', e.message));
   };
 
   const removeImage = index => {
-    let new_imageList = [...image];
-    new_imageList.splice(index, 1);
-    setImage(new_imageList);
-    imageList = [...new_imageList];
+    // let new_imageList = [...image];
+    // new_imageList.splice(index, 1);
+    // setImage(new_imageList);
+    // imageList = [...new_imageList];
+    setImage('');
+  };
+
+  const uploadPhoto = () => {
+    const formData = new FormData();
+    formData.append('image', {
+      name: image.filename,
+      type: 'image/jpeg',
+      uri: image.path,
+    });
+
+    fetch('http://3.36.28.39:8080/api/upload', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        token: userInfo.token,
+      },
+      body: formData,
+    })
+      .then(response => {
+        console.log(response);
+      })
+      .catch(e => {
+        console.log(e);
+      });
   };
 
   return (
@@ -113,7 +171,7 @@ const ChabakjiEnrollment = ({navigation}) => {
           marginHorizontal: 20,
           width: screenWidth,
         }}>
-        <FlatList
+        {/* <FlatList
           style={{height: screenWidth, width: screenWidth}}
           horizontal={true}
           pagingEnabled={true}
@@ -124,7 +182,7 @@ const ChabakjiEnrollment = ({navigation}) => {
           renderItem={({item, index}) => (
             <View>
               <Image
-                source={{uri: image[index]}}
+                source={{uri: `data:${image.mime};base64,${image.data}`}}
                 style={{width: screenWidth, height: screenWidth}}
               />
               {/* <Image
@@ -138,7 +196,7 @@ const ChabakjiEnrollment = ({navigation}) => {
                 onPress={() => {
                   console.warn('click');
                 }}
-              /> */}
+              />
               <TouchableOpacity
                 style={{
                   position: 'absolute',
@@ -151,18 +209,28 @@ const ChabakjiEnrollment = ({navigation}) => {
               </TouchableOpacity>
             </View>
           )}
-        />
+        /> */}
+        {showImage()}
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <Text style={{marginTop: 20, fontWeight: '500', fontSize: 15}}>
             정방형(정사각형) 사진을 추천드려요!
           </Text>
-          <TouchableOpacity
-            style={styles.uploadPhoto}
-            onPress={() => {
-              chooseImageFromLibrary();
-            }}>
-            <Text style={{color: 'white', fontSize: 15}}>사진 업로드</Text>
-          </TouchableOpacity>
+          <View style={{flexDirection: 'row'}}>
+            <TouchableOpacity
+              style={styles.selectPhoto}
+              onPress={() => {
+                chooseImageFromLibrary();
+              }}>
+              <Text style={{color: 'white', fontSize: 15}}>사진 선택</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.uploadPhoto}
+              onPress={() => {
+                uploadPhoto();
+              }}>
+              <Text style={{color: 'white', fontSize: 15}}>사진 업로드</Text>
+            </TouchableOpacity>
+          </View>
         </View>
         <View
           style={{
@@ -207,7 +275,6 @@ const ChabakjiEnrollment = ({navigation}) => {
             }}>
             <Text
               style={{
-                color: '#aaaaaa',
                 fontSize: 18,
                 fontWeight: '400',
               }}>
@@ -343,18 +410,55 @@ const ChabakjiEnrollment = ({navigation}) => {
           <TouchableOpacity
             style={styles.Enroll}
             onPress={() => {
-              Alert.alert(
-                '차박린이',
-                '감사합니다. 회원님의 차박지 등록 심사가 진행될 예정입니다.',
-              );
-              imageList.length = 0;
-              setImage([]);
-              setName('');
-              setLocation('차박지를 검색해주세요.');
-              setDescription('');
-              setComfort('');
-              setVideoLink('');
-              navigation.navigate('HomeScreen');
+              if (
+                image === null ||
+                location === '아래 버튼을 눌러 차박지를 검색해주세요.' ||
+                description === '' ||
+                comfort === '' ||
+                name === ''
+              ) {
+                Alert.alert('입력되지 않은 정보가 있습니다.');
+              } else {
+                fetch('http://3.36.28.39:8080/api/camping/register', {
+                  method: 'POST',
+                  headers: {
+                    'Content-Type': 'application/json',
+                    token: userInfo.token,
+                  },
+                  body: JSON.stringify({
+                    address: location,
+                    explanation: description,
+                    facilities: comfort,
+                    image: image,
+                    name: name,
+                    region: category,
+                    videoLink: videoLink,
+                  }),
+                })
+                  .then(response => response.json())
+                  .then(json => {
+                    console.log(json);
+                    if (json.success === true) {
+                      Alert.alert(
+                        '차박린이',
+                        '감사합니다. 회원님의 차박지 등록 심사가 진행될 예정입니다.',
+                      );
+                      imageList.length = 0;
+                      setImage([]);
+                      setName('');
+                      setLocation('아래 버튼을 눌러 차박지를 검색해주세요.');
+                      setDescription('');
+                      setComfort('');
+                      setVideoLink('');
+                      navigation.navigate('HomeScreen');
+                    } else {
+                      Alert.alert(json.msg);
+                    }
+                  })
+                  .catch(e => {
+                    console.log(e);
+                  });
+              }
             }}>
             <Text style={{color: 'white', fontSize: 15}}>등록</Text>
           </TouchableOpacity>
@@ -364,7 +468,7 @@ const ChabakjiEnrollment = ({navigation}) => {
               imageList.length = 0;
               setImage([]);
               setName('');
-              setLocation('차박지를 검색해주세요.');
+              setLocation('아래 버튼을 눌러 차박지를 검색해주세요.');
               setDescription('');
               setComfort('');
               setVideoLink('');
@@ -399,7 +503,17 @@ const styles = StyleSheet.create({
     borderColor: '#295eba',
     borderRadius: 8,
   },
+  selectPhoto: {
+    borderRadius: 8,
+    width: 120,
+    height: 50,
+    marginTop: 10,
+    backgroundColor: '#295eba',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   uploadPhoto: {
+    marginLeft: 20,
     borderRadius: 8,
     width: 120,
     height: 50,
