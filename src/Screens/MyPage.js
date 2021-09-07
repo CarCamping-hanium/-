@@ -1,6 +1,7 @@
-import React, {useState, useContext, useLayoutEffect} from 'react';
+import React, {useState, useContext, useLayoutEffect, useEffect} from 'react';
 import {UserContext} from '../Context/Context';
 import Modal from '../Components/Modal';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import {
   SafeAreaView,
   Text,
@@ -22,6 +23,35 @@ const MyPage = ({navigation}) => {
   const [password, setPassword] = useState('');
   const [modifyVisible, setModifyVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
+
+  useEffect(() => {
+    AsyncStorage.getItem('token', (err, result) => {
+      fetch('http://3.36.28.39:8080/api/myInfo', {
+        //토큰을 기반으로 유저정보 불러옴
+        method: 'GET',
+        headers: {
+          token: result,
+        },
+      })
+        .then(response => response.json())
+        .then(json => {
+          AsyncStorage.setItem('userInfo', JSON.stringify(json)); //로컬스토리지 최신화
+          AsyncStorage.getItem('userInfo', (err, result) => {
+            console.log(result);
+          });
+          setUserInfo({
+            id: userInfo.id,
+            member_id: userInfo.member_id,
+            nickname: userInfo.nickname,
+            point: userInfo.point,
+            token: userInfo.token,
+          });
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    });
+  }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
