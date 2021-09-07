@@ -79,7 +79,7 @@ const PointRanking = ({navigation}) => {
         list.push(rank_number);
         temp += 1;
       } else {
-        rank_number += 1 + tmp;
+        rank_number += 1 + temp;
         list.push(rank_number);
         temp = 0;
       }
