@@ -313,8 +313,9 @@ const Signup = ({navigation}) => {
         style={{
           flex: 1,
           alignItems: 'center',
-          justifyContent: 'flex-end',
-          marginBottom: 30,
+          justifyContent: 'center',
+          position: 'absolute',
+          bottom: 50,
         }}>
         <TouchableOpacity
           style={{
