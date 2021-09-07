@@ -26,8 +26,9 @@ const screenWidth = Dimensions.get('window').width;
 
 const ChabakjiEnrollment = ({navigation}) => {
   const [changedImage, setChangedImage] = useState(''); //S3에 의해 변환된 후의 주소
+  const [checkImageUpload, setCheckImageUpload] = useState(false);
   const [image, setImage] = useState(''); //image
-  const [category, setCategory] = useState(''); //region
+  const [category, setCategory] = useState('지역'); //region
   const [name, setName] = useState(''); //name
   const [description, setDescription] = useState(''); //explanation
   const [comfort, setComfort] = useState(''); //facilities
@@ -110,7 +111,6 @@ const ChabakjiEnrollment = ({navigation}) => {
         // });
         console.log('Response: ', response);
         setImage(response);
-        uploadPhoto();
       })
       .catch(e => console.log('Error: ', e.message));
   };
@@ -142,11 +142,35 @@ const ChabakjiEnrollment = ({navigation}) => {
       .then(response => response.json())
       .then(json => {
         console.log(json);
-        setChangedImage(json.data);
+        if (json.success === true && checkImageUpload === false) {
+          setCheckImageUpload(true);
+          setChangedImage(json.data);
+          Alert.alert('사진이 업로드되었습니다.');
+        } else if (checkImageUpload === true) {
+          Alert.alert('이미 사진이 업로드 되었습니다.');
+        } else {
+          Alert.alert(json.msg);
+        }
       })
       .catch(e => {
         console.log(e);
       });
+  };
+
+  const photoText = () => {
+    if (image === '') {
+      return (
+        <Text style={{marginTop: 20, fontWeight: '500', fontSize: 15}}>
+          정방형(정사각형) 사진을 추천드려요!
+        </Text>
+      );
+    } else {
+      return (
+        <Text style={{marginTop: 20, fontWeight: '500', fontSize: 15}}>
+          확정된 사진이라면 '사진 업로드' 버튼을 눌러주세요!
+        </Text>
+      );
+    }
   };
 
   return (
@@ -217,9 +241,7 @@ const ChabakjiEnrollment = ({navigation}) => {
         /> */}
         {showImage()}
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <Text style={{marginTop: 20, fontWeight: '500', fontSize: 15}}>
-            정방형(정사각형) 사진을 추천드려요!
-          </Text>
+          {photoText()}
           <View style={{flexDirection: 'row'}}>
             <TouchableOpacity
               style={styles.selectPhoto}
@@ -416,7 +438,7 @@ const ChabakjiEnrollment = ({navigation}) => {
             style={styles.Enroll}
             onPress={() => {
               if (
-                image === null ||
+                image === '' ||
                 location === '아래 버튼을 눌러 차박지를 검색해주세요.' ||
                 description === '' ||
                 name === ''
@@ -424,6 +446,8 @@ const ChabakjiEnrollment = ({navigation}) => {
                 Alert.alert('입력되지 않은 정보가 있습니다.');
               } else if (category === '지역') {
                 Alert.alert('지역을 선택하세요.');
+              } else if (checkImageUpload === false) {
+                Alert.alert('사진 업로드 버튼을 눌러주세요.');
               } else {
                 fetch('http://3.36.28.39:8080/api/camping/register', {
                   method: 'POST',
@@ -446,7 +470,6 @@ const ChabakjiEnrollment = ({navigation}) => {
                     console.log(json);
                     if (json.success === true) {
                       Alert.alert(
-                        '차박린이',
                         '감사합니다. 회원님의 차박지 등록 심사가 진행될 예정입니다.',
                       );
                       setImage('');
@@ -455,6 +478,8 @@ const ChabakjiEnrollment = ({navigation}) => {
                       setDescription('');
                       setComfort('');
                       setVideoLink('');
+                      setCategory('지역');
+                      setCheckImageUpload(false);
                       AsyncStorage.getItem('token', (err, result) => {
                         fetch('http://3.36.28.39:8080/api/myInfo', {
                           //토큰을 기반으로 유저정보 불러옴
@@ -505,6 +530,8 @@ const ChabakjiEnrollment = ({navigation}) => {
               setDescription('');
               setComfort('');
               setVideoLink('');
+              setCategory('지역');
+              setCheckImageUpload(false);
               navigation.navigate('HomeScreen');
             }}>
             <Text style={{color: 'white', fontSize: 15}}>취소</Text>
