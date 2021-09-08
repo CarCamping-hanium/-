@@ -19,7 +19,7 @@ const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 
 const MyPage = ({navigation}) => {
-  const {userInfo, deleteMember} = useContext(UserContext);
+  const {userInfo, setUserInfo, deleteMember} = useContext(UserContext);
   const [password, setPassword] = useState('');
   const [modifyVisible, setModifyVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
@@ -35,15 +35,16 @@ const MyPage = ({navigation}) => {
       })
         .then(response => response.json())
         .then(json => {
+          console.log(json);
           AsyncStorage.setItem('userInfo', JSON.stringify(json)); //로컬스토리지 최신화
           AsyncStorage.getItem('userInfo', (err, result) => {
             console.log(result);
           });
           setUserInfo({
-            id: userInfo.id,
-            member_id: userInfo.member_id,
-            nickname: userInfo.nickname,
-            point: userInfo.point,
+            id: json.data.loginId,
+            member_id: json.data.member_id,
+            nickname: json.data.nickname,
+            point: json.data.point,
             token: userInfo.token,
           });
         })
