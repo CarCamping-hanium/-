@@ -72,7 +72,7 @@ const ChabakjiEnrollment = ({navigation}) => {
       return (
         <View>
           <Image
-            source={{uri: image.path}}
+            source={{uri: image.sourceURL}}
             style={{width: screenWidth, height: screenWidth}}
           />
           <TouchableOpacity
@@ -498,10 +498,10 @@ const ChabakjiEnrollment = ({navigation}) => {
                               console.log(result);
                             });
                             setUserInfo({
-                              id: userInfo.id,
-                              member_id: userInfo.member_id,
-                              nickname: userInfo.nickname,
-                              point: userInfo.point,
+                              id: json.data.loginId,
+                              member_id: json.data.member_id,
+                              nickname: json.data.nickname,
+                              point: json.data.point,
                               token: userInfo.token,
                             });
                           })
