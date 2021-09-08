@@ -14,45 +14,99 @@ import {
   StyleSheet,
 } from 'react-native';
 import {DrawerActions} from '@react-navigation/native';
+import ImagePicker from 'react-native-image-crop-picker';
 
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 
 const MyPage = ({navigation}) => {
-  const {userInfo, setUserInfo, deleteMember} = useContext(UserContext);
+  const {userInfo, getUserInfo, deleteMember} = useContext(UserContext);
   const [password, setPassword] = useState('');
   const [modifyVisible, setModifyVisible] = useState(false);
+  const [profileModalVisible, setProfileModalVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
+  const [profileImage, setProfileImage] = useState(null);
+
+  //사진을 서버로 보내는 함수
+  const uploadProfile = () => {
+    if (profileImage !== null) {
+      const formData = new FormData();
+      formData.append('images', {
+        name: profileImage.filename,
+        type: 'image/jpeg',
+        uri: profileImage.path,
+      });
+      Alert.alert('프로필 사진을 변경하시겠습니까?', '', [
+        {
+          text: '변경',
+          onPress: () => {
+            fetch('http://3.38.85.251:8080/api/updateProfile', {
+              //서버로 아이디, 비번 보내서 일치하는지 확인
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                token: userInfo.token,
+              },
+              body: formData,
+            })
+              .then(response => response.json())
+              .then(json => {
+                console.log(json);
+                if (json.msg === 'success') {
+                  Alert.alert('프로필 사진이 변경되었습니다.');
+                  getUserInfo();
+                } else {
+                  Alert.alert(json.msg);
+                }
+              });
+          },
+        },
+        {
+          text: '취소',
+          onPress: () => {
+            //setProfileImage(userInfo.profile);
+          },
+        },
+      ]);
+    }
+  };
+
+  //갤러리에서 사진을 고르는 함수
+  const chooseImageFromLibrary = () => {
+    ImagePicker.openPicker({
+      width: screenWidth,
+      height: screenWidth,
+      cropping: true,
+      waitAnimationEnd: false,
+      includeExif: true,
+      forceJpg: true, //ios live photo를 jpg로 바꿔줌
+      compressImageQuality: 1, //이미지 압축 0~1
+      mediaType: 'photo',
+      includeBase64: true,
+    })
+      .then(response => {
+        //각각의 사진들을 imageList 배열에 넣는 과정
+        // response.map(img => {
+        //   imageList.push(img.path);
+        //   console.log(typeof img.path);
+        //   //imageList = [...image, img.path];
+        // });
+        console.log('Response: ', response);
+        setProfileModalVisible(false);
+        setProfileImage(response);
+      })
+      .catch(e => console.log('Error: ', e.message));
+  };
 
   useEffect(() => {
-    AsyncStorage.getItem('token', (err, result) => {
-      fetch('http://3.38.85.251:8080/api/myInfo', {
-        //토큰을 기반으로 유저정보 불러옴
-        method: 'GET',
-        headers: {
-          token: result,
-        },
-      })
-        .then(response => response.json())
-        .then(json => {
-          console.log(json);
-          AsyncStorage.setItem('userInfo', JSON.stringify(json)); //로컬스토리지 최신화
-          AsyncStorage.getItem('userInfo', (err, result) => {
-            console.log(result);
-          });
-          setUserInfo({
-            id: json.data.loginId,
-            member_id: json.data.member_id,
-            nickname: json.data.nickname,
-            point: json.data.point,
-            token: userInfo.token,
-          });
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    });
+    setProfileImage(userInfo.profile);
+    getUserInfo();
   }, []);
+
+  //프사가 변경될 때마다 프로필을 변경된 프사로 새로고침 하기 위함
+  useEffect(() => {
+    getUserInfo();
+  }, [userInfo.profile]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -73,16 +127,107 @@ const MyPage = ({navigation}) => {
       style={{
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'flex-start',
+        justifyContent: 'center',
         backgroundColor: 'white',
       }}>
+      <TouchableOpacity
+        onPress={() => {
+          setProfileModalVisible(true);
+        }}>
+        <Image
+          source={
+            profileImage === null
+              ? require('../Assets/Images/empty_profile.png')
+              : {uri: userInfo.profile}
+          }
+          style={{width: 200, height: 200, borderRadius: 20}}
+        />
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={{
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: '#295eba',
+          width: 130,
+          height: 50,
+          borderRadius: 8,
+          marginHorizontal: 10,
+        }}
+        onPress={() => {
+          uploadProfile();
+        }}>
+        <Text style={{fontWeight: 'bold', color: 'white'}}>사진 변경 완료</Text>
+      </TouchableOpacity>
+      <Modal visible={profileModalVisible}>
+        <View
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+            width: 300,
+            height: 200,
+            borderWidth: 3,
+            borderRadius: 10,
+            backgroundColor: 'white',
+            borderColor: '#295eba',
+          }}>
+          <TouchableOpacity
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 250,
+              height: 50,
+              backgroundColor: '#295eba',
+              borderRadius: 10,
+            }}
+            onPress={() => {
+              chooseImageFromLibrary();
+            }}>
+            <Text style={{color: 'white', fontSize: 18}}>
+              갤러리에서 가져오기
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              marginTop: 10,
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 250,
+              height: 50,
+              backgroundColor: '#295eba',
+              borderRadius: 10,
+            }}
+            onPress={() => {
+              setProfileImage(null);
+              setProfileModalVisible(false);
+            }}>
+            <Text style={{color: 'white', fontSize: 18}}>
+              기본 이미지로 설정
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              marginTop: 10,
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: 120,
+              height: 50,
+              backgroundColor: '#295eba',
+              borderRadius: 10,
+            }}
+            onPress={() => {
+              setProfileModalVisible(false);
+            }}>
+            <Text style={{color: 'white', fontSize: 18}}>취소</Text>
+          </TouchableOpacity>
+        </View>
+      </Modal>
       <TouchableOpacity
         onPress={() => {
           navigation.navigate('MyPointHistory');
         }}>
         <Text
           style={{
-            marginTop: 30,
+            marginTop: 20,
             fontSize: 20,
             justifyContent: 'center',
             alignItems: 'center',
@@ -94,7 +239,7 @@ const MyPage = ({navigation}) => {
           내 포인트 : {userInfo.point}
         </Text>
       </TouchableOpacity>
-      <View style={{marginTop: 10}}>
+      <View style={{marginTop: 20}}>
         <TouchableOpacity
           style={{
             alignItems: 'center',
@@ -222,10 +367,6 @@ const MyPage = ({navigation}) => {
           </Text>
         </TouchableOpacity>
       </View>
-      <Image
-        source={require('../Assets/Images/mypage_background.png')}
-        style={{width: screenWidth, height: screenWidth, marginTop: 20}}
-      />
       <View
         style={{
           flex: 1,
