@@ -29,46 +29,67 @@ const MyPage = ({navigation}) => {
 
   //사진을 서버로 보내는 함수
   const uploadProfile = () => {
-    if (profileImage !== null) {
-      const formData = new FormData();
-      formData.append('images', {
-        name: profileImage.filename,
-        type: 'image/jpeg',
-        uri: profileImage.path,
+    const formData = new FormData();
+    formData.append('images', {
+      name: profileImage.filename,
+      type: 'image/jpeg',
+      uri: profileImage.path,
+    });
+    Alert.alert('프로필 사진을 변경하시겠습니까?', '', [
+      {
+        text: '변경',
+        onPress: () => {
+          fetch('http://3.38.85.251:8080/api/updateProfile', {
+            //서버로 아이디, 비번 보내서 일치하는지 확인
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              token: userInfo.token,
+            },
+            body: formData,
+          })
+            .then(response => response.json())
+            .then(json => {
+              console.log(json);
+              if (json.msg === 'success') {
+                Alert.alert('프로필 사진이 변경되었습니다.');
+                getUserInfo();
+              } else {
+                Alert.alert(json.msg);
+              }
+            });
+        },
+      },
+      {
+        text: '취소',
+        onPress: () => {
+          setProfileImage(userInfo.profile);
+          getUserInfo();
+        },
+      },
+    ]);
+  };
+
+  //프사 삭제 함수
+  const deleteProfile = () => {
+    fetch('http://3.38.85.251:8080/api/deleteProfile', {
+      //서버로 아이디, 비번 보내서 일치하는지 확인
+      method: 'DELETE',
+      headers: {
+        'Content-Type': 'application/json',
+        token: userInfo.token,
+      },
+    })
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+        if (json.success === true) {
+          setProfileImage(userInfo.profile);
+          setProfileImage(null);
+          getUserInfo();
+          Alert.alert('프로필 사진이 삭제되었습니다.');
+        }
       });
-      Alert.alert('프로필 사진을 변경하시겠습니까?', '', [
-        {
-          text: '변경',
-          onPress: () => {
-            fetch('http://3.38.85.251:8080/api/updateProfile', {
-              //서버로 아이디, 비번 보내서 일치하는지 확인
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                token: userInfo.token,
-              },
-              body: formData,
-            })
-              .then(response => response.json())
-              .then(json => {
-                console.log(json);
-                if (json.msg === 'success') {
-                  Alert.alert('프로필 사진이 변경되었습니다.');
-                  getUserInfo();
-                } else {
-                  Alert.alert(json.msg);
-                }
-              });
-          },
-        },
-        {
-          text: '취소',
-          onPress: () => {
-            //setProfileImage(userInfo.profile);
-          },
-        },
-      ]);
-    }
   };
 
   //갤러리에서 사진을 고르는 함수
@@ -94,6 +115,7 @@ const MyPage = ({navigation}) => {
         console.log('Response: ', response);
         setProfileModalVisible(false);
         setProfileImage(response);
+        Alert.alert("'사진 변경 완료' 버튼을 눌러주세요!");
       })
       .catch(e => console.log('Error: ', e.message));
   };
@@ -152,9 +174,14 @@ const MyPage = ({navigation}) => {
           height: 50,
           borderRadius: 8,
           marginHorizontal: 10,
+          marginTop: 10,
         }}
         onPress={() => {
-          uploadProfile();
+          if (profileImage !== null) {
+            uploadProfile();
+          } else {
+            Alert.alert('프로필 사진을 선택해주세요.');
+          }
         }}>
         <Text style={{fontWeight: 'bold', color: 'white'}}>사진 변경 완료</Text>
       </TouchableOpacity>
@@ -164,7 +191,7 @@ const MyPage = ({navigation}) => {
             alignItems: 'center',
             justifyContent: 'center',
             width: 300,
-            height: 200,
+            height: 300,
             borderWidth: 3,
             borderRadius: 10,
             backgroundColor: 'white',
@@ -188,7 +215,7 @@ const MyPage = ({navigation}) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={{
-              marginTop: 10,
+              marginTop: 20,
               alignItems: 'center',
               justifyContent: 'center',
               width: 250,
@@ -197,16 +224,31 @@ const MyPage = ({navigation}) => {
               borderRadius: 10,
             }}
             onPress={() => {
-              setProfileImage(null);
               setProfileModalVisible(false);
+              if (profileImage === null) {
+                Alert.alert('프로필 사진이 설정되어 있지 않습니다.');
+              } else {
+                Alert.alert('프로필 사진을 삭제하시겠습니까?', '', [
+                  {
+                    text: '삭제',
+                    onPress: () => {
+                      deleteProfile();
+                    },
+                  },
+                  {
+                    text: '취소',
+                    onPress: () => {
+                      setProfileImage(userInfo.profile);
+                    },
+                  },
+                ]);
+              }
             }}>
-            <Text style={{color: 'white', fontSize: 18}}>
-              기본 이미지로 설정
-            </Text>
+            <Text style={{color: 'white', fontSize: 18}}>프로필 사진 삭제</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={{
-              marginTop: 10,
+              marginTop: 20,
               alignItems: 'center',
               justifyContent: 'center',
               width: 120,
