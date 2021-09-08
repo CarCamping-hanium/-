@@ -11,6 +11,7 @@ import {UserContext} from '../../Context/Context';
 
 const Gyeonggi = ({navigation}) => {
   const {selectedArea} = useContext(UserContext);
+
   const P0 = {latitude: 37.51463434907, longitude: 127.0282805886601};
   const P1 = {latitude: 30.565051, longitude: 126.978567};
   const P2 = {latitude: 30.565383, longitude: 126.976292};
