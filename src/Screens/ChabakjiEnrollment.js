@@ -72,7 +72,7 @@ const ChabakjiEnrollment = ({navigation}) => {
       return (
         <View>
           <Image
-            source={{uri: image.sourceURL}}
+            source={{uri: image.path}}
             style={{width: screenWidth, height: screenWidth}}
           />
           <TouchableOpacity
