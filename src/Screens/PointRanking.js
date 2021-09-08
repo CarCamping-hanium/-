@@ -40,7 +40,7 @@ const PointRanking = ({navigation}) => {
     });
   }, []);
   const getRankingInfo = () => {
-    fetch('http://3.36.28.39:8080/api/ranking', {
+    fetch('http://3.38.85.251:8080/api/ranking', {
       method: 'GET',
     })
       .then(response => response.json())
@@ -86,7 +86,7 @@ const PointRanking = ({navigation}) => {
   };
 
   const getMyRank = () => {
-    fetch('http://3.36.28.39:8080/api/myRank', {
+    fetch('http://3.38.85.251:8080/api/myRank', {
       method: 'GET',
       headers: {
         token: userInfo.token,

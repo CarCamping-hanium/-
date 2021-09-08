@@ -32,7 +32,7 @@ const ModifyNickname = ({navigation}) => {
       setNickname('');
       setNicknameCheckMsg('');
     } else {
-      fetch('http://3.36.28.39:8080/api/checkNickName', {
+      fetch('http://3.38.85.251:8080/api/checkNickName', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -61,7 +61,7 @@ const ModifyNickname = ({navigation}) => {
       nickname === nicknameCheck &&
       nicknameCheckMsg === '사용 가능한 닉네임입니다.'
     ) {
-      fetch('http://3.36.28.39:8080/api/member/update/nickname', {
+      fetch('http://3.38.85.251:8080/api/member/update/nickname', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -78,7 +78,7 @@ const ModifyNickname = ({navigation}) => {
 
             //닉네임 변경 시 로컬스토리지에 userInfo 최신화
             AsyncStorage.getItem('token', (err, result) => {
-              fetch('http://3.36.28.39:8080/api/myInfo', {
+              fetch('http://3.38.85.251:8080/api/myInfo', {
                 //토큰을 기반으로 유저정보 불러옴
                 method: 'GET',
                 headers: {

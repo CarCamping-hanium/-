@@ -52,7 +52,7 @@ const ModifyPassword = ({navigation}) => {
       repassword === passwordCheck &&
       passwordRight === '비밀번호가 일치합니다.'
     ) {
-      fetch('http://3.36.28.39:8080/api/member/update/password', {
+      fetch('http://3.38.85.251:8080/api/member/update/password', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

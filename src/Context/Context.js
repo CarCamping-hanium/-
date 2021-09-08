@@ -25,7 +25,7 @@ const UserContextProvider = ({children}) => {
     if (id_data === '' || password_data === '') {
       Alert.alert('아이디 또는 비밀번호를 확인해주세요.');
     } else {
-      fetch('http://3.36.28.39:8080/api/signIn', {
+      fetch('http://3.38.85.251:8080/api/signIn', {
         //서버로 아이디, 비번 보내서 일치하는지 확인
         method: 'POST',
         headers: {
@@ -42,7 +42,7 @@ const UserContextProvider = ({children}) => {
             //일치하면 로컬스토리지에 토큰 저장
             AsyncStorage.setItem('token', json.data).then(() => {
               AsyncStorage.getItem('token', (err, result) => {
-                fetch('http://3.36.28.39:8080/api/myInfo', {
+                fetch('http://3.38.85.251:8080/api/myInfo', {
                   //토큰을 기반으로 유저정보 불러옴
                   method: 'GET',
                   headers: {
@@ -77,7 +77,7 @@ const UserContextProvider = ({children}) => {
 
   const getUserInfo = () => {
     AsyncStorage.getItem('token', (err, result) => {
-      fetch('http://3.36.28.39:8080/api/myInfo', {
+      fetch('http://3.38.85.251:8080/api/myInfo', {
         //토큰을 기반으로 유저정보 불러옴
         method: 'GET',
         headers: {
@@ -102,7 +102,7 @@ const UserContextProvider = ({children}) => {
   };
 
   const logout = () => {
-    fetch('http://3.36.28.39:8080/api/logout', {
+    fetch('http://3.38.85.251:8080/api/logout', {
       //토큰을 기반으로 유저정보 불러옴
       method: 'GET',
       headers: {

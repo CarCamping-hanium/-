@@ -131,7 +131,7 @@ const ChabakjiEnrollment = ({navigation}) => {
       uri: image.path,
     });
 
-    fetch('http://3.36.28.39:8080/api/upload', {
+    fetch('http://3.38.85.251:8080/api/upload', {
       method: 'POST',
       headers: {
         'Content-Type': 'multipart/form-data',
@@ -449,7 +449,7 @@ const ChabakjiEnrollment = ({navigation}) => {
               } else if (checkImageUpload === false) {
                 Alert.alert('사진 업로드 버튼을 눌러주세요.');
               } else {
-                fetch('http://3.36.28.39:8080/api/camping/register', {
+                fetch('http://3.38.85.251:8080/api/camping/register', {
                   method: 'POST',
                   headers: {
                     'Content-Type': 'application/json',
@@ -481,7 +481,7 @@ const ChabakjiEnrollment = ({navigation}) => {
                       setCategory('지역');
                       setCheckImageUpload(false);
                       AsyncStorage.getItem('token', (err, result) => {
-                        fetch('http://3.36.28.39:8080/api/myInfo', {
+                        fetch('http://3.38.85.251:8080/api/myInfo', {
                           //토큰을 기반으로 유저정보 불러옴
                           method: 'GET',
                           headers: {

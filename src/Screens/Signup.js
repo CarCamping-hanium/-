@@ -40,7 +40,7 @@ const Signup = ({navigation}) => {
       setID('');
       setIDCheckMsg('');
     } else {
-      fetch('http://3.36.28.39:8080/api/checkLoginId', {
+      fetch('http://3.38.85.251:8080/api/checkLoginId', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -103,7 +103,7 @@ const Signup = ({navigation}) => {
       setNickname('');
       setNicknameCheckMsg('');
     } else {
-      fetch('http://3.36.28.39:8080/api/checkNickName', {
+      fetch('http://3.38.85.251:8080/api/checkNickName', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -138,7 +138,7 @@ const Signup = ({navigation}) => {
       passwordRight === '비밀번호가 일치합니다.' &&
       nicknameCheckMsg === '사용 가능한 닉네임입니다.'
     ) {
-      fetch('http://3.36.28.39:8080/api/signUp', {
+      fetch('http://3.38.85.251:8080/api/signUp', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

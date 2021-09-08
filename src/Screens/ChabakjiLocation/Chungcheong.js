@@ -21,12 +21,15 @@ const Chungcheong = ({navigation}) => {
   const [LocationList, setLocationList] = useState([]);
   const [LocationLength, setLocationLength] = useState();
   
-  const getChabakLocation = () => {
-    fetch('http://3.36.28.39:8080/api/camping/map', {
-      method: 'GET',
+ const getChabakLocation = () => {
+   
+    fetch('http://3.38.85.251:8080/api/camping/map', {
+      method: 'POST',
       headers: {
         token: userInfo.token,
-      },
+      },  body: JSON.stringify({
+       region:'경기도'
+      }),
     })
       .then(response => response.json())
       .then(json => {
@@ -39,7 +42,7 @@ const Chungcheong = ({navigation}) => {
       .catch(e => {
         console.log(e);
       });
-      
+    
   };
   useEffect(() => {
     getChabakLocation();

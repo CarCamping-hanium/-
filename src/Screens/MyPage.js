@@ -26,7 +26,7 @@ const MyPage = ({navigation}) => {
 
   useEffect(() => {
     AsyncStorage.getItem('token', (err, result) => {
-      fetch('http://3.36.28.39:8080/api/myInfo', {
+      fetch('http://3.38.85.251:8080/api/myInfo', {
         //토큰을 기반으로 유저정보 불러옴
         method: 'GET',
         headers: {
@@ -288,7 +288,7 @@ const MyPage = ({navigation}) => {
                   {
                     text: '탈퇴',
                     onPress: () => {
-                      fetch('http://3.36.28.39:8080/api/memberDelete', {
+                      fetch('http://3.38.85.251:8080/api/memberDelete', {
                         //서버로 아이디, 비번 보내서 일치하는지 확인
                         method: 'DELETE',
                         headers: {
