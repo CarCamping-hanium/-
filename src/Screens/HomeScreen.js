@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useEffect} from 'react';
+import React, {useState,useLayoutEffect, useEffect} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -9,9 +9,11 @@ import {
 } from 'react-native';
 import {DrawerActions} from '@react-navigation/native';
 import SplashScreen from 'react-native-splash-screen';
-
+const [LocationList, setLocationList] = useState();
+const [LocationLength, setLocationLength] = useState();
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
+const {userInfo} = useContext(UserContext);
 const HomeScreen = ({navigation}) => {
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -26,8 +28,28 @@ const HomeScreen = ({navigation}) => {
       ),
     });
   }, []);
-
+  const getChabakLocation = () => {
+    fetch('http://3.36.28.39:8080/api/camping/map', {
+      method: 'GET',
+      headers: {
+        token: userInfo.token,
+      },
+    })
+      .then(response => response.json())
+      .then(json => {
+        console.log(json.data);
+        setLocationList(json.data);
+        setLocationLength(json.data.length);
+        setMarker();
+     
+      })
+      .catch(e => {
+        console.log(e);
+      });
+      
+  };
   useEffect(() => {
+    getChabakLocation();
     setTimeout(() => {
       SplashScreen.hide();
     }, 2000);

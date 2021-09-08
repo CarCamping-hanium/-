@@ -39,7 +39,6 @@ const PointRanking = ({navigation}) => {
       ),
     });
   }, []);
-
   const getRankingInfo = () => {
     fetch('http://3.36.28.39:8080/api/ranking', {
       method: 'GET',
@@ -197,7 +196,13 @@ const PointRanking = ({navigation}) => {
               height: 56,
               width: 70,
               backgroundColor:
-                myRank === 1 ? '#ffd700' : myRank === 2 ? '#c0c0c0' : '#c49c48',
+              myRank === 1
+                ? '#ffd700'
+                : myRank === 2
+                ? '#c0c0c0'
+                : myRank === 3
+                ? '#c49c48'
+                : 'white',
             }}>
             <Text
               style={{

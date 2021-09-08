@@ -311,11 +311,9 @@ const Signup = ({navigation}) => {
       </View>
       <View
         style={{
-          flex: 1,
           alignItems: 'center',
           justifyContent: 'center',
-          position: 'absolute',
-          bottom: 50,
+          marginTop:'40%',
         }}>
         <TouchableOpacity
           style={{
