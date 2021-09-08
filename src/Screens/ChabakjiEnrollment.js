@@ -38,7 +38,7 @@ const ChabakjiEnrollment = ({navigation}) => {
     //address
     '아래 버튼을 눌러 차박지를 검색해주세요.',
   );
-  const {userInfo, setUserInfo} = useContext(UserContext);
+  const {userInfo, getUserInfo} = useContext(UserContext);
 
   // const chooseImageFromLibrary = () => {
   //   launchImageLibrary(
@@ -480,35 +480,7 @@ const ChabakjiEnrollment = ({navigation}) => {
                       setVideoLink('');
                       setCategory('지역');
                       setCheckImageUpload(false);
-                      AsyncStorage.getItem('token', (err, result) => {
-                        fetch('http://3.38.85.251:8080/api/myInfo', {
-                          //토큰을 기반으로 유저정보 불러옴
-                          method: 'GET',
-                          headers: {
-                            token: result,
-                          },
-                        })
-                          .then(response => response.json())
-                          .then(json => {
-                            AsyncStorage.setItem(
-                              'userInfo',
-                              JSON.stringify(json),
-                            ); //로컬스토리지 최신화
-                            AsyncStorage.getItem('userInfo', (err, result) => {
-                              console.log(result);
-                            });
-                            setUserInfo({
-                              id: json.data.loginId,
-                              member_id: json.data.member_id,
-                              nickname: json.data.nickname,
-                              point: json.data.point,
-                              token: userInfo.token,
-                            });
-                          })
-                          .catch(e => {
-                            console.log(e);
-                          });
-                      });
+                      getUserInfo();
                       navigation.navigate('HomeScreen');
                     } else {
                       Alert.alert(json.msg);

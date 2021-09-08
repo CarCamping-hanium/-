@@ -58,6 +58,7 @@ const UserContextProvider = ({children}) => {
                       nickname: json.data.nickname,
                       point: json.data.point,
                       token: result,
+                      profile: json.data.profile,
                     });
                   })
                   .catch(e => {
@@ -93,6 +94,7 @@ const UserContextProvider = ({children}) => {
             nickname: json.data.nickname,
             point: json.data.point,
             token: result,
+            profile: json.data.profile,
           });
         })
         .catch(e => {

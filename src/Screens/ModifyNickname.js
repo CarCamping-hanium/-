@@ -17,7 +17,7 @@ const ModifyNickname = ({navigation}) => {
   const [nickname, setNickname] = useState('');
   const [nicknameCheckMsg, setNicknameCheckMsg] = useState('');
   const [nicknameCheck, setNicknameCheck] = useState(''); //닉네임 중복 확인 완료 상태 임시 저장
-  const {userInfo, setUserInfo} = useContext(UserContext);
+  const {userInfo, getUserInfo} = useContext(UserContext);
 
   const nicknameChecking = str => {
     var regExp = /^([a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]).{1,7}$/;
@@ -77,32 +77,7 @@ const ModifyNickname = ({navigation}) => {
             Alert.alert('닉네임이 변경되었습니다.');
 
             //닉네임 변경 시 로컬스토리지에 userInfo 최신화
-            AsyncStorage.getItem('token', (err, result) => {
-              fetch('http://3.38.85.251:8080/api/myInfo', {
-                //토큰을 기반으로 유저정보 불러옴
-                method: 'GET',
-                headers: {
-                  token: result,
-                },
-              })
-                .then(response => response.json())
-                .then(json => {
-                  AsyncStorage.setItem('userInfo', JSON.stringify(json)); //로컬스토리지 최신화
-                  AsyncStorage.getItem('userInfo', (err, result) => {
-                    console.log(result);
-                  });
-                  setUserInfo({
-                    id: userInfo.id,
-                    member_id: userInfo.member_id,
-                    nickname: nickname,
-                    point: userInfo.point,
-                    token: userInfo.token,
-                  });
-                })
-                .catch(e => {
-                  console.log(e);
-                });
-            });
+            getUserInfo();
             navigation.navigate('MyPage');
           } else {
             Alert.alert('닉네임을 다시 확인해주세요.');
