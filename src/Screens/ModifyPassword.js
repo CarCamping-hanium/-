@@ -19,6 +19,10 @@ const ModifyPassword = ({navigation}) => {
   const [passwordRight, setPasswordRight] = useState(''); //비밀번호가 일치하는지 아닌지 출력
   const [passwordCheck, setPasswordCheck] = useState(''); //비밀번호 중복 확인 완료 상태 임시 저장
   const [msgColor, setMsgColor] = useState(''); //passwordRight TextColor
+
+  const [checkPasswordBoxColor, setCheckPasswordBoxColor] =
+    useState('transparent');
+
   const {userInfo, setUserInfo} = useContext(UserContext);
 
   const passwordChecking = str => {
@@ -35,10 +39,12 @@ const ModifyPassword = ({navigation}) => {
       setRepassword('');
       setPasswordRight('');
     } else if (password === repassword) {
+      setCheckPasswordBoxColor('transparent');
       setPasswordCheck(password);
       setPasswordRight('비밀번호가 일치합니다.');
       setMsgColor('#295eba');
     } else {
+      setCheckPasswordBoxColor('red');
       setPasswordRight('비밀번호가 일치하지 않습니다.');
       setMsgColor('red');
     }
@@ -132,7 +138,17 @@ const ModifyPassword = ({navigation}) => {
         </View>
         <View style={{flexDirection: 'row'}}>
           <TextInput
-            style={styles.Text}
+            style={{
+              width: 200,
+              height: 40,
+              backgroundColor: '#cccccc',
+              paddingLeft: 16,
+              paddingRight: 16,
+              borderRadius: 8,
+              marginTop: 15,
+              borderWidth: 2,
+              borderColor: checkPasswordBoxColor,
+            }}
             autoCapitalize="none"
             autoCorrect={false}
             allowFontScaling={false}
