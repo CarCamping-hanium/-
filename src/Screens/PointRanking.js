@@ -39,12 +39,14 @@ const PointRanking = ({navigation}) => {
       ),
     });
   }, []);
+
   const getRankingInfo = () => {
     fetch('http://3.38.85.251:8080/api/ranking', {
       method: 'GET',
     })
       .then(response => response.json())
       .then(json => {
+        console.log(json);
         setRankingList(json.data);
         setListLength(json.data.length);
       })
@@ -196,13 +198,13 @@ const PointRanking = ({navigation}) => {
               height: 56,
               width: 70,
               backgroundColor:
-              myRank === 1
-                ? '#ffd700'
-                : myRank === 2
-                ? '#c0c0c0'
-                : myRank === 3
-                ? '#c49c48'
-                : 'white',
+                myRank === 1
+                  ? '#ffd700'
+                  : myRank === 2
+                  ? '#c0c0c0'
+                  : myRank === 3
+                  ? '#c49c48'
+                  : 'white',
             }}>
             <Text
               style={{
