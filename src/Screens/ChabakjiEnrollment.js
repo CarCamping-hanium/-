@@ -58,6 +58,7 @@ const ChabakjiEnrollment = ({navigation}) => {
   //   );
   // };
 
+  //사진을 아직 선택하지 않았을 때와 선택한 후의 보여지는 이미지가 다름
   const showImage = () => {
     if (image === '') {
       return (
@@ -90,6 +91,7 @@ const ChabakjiEnrollment = ({navigation}) => {
     }
   };
 
+  //갤러리에서 사진을 가져옴
   const chooseImageFromLibrary = () => {
     ImagePicker.openPicker({
       width: screenWidth,
@@ -123,6 +125,7 @@ const ChabakjiEnrollment = ({navigation}) => {
     setImage('');
   };
 
+  //가져온 사진을 서버에 먼저 업로드하는 과정의 함수
   const uploadPhoto = () => {
     const formData = new FormData();
     formData.append('images', {
