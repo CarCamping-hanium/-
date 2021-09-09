@@ -7,28 +7,48 @@ import {
   TouchableOpacity,
   Dimensions,
   Image,
+  FlatList,
 } from 'react-native';
 import NaverMapView, {Marker, Path} from 'react-native-nmap';
 import Modal from '../../Components/Modal';
 import {UserContext} from '../../Context/Context';
-
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
-
-const Chungcheong = ({navigation}) => {
+const Chungcheong = ({navigation}) => {  
+  const {userInfo} = useContext(UserContext);
   const {selectedArea} = useContext(UserContext);
   const [visible, setVisible] = useState(false);
-
-  const P0 = {latitude: 37.455648, longitude: 126.3697234};
-  const P1 = {latitude: 37.565051, longitude: 126.978567};
-  const P2 = {latitude: 37.565383, longitude: 126.976292};
-
+  const [LocationList, setLocationList] = useState([]);
+ const getChabakLocation = () => { console.log('지역:' ,'경기도')
+    fetch('http://3.38.85.251:8080/api/camping/map', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        token: userInfo.token,
+      },
+      body: JSON.stringify({
+      region: '경기도'
+      }),
+    })
+      .then(response => response.json())
+      .then(json => {
+        console.log(json)
+        setLocationList(json.data);
+        setLocationLength(json.data.length);   
+      })
+      .catch(e => {
+        console.log(e);
+      });
+    
+  };
   useEffect(() => {
+    getChabakLocation();
     selectedArea('충청도');
   }, []);
+  const P0 = {latitude: 37.54585425908, longitude: 128.2605803183507};
 
   return (
-    <SafeAreaView>
+    <SafeAreaView>   
       <NaverMapView
         style={{width: '100%', height: '100%'}}
         //showsMyLocationButton={true}
@@ -36,44 +56,15 @@ const Chungcheong = ({navigation}) => {
         //onTouch={e => console.warn('onTouch', JSON.stringify(e.nativeEvent))}
         //onCameraChange={e => console.warn('onCameraChange', JSON.stringify(e))}
         //onMapClick={e => console.warn('onMapClick', JSON.stringify(e))}
-      >
-        <Marker
-          coordinate={P0}
+      >  
+ {LocationList.map((val) => {console.log(val.lng)
+  return (
+  <Marker
+          coordinate={{latitude:val.lat,longitude:val.lng}}
           pinColor="blue"
-          onClick={() => {
-            setVisible(true);
-          }}
-        />
-        <Marker
-          coordinate={P1}
-          pinColor="blue"
-          onClick={() => console.warn('onClick! p1')}
-        />
-        <Marker
-          coordinate={P2}
-          pinColor="blue"
-          onClick={() => console.warn('onClick! p2')}
-        />
-        {/* <Path
-        coordinates={[P0, P1]}
-        onClick={() => console.warn('onClick! path')}
-        width={10}
-      />
-        <Polyline
-        coordinates={[P1, P2]}
-        onClick={() => console.warn('onClick! polyline')}
-      />
-      <Circle
-        coordinate={P0}
-        color={'rgba(255,0,0,0.3)'}
-        radius={200}
-        onClick={() => console.warn('onClick! circle')}
-      />
-      <Polygon
-        coordinates={[P0, P1, P2]}
-        color={`rgba(0, 0, 0, 0.5)`}
-        onClick={() => console.warn('onClick! polygon')}
-      /> */}
+          onClick={() => console.warn('onClick! p0')}
+        />); 
+ })}
       </NaverMapView>
       <TouchableOpacity
         style={styles.openList}
