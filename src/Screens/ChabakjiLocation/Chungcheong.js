@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect} from 'react';
+import React, {useState, useContext, useEffect,useCallback} from 'react';
 import {
   View,
   Text,
@@ -8,10 +8,14 @@ import {
   Dimensions,
   Image,
   FlatList,
+  useIsFocused,
 } from 'react-native';
+import {useFocusEffect} from '@react-navigation/native';
 import NaverMapView, {Marker, Path} from 'react-native-nmap';
 import Modal from '../../Components/Modal';
 import {UserContext} from '../../Context/Context';
+import { DebugInstructions } from 'react-native/Libraries/NewAppScreen';
+let LocationList;
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 const Chungcheong = ({navigation}) => {  
@@ -19,7 +23,41 @@ const Chungcheong = ({navigation}) => {
   const {selectedArea} = useContext(UserContext);
   const [visible, setVisible] = useState(false);
   const [LocationList, setLocationList] = useState([]);
- const getChabakLocation = () => { console.log('지역:' ,'경기도')
+  const {selectedChabak_ID} = useContext(UserContext);
+  const {selectedChabak_name} = useContext(UserContext);
+  const [Chabak_Name,setChabak_Name]=useState();
+  const [Chabak_Address,setChabak_Address]=useState();
+  const[Chabak_Image,setChabak_Image]=useState();
+ 
+
+ 
+
+  const openModal=(ID)=>{
+    var url='http://3.38.85.251:8080/api/camping/'+ID;
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        token: userInfo.token,
+      },
+     
+    })
+      .then(response => response.json())
+      .then(json => {
+        setChabak_Address(json.data.address);
+        setChabak_Name(json.data.name);
+        setChabak_Image(json.data.image);
+        selectedChabak_name(json.data.name);
+        selectedChabak_ID(json.data.campsite_id);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+
+    setVisible(true);
+    }
+ const getChabakLocation = () => {
+
     fetch('http://3.38.85.251:8080/api/camping/map', {
       method: 'POST',
       headers: {
@@ -32,23 +70,24 @@ const Chungcheong = ({navigation}) => {
     })
       .then(response => response.json())
       .then(json => {
-        console.log(json)
         setLocationList(json.data);
-        setLocationLength(json.data.length);   
       })
       .catch(e => {
         console.log(e);
       });
     
   };
-  useEffect(() => {
-    getChabakLocation();
-    selectedArea('충청도');
-  }, []);
-  const P0 = {latitude: 37.54585425908, longitude: 128.2605803183507};
-
+  useFocusEffect(
+    useCallback(() => {
+      selectedArea('충청도');
+      getChabakLocation();        
+    }, [])
+);
+    const P0 = {latitude: 37.54585425908, longitude: 128.2605803183507};
   return (
+    
     <SafeAreaView>   
+     
       <NaverMapView
         style={{width: '100%', height: '100%'}}
         //showsMyLocationButton={true}
@@ -57,18 +96,22 @@ const Chungcheong = ({navigation}) => {
         //onCameraChange={e => console.warn('onCameraChange', JSON.stringify(e))}
         //onMapClick={e => console.warn('onMapClick', JSON.stringify(e))}
       >  
- {LocationList.map((val) => {console.log(val.lng)
-  return (
-  <Marker
-          coordinate={{latitude:val.lat,longitude:val.lng}}
-          pinColor="blue"
-          onClick={() => console.warn('onClick! p0')}
-        />); 
- })}
+       {  LocationList.map((val,id) => {console.log(val.lng);
+      return (
+      <Marker
+              coordinate={{latitude:val.lat,longitude:val.lng}}
+              pinColor="blue"   
+              key={id + '_' + Date.now()}
+              onClick={() => openModal(val.campsite_id)
+           
+              }
+            />) })
+            }
       </NaverMapView>
+
       <TouchableOpacity
         style={styles.openList}
-        onPress={() => {
+        onPress={() => {       
           navigation.navigate('ChabakjiList');
         }}>
         <Text
@@ -101,13 +144,13 @@ const Chungcheong = ({navigation}) => {
               style={{
                 fontSize: 20,
               }}>
-              (차박지명)
+         {Chabak_Name}
             </Text>
           </View>
           <View //사진 및 설명 컴포넌트
             style={{flex: 1, alignItems: 'flex-start'}}>
             <Image
-              source={require('../../Assets/Images/car.png')}
+              source={{uri:Chabak_Image}}
               style={{
                 width: 250,
                 height: 200,
@@ -115,9 +158,7 @@ const Chungcheong = ({navigation}) => {
               }}
             />
             <Text style={styles.modalDescription}>위치</Text>
-            <Text style={{marginTop: 3}}>(위치)</Text>
-            <Text style={styles.modalDescription}>근처 편의시설</Text>
-            <Text style={{marginTop: 3}}>(편의시설)</Text>
+            <Text style={{marginTop: 3}}>{Chabak_Address}</Text>
           </View>
           <View //버튼 컴포넌트
             style={{flexDirection: 'row'}}>
@@ -133,6 +174,9 @@ const Chungcheong = ({navigation}) => {
               style={styles.modalClose}
               onPress={() => {
                 setVisible(false);
+                setChabak_Name('');
+                setChabak_Address('');
+                setChabak_Image('');
               }}>
               <Text style={{color: 'white', fontSize: 20}}>닫기</Text>
             </TouchableOpacity>

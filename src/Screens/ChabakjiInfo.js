@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState} from 'react';
+import React, {useLayoutEffect, useState,useContext} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -11,11 +11,40 @@ import {
   View,
   Linking,
 } from 'react-native';
-
+import {UserContext} from '../Context/Context';
 const screenWidth = Dimensions.get('window').width;
 const ChabakjiInfo = ({navigation}) => {
-  const [image, setImage] = useState([]);
+  const {userInfo} = useContext(UserContext);
+  const {chabak_ID} = useContext(UserContext);
+  const [Chabak_Address,setChabak_Address]=useState();
+  const[Chabak_Exp,setChabak_Exp]=useState('');
+  const[Chabak_Link,setChabak_Link]=useState('');
+  const[Chabak_Image,setChabak_Image]=useState();
+  const getInfo=()=>{
+    var url='http://3.38.85.251:8080/api/camping/'+chabak_ID;
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        token: userInfo.token,
+      },
+     
+    })
+      .then(response => response.json())
+      .then(json => {
+        console.log(json.data);
+        setChabak_Address(json.data.address);
+        setChabak_Image(json.data.image);
+        setChabak_Link(json.data.videoLink);
+        setChabak_Exp(json.data.explanation);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+
+  };
   useLayoutEffect(() => {
+    getInfo();
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
@@ -45,23 +74,14 @@ const ChabakjiInfo = ({navigation}) => {
           marginHorizontal: 20,
           width: screenWidth,
         }}>
-        <FlatList
-          style={{height: screenWidth, width: screenWidth}}
-          horizontal={true}
-          pagingEnabled={true}
-          data={image}
-          keyExtractor={(item, index) => {
-            return `image-${index}`;
-          }}
-          renderItem={({item, index}) => (
-            <View>
-              <Image
-                source={{uri: image[index]}}
-                style={{width: screenWidth, height: screenWidth}}
-              />
-            </View>
-          )}
-        />
+          <Image
+              source={
+                {uri:Chabak_Image}}
+              style={{
+                width: screenWidth,
+                height: screenWidth,
+              }}
+            />
         <View style={{paddingRight: 140}}>
           <Text
             style={{
@@ -73,7 +93,7 @@ const ChabakjiInfo = ({navigation}) => {
             위치
           </Text>
           <Text style={styles.content}>
-            경상남도 거제시 일운명 구조오리 500-1
+         {Chabak_Address}
           </Text>
         </View>
         <View>
@@ -87,12 +107,7 @@ const ChabakjiInfo = ({navigation}) => {
             설명
           </Text>
           <Text style={styles.content}>
-            경상남도 거제에 위치한 차박 명소경상남도 거제에 위치한 차박 명소
-            경상남도 거제에 위치한 차박 명소 경상남도 거제에 위치한 차박 명소
-            경상남도 거제에 위치한 차박 명소경상남도 거제에 위치한 차박 명소
-            경상남도 거제에 위치한 차박 명소 경상남도 거제에 위치한 차박 명소
-            경상남도 거제에 위치한 차박 명소 경상남도 거제에 위치한 차박 명소
-            경상남도 거제에 위치한 차박 명소
+     {Chabak_Exp}
           </Text>
         </View>
         <View>
@@ -118,9 +133,9 @@ const ChabakjiInfo = ({navigation}) => {
             관련 영상 링크 (선택사항)
           </Text>
           <Text
-            onPress={() => Linking.openURL('https://www.youtube.com')}
+            onPress={() => Linking.openURL(Chabak_Link)}
             style={styles.videoLink}>
-            www.youtube.com
+            {Chabak_Link}
           </Text>
         </View>
         <View

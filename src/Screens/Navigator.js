@@ -18,7 +18,7 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer} from '@react-navigation/native';
+import {NavigationContainer,useFocusEffect} from '@react-navigation/native';
 
 import Login from './Login';
 import Signup from './Signup';
@@ -70,6 +70,7 @@ const LoginNavigator = ({navigation}) => {
 
 const HomeScreenNavigator = navigation => {
   const {area} = useContext(UserContext);
+  const {chabak_name} = useContext(UserContext);
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -115,7 +116,10 @@ const HomeScreenNavigator = navigation => {
       <Stack.Screen
         name="ChabakjiInfo"
         component={ChabakjiInfo}
-        options={{title: '차박지명', headerBackTitleVisible: false}}
+        options={{
+          title:  chabak_name,
+          headerBackTitleVisible: false,
+        }}
       />
       <Stack.Screen
         name="ReviewBoard"

@@ -13,7 +13,8 @@ const UserContext = createContext(defaultContext);
 const UserContextProvider = ({children}) => {
   const [userInfo, setUserInfo] = useState(undefined);
   const [area, setArea] = useState('');
-
+  const [chabak_ID,setChabak_ID] = useState('');
+  const [chabak_name,setChabak_name] = useState('');
   const login = (id_data, password_data) => {
     // AsyncStorage.setItem('token', 'save your token').then(() => {
     //   setUserInfo({
@@ -134,7 +135,12 @@ const UserContextProvider = ({children}) => {
   const selectedArea = data => {
     setArea(data);
   };
-
+  const selectedChabak_ID = data => {
+    setChabak_ID(data);
+  };
+  const selectedChabak_name = data => {
+    setChabak_name(data);
+  };
   useEffect(() => {
     getUserInfo();
   }, []);
@@ -150,6 +156,10 @@ const UserContextProvider = ({children}) => {
         logout,
         selectedArea,
         deleteMember,
+        selectedChabak_ID,
+        chabak_ID,
+        selectedChabak_name,
+        chabak_name,
       }}>
       {children}
     </UserContext.Provider>

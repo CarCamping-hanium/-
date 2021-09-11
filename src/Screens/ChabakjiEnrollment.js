@@ -38,6 +38,9 @@ const ChabakjiEnrollment = ({navigation}) => {
     //address
     '아래 버튼을 눌러 차박지를 검색해주세요.',
   );
+  useEffect(() => {
+    uploadPhoto();
+    },[image]);
   const {userInfo, getUserInfo} = useContext(UserContext);
 
   // const chooseImageFromLibrary = () => {
@@ -126,18 +129,18 @@ const ChabakjiEnrollment = ({navigation}) => {
   };
 
   //가져온 사진을 서버에 먼저 업로드하는 과정의 함수
-  const uploadPhoto = () => {
+  const uploadPhoto = () => { console.log(image.filename);
     const formData = new FormData();
-    formData.append('images', {
-      name: image.filename,
-      type: 'image/jpeg',
+    formData.append('images', {   
+      name:'name',
+      type: image.mime,
       uri: image.path,
     });
-
+   
     fetch('http://3.38.85.251:8080/api/upload', {
       method: 'POST',
       headers: {
-        'Content-Type': 'multipart/form-data',
+       // 'Content-Type': 'multipart/form-data',
         token: userInfo.token,
       },
       body: formData,
