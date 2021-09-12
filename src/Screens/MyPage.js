@@ -29,45 +29,33 @@ const MyPage = ({navigation}) => {
 
   //사진을 서버로 보내는 함수
   const uploadProfile = () => {
-    const formData = new FormData();
-    formData.append('images', {
-      name: profileImage.filename,
-      type: 'image/jpeg',
-      uri: profileImage.path,
-    });
-    Alert.alert('프로필 사진을 변경하시겠습니까?', '', [
-      {
-        text: '변경',
-        onPress: () => {
-          fetch('http://3.38.85.251:8080/api/updateProfile', {
-            //서버로 아이디, 비번 보내서 일치하는지 확인
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              token: userInfo.token,
-            },
-            body: formData,
-          })
-            .then(response => response.json())
-            .then(json => {
-              console.log(json);
-              if (json.msg === 'success') {
-                Alert.alert('프로필 사진이 변경되었습니다.');
-                getUserInfo();
-              } else {
-                Alert.alert(json.msg);
-              }
-            });
+    if (profileImage !== null) {
+      const formData = new FormData();
+      formData.append('images', {
+        name: 'profile',
+        type: 'image/jpeg',
+        uri: profileImage.path,
+      });
+      fetch('http://3.38.85.251:8080/api/updateProfile', {
+        //서버로 아이디, 비번 보내서 일치하는지 확인
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          token: userInfo.token,
         },
-      },
-      {
-        text: '취소',
-        onPress: () => {
-          setProfileImage(userInfo.profile);
-          getUserInfo();
-        },
-      },
-    ]);
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(json => {
+          console.log('upload api console : ', json);
+          if (json.msg === 'success') {
+            console.log('succe:', json);
+            getUserInfo();
+          } else {
+            Alert.alert(json.msg);
+          }
+        });
+    }
   };
 
   //프사 삭제 함수
@@ -84,7 +72,6 @@ const MyPage = ({navigation}) => {
       .then(json => {
         console.log(json);
         if (json.success === true) {
-          setProfileImage(userInfo.profile);
           setProfileImage(null);
           getUserInfo();
           Alert.alert('프로필 사진이 삭제되었습니다.');
@@ -113,22 +100,22 @@ const MyPage = ({navigation}) => {
         //   //imageList = [...image, img.path];
         // });
         console.log('Response: ', response);
-        setProfileModalVisible(false);
         setProfileImage(response);
-        Alert.alert("'사진 변경 완료' 버튼을 눌러주세요!");
+        setProfileModalVisible(false);
       })
       .catch(e => console.log('Error: ', e.message));
   };
 
   useEffect(() => {
-    setProfileImage(userInfo.profile);
     getUserInfo();
+    setProfileImage(userInfo.profile);
   }, []);
 
   //프사가 변경될 때마다 프로필을 변경된 프사로 새로고침 하기 위함
   useEffect(() => {
+    uploadProfile();
     getUserInfo();
-  }, [userInfo.profile]);
+  }, [profileImage]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -164,26 +151,6 @@ const MyPage = ({navigation}) => {
           }
           style={{width: 200, height: 200, borderRadius: 20}}
         />
-      </TouchableOpacity>
-      <TouchableOpacity
-        style={{
-          alignItems: 'center',
-          justifyContent: 'center',
-          backgroundColor: '#295eba',
-          width: 130,
-          height: 50,
-          borderRadius: 8,
-          marginHorizontal: 10,
-          marginTop: 10,
-        }}
-        onPress={() => {
-          if (profileImage !== null) {
-            uploadProfile();
-          } else {
-            Alert.alert('프로필 사진을 선택해주세요.');
-          }
-        }}>
-        <Text style={{fontWeight: 'bold', color: 'white'}}>사진 변경 완료</Text>
       </TouchableOpacity>
       <Modal visible={profileModalVisible}>
         <View
