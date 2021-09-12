@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState,useContext} from 'react';
+import React, {useLayoutEffect, useState, useContext} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -14,21 +14,19 @@ import {
 import {UserContext} from '../Context/Context';
 const screenWidth = Dimensions.get('window').width;
 const ChabakjiInfo = ({navigation}) => {
-  const {userInfo} = useContext(UserContext);
-  const {chabak_ID} = useContext(UserContext);
-  const [Chabak_Address,setChabak_Address]=useState();
-  const[Chabak_Exp,setChabak_Exp]=useState('');
-  const[Chabak_Link,setChabak_Link]=useState('');
-  const[Chabak_Image,setChabak_Image]=useState();
-  const getInfo=()=>{
-    var url='http://3.38.85.251:8080/api/camping/'+chabak_ID;
+  const {userInfo, chabak_ID} = useContext(UserContext);
+  const [Chabak_Address, setChabak_Address] = useState();
+  const [Chabak_Exp, setChabak_Exp] = useState('');
+  const [Chabak_Link, setChabak_Link] = useState('');
+  const [Chabak_Image, setChabak_Image] = useState('');
+  const getInfo = () => {
+    var url = 'http://3.38.85.251:8080/api/camping/' + chabak_ID;
     fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         token: userInfo.token,
       },
-     
     })
       .then(response => response.json())
       .then(json => {
@@ -41,7 +39,6 @@ const ChabakjiInfo = ({navigation}) => {
       .catch(e => {
         console.log(e);
       });
-
   };
   useLayoutEffect(() => {
     getInfo();
@@ -74,14 +71,13 @@ const ChabakjiInfo = ({navigation}) => {
           marginHorizontal: 20,
           width: screenWidth,
         }}>
-          <Image
-              source={
-                {uri:Chabak_Image}}
-              style={{
-                width: screenWidth,
-                height: screenWidth,
-              }}
-            />
+        <Image
+          source={{uri: Chabak_Image}}
+          style={{
+            width: screenWidth,
+            height: screenWidth,
+          }}
+        />
         <View style={{paddingRight: 140}}>
           <Text
             style={{
@@ -92,9 +88,7 @@ const ChabakjiInfo = ({navigation}) => {
             }}>
             위치
           </Text>
-          <Text style={styles.content}>
-         {Chabak_Address}
-          </Text>
+          <Text style={styles.content}>{Chabak_Address}</Text>
         </View>
         <View>
           <Text
@@ -106,9 +100,7 @@ const ChabakjiInfo = ({navigation}) => {
             }}>
             설명
           </Text>
-          <Text style={styles.content}>
-     {Chabak_Exp}
-          </Text>
+          <Text style={styles.content}>{Chabak_Exp}</Text>
         </View>
         <View>
           <Text
