@@ -150,22 +150,6 @@ const ChabakjiEnrollment = ({navigation}) => {
     }
   };
 
-  const photoText = () => {
-    if (image === '') {
-      return (
-        <Text style={{marginTop: 20, fontWeight: '500', fontSize: 15}}>
-          정방형(정사각형) 사진을 추천드려요!
-        </Text>
-      );
-    } else {
-      return (
-        <Text style={{marginTop: 20, fontWeight: '500', fontSize: 15}}>
-          확정된 사진이라면 '사진 업로드' 버튼을 눌러주세요!
-        </Text>
-      );
-    }
-  };
-
   return (
     <SafeAreaView
       style={{
@@ -234,7 +218,9 @@ const ChabakjiEnrollment = ({navigation}) => {
         /> */}
         {showImage()}
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          {photoText()}
+          <Text style={{marginTop: 20, fontWeight: '500', fontSize: 15}}>
+            정방형(정사각형) 사진을 추천드려요!
+          </Text>
           <TouchableOpacity
             style={styles.selectPhoto}
             onPress={() => {
