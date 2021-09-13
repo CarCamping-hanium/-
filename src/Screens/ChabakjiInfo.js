@@ -19,6 +19,7 @@ const ChabakjiInfo = ({navigation}) => {
   const [Chabak_Exp, setChabak_Exp] = useState('');
   const [Chabak_Link, setChabak_Link] = useState('');
   const [Chabak_Image, setChabak_Image] = useState('');
+
   const getInfo = () => {
     var url = 'http://3.38.85.251:8080/api/camping/' + chabak_ID;
     fetch(url, {
@@ -57,6 +58,7 @@ const ChabakjiInfo = ({navigation}) => {
       ),
     });
   }, []);
+
   return (
     <SafeAreaView
       style={{
