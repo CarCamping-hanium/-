@@ -96,7 +96,7 @@ const Chungcheong = ({navigation}) => {
         //onCameraChange={e => console.warn('onCameraChange', JSON.stringify(e))}
         //onMapClick={e => console.warn('onMapClick', JSON.stringify(e))}
       >  
-       {  LocationList.map((val,id) => {console.log(val.lng);
+       {  LocationList.map((val,id) => {
       return (
       <Marker
               coordinate={{latitude:val.lat,longitude:val.lng}}

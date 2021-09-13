@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState} from 'react';
+import React, {useLayoutEffect, useState,useContext} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -11,11 +11,16 @@ import {
   View,
 } from 'react-native';
 import {Rating} from 'react-native-ratings';
-
+import {UserContext} from '../Context/Context';
 const screenWidth = Dimensions.get('window').width;
 const ChabakjiInfo = ({navigation}) => {
+  const {userInfo, Review_ID} = useContext(UserContext);
   const [image, setImage] = useState([]);
+  const [title,setTitle]=useState('');
+  const [Description,setDescription]=useState('');
+  const [Score,setScore]=useState();
   useLayoutEffect(() => {
+    getInfo();
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
@@ -30,7 +35,27 @@ const ChabakjiInfo = ({navigation}) => {
         </TouchableOpacity>
       ),
     });
+ 
   }, []);
+  const getInfo = () => {
+    var url = 'http://3.38.85.251:8080/api/campingReview/' + Review_ID;
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        token: userInfo.token,
+      },
+    })
+      .then(response => response.json())
+      .then(json => {
+        setTitle(json.data.title);
+        setScore(json.data.score);
+        console.log(json.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
   return (
     <SafeAreaView
       style={{
@@ -51,7 +76,7 @@ const ChabakjiInfo = ({navigation}) => {
               fontWeight: 'bold',
               fontSize: 25,
             }}>
-            제목
+          {title}
           </Text>
         </View>
         <View
@@ -120,6 +145,7 @@ const ChabakjiInfo = ({navigation}) => {
               jumpValue={0.5}
               showRating={true}
               fractions={10}
+              startingValue={Score}
             />
           </View>
         </View>

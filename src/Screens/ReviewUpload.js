@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect,useContext} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -16,17 +16,19 @@ import {
 } from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 import {Rating} from 'react-native-ratings';
-
+import {UserContext} from '../Context/Context';
 const screenWidth = Dimensions.get('window').width;
 let imageList = [];
 
 const ReviewUpload = ({navigation}) => {
+  const {userInfo, chabak_ID} = useContext(UserContext);
   const [image, setImage] = useState([]);
   const [reviewTitle, setReviewTitle] = useState('');
   const [reviewDescription, setReviewDescription] = useState('');
   const [score, setScore] = useState(0);
 
   const chooseImageFromLibrary = () => {
+  
     ImagePicker.openPicker({
       width: screenWidth,
       height: screenWidth,
@@ -53,7 +55,40 @@ const ReviewUpload = ({navigation}) => {
       })
       .catch(e => console.log('Error: ', e.message));
   };
-
+const ReviewUpload=()=>{ 
+  if (
+    //image === '' ||
+    reviewTitle==='' ||
+   reviewDescription === ''
+  ) {
+    Alert.alert('입력되지 않은 정보가 있습니다.');
+  } else { 
+  var url = 'http://3.38.85.251:8080/api/review/' + chabak_ID;
+  fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      token: userInfo.token,
+    },
+    body: JSON.stringify({
+   content:reviewDescription,
+   score:score,
+   title:reviewTitle,
+    }),
+  })
+  .then(response => response.json())
+  .then(json => {
+   console.log(json);
+   if(json.success===true){
+   imageList.length = 0;
+   setImage([]);
+   Alert.alert('차박린이', '회원님의 소중한 리뷰가 등록되었습니다.');
+   navigation.navigate('ReviewBoard');}
+  })
+  .catch(e => {
+    console.log(e);
+  });
+};}
   const removeImage = index => {
     let new_imageList = [...image];
     new_imageList.splice(index, 1);
@@ -150,6 +185,7 @@ const ReviewUpload = ({navigation}) => {
             이 차박지의 점수는?
           </Text>
           <Rating
+        onStartRating={0}
             ratingCount={5}
             imageSize={40}
             jumpValue={0.5}
@@ -169,16 +205,15 @@ const ReviewUpload = ({navigation}) => {
           <TouchableOpacity
             style={styles.Enroll}
             onPress={() => {
-              imageList.length = 0;
-              setImage([]);
-              Alert.alert('차박린이', '회원님의 소중한 리뷰가 등록되었습니다.');
-              navigation.navigate('ReviewBoard');
+              ReviewUpload();
+           
             }}>
             <Text style={{color: 'white'}}>등록</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.Cancel}
             onPress={() => {
+            
               imageList.length = 0;
               setImage([]);
               navigation.navigate('ReviewBoard');
