@@ -18,7 +18,7 @@ import {
   DrawerItem,
 } from '@react-navigation/drawer';
 import {createStackNavigator} from '@react-navigation/stack';
-import {NavigationContainer,useFocusEffect} from '@react-navigation/native';
+import {NavigationContainer, useFocusEffect} from '@react-navigation/native';
 
 import Login from './Login';
 import Signup from './Signup';
@@ -117,7 +117,7 @@ const HomeScreenNavigator = navigation => {
         name="ChabakjiInfo"
         component={ChabakjiInfo}
         options={{
-          title:  chabak_name,
+          title: chabak_name,
           headerBackTitleVisible: false,
         }}
       />
@@ -125,7 +125,7 @@ const HomeScreenNavigator = navigation => {
         name="ReviewBoard"
         component={ReviewBoard}
         options={{
-          title: '리뷰 페이지',
+          title: chabak_name + '의 리뷰',
           headerBackTitleVisible: false,
         }}
       />

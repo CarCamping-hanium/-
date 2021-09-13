@@ -1,4 +1,4 @@
-import React, {useState, useLayoutEffect,useContext} from 'react';
+import React, {useState, useLayoutEffect, useContext} from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -16,8 +16,8 @@ const screenWidth = Dimensions.get('window').width;
 const sort = ['별점순', '최신순', '오래된순'];
 const ReviewBoard = ({navigation}) => {
   const [ReviewList, setReviewList] = useState();
-  const {userInfo, chabak_name,chabak_ID} = useContext(UserContext);
-  const [Sorting,setSorting] = useState('gradeUp');
+  const {userInfo, chabak_name, chabak_ID} = useContext(UserContext);
+  const [Sorting, setSorting] = useState('gradeUp');
   const {selectedReview_ID} = useContext(UserContext);
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -38,7 +38,8 @@ const ReviewBoard = ({navigation}) => {
   }, [Sorting]);
   const getReview = () => {
     console.log(Sorting);
-    var url='http://3.38.85.251:8080/api/campingReview/'+chabak_ID+'/'+Sorting;
+    var url =
+      'http://3.38.85.251:8080/api/campingReview/' + chabak_ID + '/' + Sorting;
     console.log(url);
     fetch(url, {
       method: 'GET',
@@ -46,13 +47,11 @@ const ReviewBoard = ({navigation}) => {
         'Content-Type': 'application/json',
         token: userInfo.token,
       },
-    },
-    )
+    })
       .then(response => response.json())
       .then(json => {
         setReviewList(json.data);
         console.log(json);
-
       })
       .catch(e => {
         console.log(e);
@@ -60,9 +59,9 @@ const ReviewBoard = ({navigation}) => {
   };
   return (
     <SafeAreaView style={styles.Container}>
-      <Text style={styles.MainTitle}>{chabak_name}에 달린 리뷰</Text>
       <View
         style={{
+          marginTop: 20,
           flexDirection: 'row',
           justifyContent: 'center',
         }}>
@@ -82,16 +81,11 @@ const ReviewBoard = ({navigation}) => {
           data={sort}
           defaultValue={'별점순'}
           onSelect={(selectedItem, index) => {
-            if(index===0)
-            setSorting('gradeUp');
-            else if(index===1)
-            setSorting('latestUP');
-            else if(index===2)
-            setSorting('latestDOWN');
-          
+            if (index === 0) setSorting('gradeUp');
+            else if (index === 1) setSorting('latestUP');
+            else if (index === 2) setSorting('latestDOWN');
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
-  
             return selectedItem;
           }}
           rowTextForSelection={(item, index) => {
@@ -166,12 +160,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  MainTitle: {
-    fontSize: 25,
-    textAlign: 'center',
-    fontWeight: 'bold',
-    marginBottom: '5%',
   },
   Sort: {marginTop: 10, fontSize: 20},
   ReviewUpload: {
