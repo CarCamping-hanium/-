@@ -1,4 +1,5 @@
-import React, {useLayoutEffect, useState} from 'react';
+import {response} from 'express';
+import React, {useLayoutEffect, useState, useEffect, useContext} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -11,30 +12,75 @@ import {
   Image,
 } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
+import {UserContext} from '../Context/Context';
 
-const sort = ['최신순', '오래된순'];
+const sort = ['최신순', '오래된순', '평점 높은 순', '평점 낮은 순'];
 const screenWidth = Dimensions.get('window').width;
-
-const DATA = [
-  {
-    title: '차박지1',
-    recommendcount: '5',
-    starcount: '★★★★★',
-  },
-  {
-    title: '차박지2',
-    recommendcount: '1',
-    starcount: '★★★★☆',
-  },
-  {
-    title: '차박지3',
-    recommendcount: '1',
-    starcount: '★★★☆☆',
-  },
-];
 
 const ChabakjiList = ({navigation}) => {
   const [searchText, setSearchText] = useState('');
+  const [list, setList] = useState([]);
+  const [sorting, setSorting] = useState(''); //평점 높은 순이 디폴트
+  const {userInfo, area} = useContext(UserContext);
+
+  //검색어로 차박지명 검색하는 함수
+  const searchingFunction = () => {
+    if (searchText === '') getList();
+    else {
+      const searched_list = [];
+      fetch(`http://3.38.85.251:8080/api/camping?name=${searchText}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          token: userInfo.token,
+        },
+      })
+        .then(response => response.json())
+        .then(json => {
+          console.log(json);
+          for (let i = 0; i < json.data.length; i++) {
+            searched_list.push({
+              name: json.data[i].name,
+              location: json.data[i].address,
+              score: json.data[i].score,
+            });
+          }
+          setList(searched_list);
+          console.log(searched_list);
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+  };
+
+  const getList = () => {
+    const searched_list = [];
+    fetch(`http://3.38.85.251:8080/api/camping/경기도/grade`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        token: userInfo.token,
+      },
+    })
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+        console.log(json.data.length);
+        for (let i = 0; i < json.data.length; i++) {
+          searched_list.push({
+            name: json.data[i].name,
+            location: json.data[i].address,
+            score: json.data[i].score,
+          });
+        }
+        setList(searched_list);
+        console.log(searched_list);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -53,6 +99,10 @@ const ChabakjiList = ({navigation}) => {
     });
   }, []);
 
+  useEffect(() => {
+    getList();
+  }, []);
+
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <View style={styles.Search}>
@@ -64,8 +114,15 @@ const ChabakjiList = ({navigation}) => {
           autoCapitalize="none"
           allowFontScaling={false}
           clearButtonMode={'while-editing'}
+          onChangeText={text => {
+            setSearchText(text);
+          }}
         />
-        <TouchableOpacity style={styles.searchButton}>
+        <TouchableOpacity
+          style={styles.searchButton}
+          onPress={() => {
+            searchingFunction();
+          }}>
           <Text style={{color: 'white', fontSize: 18}}>검색</Text>
         </TouchableOpacity>
       </View>
@@ -83,7 +140,15 @@ const ChabakjiList = ({navigation}) => {
           buttonTextStyle={{fontSize: 17}}
           data={sort}
           defaultValue={'최신순'}
-          onSelect={(selectedItem, index) => {}}
+          onSelect={(selectedItem, index) => {
+            if (index === 0) setSorting('');
+            //최신순
+            else if (index === 1) setSorting('');
+            //오래된순
+            else if (index === 2) setSorting('');
+            //평점 높은 순
+            else if (index === 3) setSorting(''); //평점 낮은 순
+          }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;
           }}
@@ -94,7 +159,7 @@ const ChabakjiList = ({navigation}) => {
       </View>
       <View style={styles.List}>
         <FlatList
-          data={DATA}
+          data={list}
           keyExtractor={(item, index) => {
             return `ChabakjiList-${index}`;
           }}
@@ -118,7 +183,7 @@ const ChabakjiList = ({navigation}) => {
                   fontWeight: 'bold',
                   color: 'white',
                 }}>
-                {item.title}
+                {item.name}
               </Text>
               <View
                 style={{
@@ -126,10 +191,10 @@ const ChabakjiList = ({navigation}) => {
                   marginTop: 7,
                 }}>
                 <Text style={{marginLeft: 10, color: 'white'}}>
-                  추천 수 : {item.recommendcount}
+                  위치 : {item.location}
                 </Text>
                 <Text style={{position: 'absolute', right: 10, color: 'white'}}>
-                  별점 : {item.starcount}
+                  리뷰 평점 : {item.score}
                 </Text>
               </View>
             </TouchableOpacity>
