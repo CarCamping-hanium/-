@@ -36,6 +36,7 @@ const ReviewBoard = ({navigation}) => {
     });
     getReview();
   }, [Sorting]);
+
   const getReview = () => {
     console.log(Sorting);
     var url =
@@ -57,6 +58,7 @@ const ReviewBoard = ({navigation}) => {
         console.log(e);
       });
   };
+
   return (
     <SafeAreaView style={styles.Container}>
       <View
