@@ -20,14 +20,15 @@ const screenWidth = Dimensions.get('window').width;
 const ChabakjiList = ({navigation}) => {
   const [searchText, setSearchText] = useState('');
   const [list, setList] = useState([]);
-  const [sorting, setSorting] = useState(''); //평점 높은 순이 디폴트
-  const {userInfo, area} = useContext(UserContext);
+  const [sorting, setSorting] = useState('grade'); //평점 높은 순이 디폴트
+  const {userInfo, area, selectedChabak_ID, selectedChabak_name} =
+    useContext(UserContext);
 
   //검색어로 차박지명 검색하는 함수
   const searchingFunction = () => {
     if (searchText === '') getList();
     else {
-      const searched_list = [];
+      let searched_list = [];
       fetch(`http://3.38.85.251:8080/api/camping?name=${searchText}`, {
         method: 'GET',
         headers: {
@@ -38,6 +39,7 @@ const ChabakjiList = ({navigation}) => {
         .then(response => response.json())
         .then(json => {
           console.log(json);
+          console.log('length : ', json.data.length);
           for (let i = 0; i < json.data.length; i++) {
             searched_list.push({
               name: json.data[i].name,
@@ -56,7 +58,7 @@ const ChabakjiList = ({navigation}) => {
 
   const getList = () => {
     const searched_list = [];
-    fetch(`http://3.38.85.251:8080/api/camping/경기도/grade`, {
+    fetch(`http://3.38.85.251:8080/api/camping/${area}/${sorting}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -69,6 +71,7 @@ const ChabakjiList = ({navigation}) => {
         console.log(json.data.length);
         for (let i = 0; i < json.data.length; i++) {
           searched_list.push({
+            campsite_id: json.data[i].campsite_id,
             name: json.data[i].name,
             location: json.data[i].address,
             score: json.data[i].score,
@@ -101,7 +104,7 @@ const ChabakjiList = ({navigation}) => {
 
   useEffect(() => {
     getList();
-  }, []);
+  }, [sorting]);
 
   return (
     <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
@@ -139,15 +142,16 @@ const ChabakjiList = ({navigation}) => {
           }}
           buttonTextStyle={{fontSize: 17}}
           data={sort}
-          defaultValue={'최신순'}
+          ㄴ
+          defaultValue={'평점 높은 순'}
           onSelect={(selectedItem, index) => {
-            if (index === 0) setSorting('');
+            if (index === 0) setSorting('datedesc');
             //최신순
-            else if (index === 1) setSorting('');
+            else if (index === 1) setSorting('dateasc');
             //오래된순
-            else if (index === 2) setSorting('');
+            else if (index === 2) setSorting('grade');
             //평점 높은 순
-            else if (index === 3) setSorting(''); //평점 낮은 순
+            else if (index === 3) setSorting('gradeasc'); //평점 낮은 순
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;
@@ -174,6 +178,8 @@ const ChabakjiList = ({navigation}) => {
                 justifyContent: 'center',
               }}
               onPress={() => {
+                selectedChabak_ID(item.campsite_id);
+                selectedChabak_name(item.name);
                 navigation.navigate('ChabakjiInfo');
               }}>
               <Text

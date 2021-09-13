@@ -15,10 +15,11 @@ import {UserContext} from '../Context/Context';
 const screenWidth = Dimensions.get('window').width;
 const ChabakjiInfo = ({navigation}) => {
   const {userInfo, chabak_ID} = useContext(UserContext);
-  const [Chabak_Address, setChabak_Address] = useState();
-  const [Chabak_Exp, setChabak_Exp] = useState('');
-  const [Chabak_Link, setChabak_Link] = useState('');
-  const [Chabak_Image, setChabak_Image] = useState('');
+  const [address, setAddress] = useState(); //위치
+  const [description, setDescription] = useState(''); //설명
+  const [videoLink, setVideoLink] = useState(''); //영상링크
+  const [image, setImage] = useState(''); //사진
+  const [facilities, setFacilities] = useState('');
 
   const getInfo = () => {
     var url = 'http://3.38.85.251:8080/api/camping/' + chabak_ID;
@@ -32,15 +33,17 @@ const ChabakjiInfo = ({navigation}) => {
       .then(response => response.json())
       .then(json => {
         console.log(json.data);
-        setChabak_Address(json.data.address);
-        setChabak_Image(json.data.image);
-        setChabak_Link(json.data.videoLink);
-        setChabak_Exp(json.data.explanation);
+        setAddress(json.data.address);
+        setImage(json.data.image);
+        setVideoLink(json.data.videoLink);
+        setDescription(json.data.explanation);
+        setFacilities(json.data.facilities);
       })
       .catch(e => {
         console.log(e);
       });
   };
+
   useLayoutEffect(() => {
     getInfo();
     navigation.setOptions({
@@ -74,7 +77,7 @@ const ChabakjiInfo = ({navigation}) => {
           width: screenWidth,
         }}>
         <Image
-          source={{uri: Chabak_Image}}
+          source={{uri: image}}
           style={{
             width: screenWidth,
             height: screenWidth,
@@ -90,7 +93,7 @@ const ChabakjiInfo = ({navigation}) => {
             }}>
             위치
           </Text>
-          <Text style={styles.content}>{Chabak_Address}</Text>
+          <Text style={styles.content}>{address}</Text>
         </View>
         <View>
           <Text
@@ -102,7 +105,7 @@ const ChabakjiInfo = ({navigation}) => {
             }}>
             설명
           </Text>
-          <Text style={styles.content}>{Chabak_Exp}</Text>
+          <Text style={styles.content}>{description}</Text>
         </View>
         <View>
           <Text
@@ -114,7 +117,7 @@ const ChabakjiInfo = ({navigation}) => {
             }}>
             근처 편의시설 (선택사항)
           </Text>
-          <Text style={styles.content}>화장실, 편의점 ,주차장, 카페</Text>
+          <Text style={styles.content}>{facilities}</Text>
         </View>
         <View>
           <Text
@@ -127,9 +130,9 @@ const ChabakjiInfo = ({navigation}) => {
             관련 영상 링크 (선택사항)
           </Text>
           <Text
-            onPress={() => Linking.openURL(Chabak_Link)}
+            onPress={() => Linking.openURL(videoLink)}
             style={styles.videoLink}>
-            {Chabak_Link}
+            {videoLink}
           </Text>
         </View>
         <View

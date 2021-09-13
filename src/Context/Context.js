@@ -13,9 +13,9 @@ const UserContext = createContext(defaultContext);
 const UserContextProvider = ({children}) => {
   const [userInfo, setUserInfo] = useState(undefined);
   const [area, setArea] = useState('');
-  const [chabak_ID,setChabak_ID] = useState('');
-  const [chabak_name,setChabak_name] = useState('');
-  const [Review_ID,setReview_ID] = useState('');
+  const [chabak_ID, setChabak_ID] = useState('');
+  const [chabak_name, setChabak_name] = useState('');
+  const [Review_ID, setReview_ID] = useState('');
   const login = (id_data, password_data) => {
     // AsyncStorage.setItem('token', 'save your token').then(() => {
     //   setUserInfo({

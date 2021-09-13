@@ -1,4 +1,4 @@
-import React, {useState, useContext, useEffect,useCallback} from 'react';
+import React, {useState, useContext, useEffect, useCallback} from 'react';
 import {
   View,
   Text,
@@ -14,33 +14,28 @@ import {useFocusEffect} from '@react-navigation/native';
 import NaverMapView, {Marker, Path} from 'react-native-nmap';
 import Modal from '../../Components/Modal';
 import {UserContext} from '../../Context/Context';
-import { DebugInstructions } from 'react-native/Libraries/NewAppScreen';
-let LocationList;
+import {DebugInstructions} from 'react-native/Libraries/NewAppScreen';
+
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
-const Chungcheong = ({navigation}) => {  
-  const {userInfo} = useContext(UserContext);
-  const {selectedArea} = useContext(UserContext);
+
+const Chungcheong = ({navigation}) => {
+  const {userInfo, selectedArea, selectedChabak_ID, selectedChabak_name} =
+    useContext(UserContext);
   const [visible, setVisible] = useState(false);
   const [LocationList, setLocationList] = useState([]);
-  const {selectedChabak_ID} = useContext(UserContext);
-  const {selectedChabak_name} = useContext(UserContext);
-  const [Chabak_Name,setChabak_Name]=useState();
-  const [Chabak_Address,setChabak_Address]=useState();
-  const[Chabak_Image,setChabak_Image]=useState();
- 
+  const [Chabak_Name, setChabak_Name] = useState();
+  const [Chabak_Address, setChabak_Address] = useState();
+  const [Chabak_Image, setChabak_Image] = useState();
 
- 
-
-  const openModal=(ID)=>{
-    var url='http://3.38.85.251:8080/api/camping/'+ID;
+  const openModal = ID => {
+    var url = 'http://3.38.85.251:8080/api/camping/' + ID;
     fetch(url, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
         token: userInfo.token,
       },
-     
     })
       .then(response => response.json())
       .then(json => {
@@ -55,9 +50,9 @@ const Chungcheong = ({navigation}) => {
       });
 
     setVisible(true);
-    }
- const getChabakLocation = () => {
+  };
 
+  const getChabakLocation = () => {
     fetch('http://3.38.85.251:8080/api/camping/map', {
       method: 'POST',
       headers: {
@@ -65,7 +60,7 @@ const Chungcheong = ({navigation}) => {
         token: userInfo.token,
       },
       body: JSON.stringify({
-      region: '경기도'
+        region: '경기도',
       }),
     })
       .then(response => response.json())
@@ -75,19 +70,16 @@ const Chungcheong = ({navigation}) => {
       .catch(e => {
         console.log(e);
       });
-    
   };
   useFocusEffect(
     useCallback(() => {
       selectedArea('충청도');
-      getChabakLocation();        
-    }, [])
-);
-    const P0 = {latitude: 37.54585425908, longitude: 128.2605803183507};
+      getChabakLocation();
+    }, []),
+  );
+  const P0 = {latitude: 37.54585425908, longitude: 128.2605803183507};
   return (
-    
-    <SafeAreaView>   
-     
+    <SafeAreaView>
       <NaverMapView
         style={{width: '100%', height: '100%'}}
         //showsMyLocationButton={true}
@@ -95,23 +87,22 @@ const Chungcheong = ({navigation}) => {
         //onTouch={e => console.warn('onTouch', JSON.stringify(e.nativeEvent))}
         //onCameraChange={e => console.warn('onCameraChange', JSON.stringify(e))}
         //onMapClick={e => console.warn('onMapClick', JSON.stringify(e))}
-      >  
-       {  LocationList.map((val,id) => {
-      return (
-      <Marker
-              coordinate={{latitude:val.lat,longitude:val.lng}}
-              pinColor="blue"   
+      >
+        {LocationList.map((val, id) => {
+          return (
+            <Marker
+              coordinate={{latitude: val.lat, longitude: val.lng}}
+              pinColor="blue"
               key={id + '_' + Date.now()}
-              onClick={() => openModal(val.campsite_id)
-           
-              }
-            />) })
-            }
+              onClick={() => openModal(val.campsite_id)}
+            />
+          );
+        })}
       </NaverMapView>
 
       <TouchableOpacity
         style={styles.openList}
-        onPress={() => {       
+        onPress={() => {
           navigation.navigate('ChabakjiList');
         }}>
         <Text
@@ -144,13 +135,13 @@ const Chungcheong = ({navigation}) => {
               style={{
                 fontSize: 20,
               }}>
-         {Chabak_Name}
+              {Chabak_Name}
             </Text>
           </View>
           <View //사진 및 설명 컴포넌트
             style={{flex: 1, alignItems: 'flex-start'}}>
             <Image
-              source={{uri:Chabak_Image}}
+              source={{uri: Chabak_Image}}
               style={{
                 width: 250,
                 height: 200,
