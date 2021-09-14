@@ -16,10 +16,6 @@ const Gangwon = ({navigation}) => {
   const P1 = {latitude: 37.555051, longitude: 128.378567};
   const P2 = {latitude: 37.865383, longitude: 128.56292};
 
-  useEffect(() => {
-    selectedArea('강원도');
-  }, []);
-
   return (
     <SafeAreaView>
       <NaverMapView

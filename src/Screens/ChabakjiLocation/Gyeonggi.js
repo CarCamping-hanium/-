@@ -16,10 +16,6 @@ const Gyeonggi = ({navigation}) => {
   const P1 = {latitude: 30.565051, longitude: 126.978567};
   const P2 = {latitude: 30.565383, longitude: 126.976292};
 
-  useEffect(() => {
-    selectedArea('경기도');
-  }, []);
-
   return (
     <SafeAreaView>
       <NaverMapView

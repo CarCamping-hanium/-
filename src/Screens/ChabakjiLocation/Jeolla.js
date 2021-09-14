@@ -16,10 +16,6 @@ const Jeolla = ({navigation}) => {
   const P1 = {latitude: 37.565051, longitude: 126.978567};
   const P2 = {latitude: 37.565383, longitude: 126.976292};
 
-  useEffect(() => {
-    selectedArea('전라도');
-  }, []);
-
   return (
     <SafeAreaView>
       <NaverMapView

@@ -20,7 +20,7 @@ const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 
 const Chungcheong = ({navigation}) => {
-  const {userInfo, selectedArea, selectedChabak_ID, selectedChabak_name} =
+  const {userInfo, area, selectedArea, selectedChabak_ID, selectedChabak_name} =
     useContext(UserContext);
   const [visible, setVisible] = useState(false);
   const [LocationList, setLocationList] = useState([]);
@@ -60,7 +60,7 @@ const Chungcheong = ({navigation}) => {
         token: userInfo.token,
       },
       body: JSON.stringify({
-        region: '경기도',
+        region: area,
       }),
     })
       .then(response => response.json())
@@ -73,7 +73,6 @@ const Chungcheong = ({navigation}) => {
   };
   useFocusEffect(
     useCallback(() => {
-      selectedArea('충청도');
       getChabakLocation();
     }, []),
   );
