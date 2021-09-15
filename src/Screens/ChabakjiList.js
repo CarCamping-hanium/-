@@ -29,128 +29,66 @@ const ChabakjiList = ({navigation}) => {
     if (searchText === '') getList();
     else {
       let searched_list = [];
-      let url;
-      if (area === '전체') {
-        //전체 차박지 중에서 검색
-        fetch(`http://3.38.85.251:8080/api/camping/search`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            token: userInfo.token,
-          },
-          body: JSON.stringify({
-            check: searchText,
-          }),
+      //지역별 차박지 중에서 검색
+      fetch(`http://3.38.85.251:8080/api/camping/search/region`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          token: userInfo.token,
+        },
+        body: JSON.stringify({
+          region: area,
+          word: searchText,
+        }),
+      })
+        .then(response => response.json())
+        .then(json => {
+          console.log(json);
+          console.log('length : ', json.data.length);
+          for (let i = 0; i < json.data.length; i++) {
+            searched_list.push({
+              name: json.data[i].name,
+              location: json.data[i].address,
+              score: json.data[i].score,
+            });
+          }
+          setList(searched_list);
+          console.log(searched_list);
         })
-          .then(response => response.json())
-          .then(json => {
-            console.log(json);
-            console.log('length : ', json.data.length);
-            for (let i = 0; i < json.data.length; i++) {
-              searched_list.push({
-                name: json.data[i].name,
-                location: json.data[i].address,
-                score: json.data[i].score,
-              });
-            }
-            setList(searched_list);
-            console.log(searched_list);
-          })
-          .catch(e => {
-            console.log(e);
-          });
-      } else {
-        //지역별 차박지 중에서 검색
-        fetch(`http://3.38.85.251:8080/api/camping/search/region`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            token: userInfo.token,
-          },
-          body: JSON.stringify({
-            region: area,
-            word: searchText,
-          }),
-        })
-          .then(response => response.json())
-          .then(json => {
-            console.log(json);
-            console.log('length : ', json.data.length);
-            for (let i = 0; i < json.data.length; i++) {
-              searched_list.push({
-                name: json.data[i].name,
-                location: json.data[i].address,
-                score: json.data[i].score,
-              });
-            }
-            setList(searched_list);
-            console.log(searched_list);
-          })
-          .catch(e => {
-            console.log(e);
-          });
-      }
+        .catch(e => {
+          console.log(e);
+        });
     }
   };
 
   //불러온 차박지 정렬하는 함수
   const getList = () => {
     const searched_list = [];
-    if (area === '전체') {
-      //전체 차박지 정렬
-      fetch(`http://3.38.85.251:8080/api/camping/${sorting}/all`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          token: userInfo.token,
-        },
+    fetch(`http://3.38.85.251:8080/api/camping/${area}/${sorting}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        token: userInfo.token,
+      },
+    })
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+        console.log(json.data.length);
+        for (let i = 0; i < json.data.length; i++) {
+          searched_list.push({
+            campsite_id: json.data[i].campsite_id,
+            name: json.data[i].name,
+            location: json.data[i].address,
+            score: json.data[i].score,
+          });
+        }
+        setList(searched_list);
+        console.log(searched_list);
       })
-        .then(response => response.json())
-        .then(json => {
-          console.log(json);
-          console.log(json.data.length);
-          for (let i = 0; i < json.data.length; i++) {
-            searched_list.push({
-              campsite_id: json.data[i].campsite_id,
-              name: json.data[i].name,
-              location: json.data[i].address,
-              score: json.data[i].score,
-            });
-          }
-          setList(searched_list);
-          console.log(searched_list);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    } else {
-      //지역별 차박지 정렬
-      fetch(`http://3.38.85.251:8080/api/camping/${area}/${sorting}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          token: userInfo.token,
-        },
-      })
-        .then(response => response.json())
-        .then(json => {
-          console.log(json);
-          console.log(json.data.length);
-          for (let i = 0; i < json.data.length; i++) {
-            searched_list.push({
-              campsite_id: json.data[i].campsite_id,
-              name: json.data[i].name,
-              location: json.data[i].address,
-              score: json.data[i].score,
-            });
-          }
-          setList(searched_list);
-          console.log(searched_list);
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    }
+      .catch(e => {
+        console.log(e);
+      });
   };
 
   useLayoutEffect(() => {
@@ -210,7 +148,6 @@ const ChabakjiList = ({navigation}) => {
           }}
           buttonTextStyle={{fontSize: 17}}
           data={sort}
-          ㄴ
           defaultValue={'평점 높은 순'}
           onSelect={(selectedItem, index) => {
             if (index === 0) setSorting('datedesc');
