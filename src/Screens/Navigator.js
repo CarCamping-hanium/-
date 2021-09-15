@@ -29,6 +29,7 @@ import MyReview from './MyReview';
 import MyChabakji from './MyChabakji';
 import ModifyPassword from './ModifyPassword';
 import ModifyNickname from './ModifyNickname';
+import AllChabakjiList from './AllChabakjiList';
 import ChabakjiList from './ChabakjiList';
 import ReviewBoard from './ReviewBoard';
 import ReviewUpload from './ReviewUpload';
@@ -104,6 +105,14 @@ const HomeScreenNavigator = navigation => {
         name="Jeolla"
         component={Jeolla}
         options={{title: '전라도', headerBackTitleVisible: false}}
+      />
+      <Stack.Screen
+        name="AllChabakjiList"
+        component={AllChabakjiList}
+        options={{
+          title: '선택된 지역  :  ' + area,
+          headerBackTitleVisible: false,
+        }}
       />
       <Stack.Screen
         name="ChabakjiList"
