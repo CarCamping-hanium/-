@@ -158,7 +158,7 @@ const HomeScreen = ({navigation}) => {
         style={styles.openList}
         onPress={() => {
           selectedArea('전체');
-          navigation.navigate('ChabakjiList');
+          navigation.navigate('AllChabakjiList');
         }}>
         <Text
           style={{
