@@ -116,6 +116,20 @@ const ChabakjiEnrollment = ({navigation}) => {
     // setImage(new_imageList);
     // imageList = [...new_imageList];
     setImage('');
+    fetch(`http://3.38.85.251:8080/api/delete?images=${changedImage}`, {
+      method: 'POST',
+      headers: {
+        // 'Content-Type': 'multipart/form-data',
+        token: userInfo.token,
+      },
+    })
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+      })
+      .catch(e => {
+        console.log(e);
+      });
   };
 
   //가져온 사진을 서버에 먼저 업로드하는 과정의 함수
@@ -124,7 +138,7 @@ const ChabakjiEnrollment = ({navigation}) => {
       const formData = new FormData();
       formData.append('images', {
         name: 'name',
-        type: image.mime,
+        type: 'image/jpeg',
         uri: image.path,
       });
       fetch('http://3.38.85.251:8080/api/upload', {
