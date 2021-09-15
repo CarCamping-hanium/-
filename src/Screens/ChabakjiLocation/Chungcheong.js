@@ -27,6 +27,7 @@ const Chungcheong = ({navigation}) => {
   const [Chabak_Name, setChabak_Name] = useState();
   const [Chabak_Address, setChabak_Address] = useState();
   const [Chabak_Image, setChabak_Image] = useState();
+  const [facility, setFacility] = useState('');
 
   const openModal = ID => {
     var url = 'http://3.38.85.251:8080/api/camping/' + ID;
@@ -39,11 +40,13 @@ const Chungcheong = ({navigation}) => {
     })
       .then(response => response.json())
       .then(json => {
+        console.log(json);
         setChabak_Address(json.data.address);
         setChabak_Name(json.data.name);
         setChabak_Image(json.data.image);
         selectedChabak_name(json.data.name);
         selectedChabak_ID(json.data.campsite_id);
+        setFacility(json.data.facilities);
       })
       .catch(e => {
         console.log(e);
@@ -115,7 +118,7 @@ const Chungcheong = ({navigation}) => {
       <Modal visible={visible}>
         <View
           style={{
-            height: 500,
+            height: 550,
             width: 330,
             justifyContent: 'center',
             alignItems: 'center',
@@ -143,12 +146,15 @@ const Chungcheong = ({navigation}) => {
               source={{uri: Chabak_Image}}
               style={{
                 width: 250,
-                height: 200,
+                height: 250,
                 marginTop: screenHeight / 50,
+                borderRadius: 12,
               }}
             />
             <Text style={styles.modalDescription}>위치</Text>
             <Text style={{marginTop: 3}}>{Chabak_Address}</Text>
+            <Text style={styles.modalDescription}>근처 편의 시설</Text>
+            <Text style={{marginTop: 3}}>{facility}</Text>
           </View>
           <View //버튼 컴포넌트
             style={{flexDirection: 'row'}}>
