@@ -165,7 +165,7 @@ const HomeScreen = ({navigation}) => {
             color: 'white',
             fontSize: 20,
           }}>
-          리스트 열기
+          전체 리스트 열기
         </Text>
       </TouchableOpacity>
     </SafeAreaView>
@@ -183,7 +183,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#295eba',
     //backgroundColor: '#3770d4',
     width: '40%',
-    height: 50,
+    height: 60,
     borderRadius: 30,
   },
 });
