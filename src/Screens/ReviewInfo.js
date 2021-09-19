@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState,useContext} from 'react';
+import React, {useLayoutEffect, useState, useContext} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -9,16 +9,17 @@ import {
   Dimensions,
   FlatList,
   View,
+  Alert,
 } from 'react-native';
 import {Rating} from 'react-native-ratings';
 import {UserContext} from '../Context/Context';
 const screenWidth = Dimensions.get('window').width;
-const ChabakjiInfo = ({navigation}) => {
+const ReviewInfo = ({navigation}) => {
   const {userInfo, Review_ID} = useContext(UserContext);
   const [image, setImage] = useState([]);
-  const [title,setTitle]=useState('');
-  const [Description,setDescription]=useState('');
-  const [Score,setScore]=useState();
+  const [title, setTitle] = useState('');
+  const [Description, setDescription] = useState('');
+  const [Score, setScore] = useState();
   useLayoutEffect(() => {
     getInfo();
     navigation.setOptions({
@@ -35,7 +36,6 @@ const ChabakjiInfo = ({navigation}) => {
         </TouchableOpacity>
       ),
     });
- 
   }, []);
   const getInfo = () => {
     var url = 'http://3.38.85.251:8080/api/campingReview/' + Review_ID;
@@ -50,6 +50,7 @@ const ChabakjiInfo = ({navigation}) => {
       .then(json => {
         setTitle(json.data.title);
         setScore(json.data.score);
+        setDescription(json.data.contents);
         console.log(json.data);
       })
       .catch(e => {
@@ -76,7 +77,7 @@ const ChabakjiInfo = ({navigation}) => {
               fontWeight: 'bold',
               fontSize: 25,
             }}>
-          {title}
+            {title}
           </Text>
         </View>
         <View
@@ -117,9 +118,7 @@ const ChabakjiInfo = ({navigation}) => {
               height: 300,
               justifyContent: 'center',
             }}>
-            <Text style={styles.content}>
-              너무 좋았습니다. 볼거리 굉장히 많았어요. 차박 장소로 강추!!
-            </Text>
+            <Text style={styles.content}>{Description}</Text>
           </View>
         </View>
         <View>
@@ -170,14 +169,60 @@ const ChabakjiInfo = ({navigation}) => {
             justifyContent: 'space-evenly',
             flexDirection: 'row',
           }}>
-          <TouchableOpacity style={styles.recommend}>
+          <TouchableOpacity
+            style={styles.recommend}
+            onPress={() => {
+              var url =
+                'http://3.38.85.251:8080/api/review/' + Review_ID + '/up';
+              fetch(url, {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  token: userInfo.token,
+                },
+              })
+                .then(response => response.json())
+                .then(json => {
+                  if (json.success === false) {
+                    Alert.alert(json.msg);
+                  } else {
+                    Alert.alert('해당 리뷰를 추천하였습니다.');
+                  }
+                })
+                .catch(e => {
+                  console.log(e);
+                });
+            }}>
             <Text style={{color: 'white', fontSize: 18}}>추천</Text>
             <Image
               source={require('../Assets/Images/recommend.png')}
               style={{width: 20, height: 20}}
             />
           </TouchableOpacity>
-          <TouchableOpacity style={styles.recommend}>
+          <TouchableOpacity
+            style={styles.recommend}
+            onPress={() => {
+              var url =
+                'http://3.38.85.251:8080/api/review/' + Review_ID + '/down';
+              fetch(url, {
+                method: 'GET',
+                headers: {
+                  'Content-Type': 'application/json',
+                  token: userInfo.token,
+                },
+              })
+                .then(response => response.json())
+                .then(json => {
+                  if (json.success === false) {
+                    Alert.alert(json.msg);
+                  } else {
+                    Alert.alert('해당 리뷰를 비추천하였습니다.');
+                  }
+                })
+                .catch(e => {
+                  console.log(e);
+                });
+            }}>
             <Text style={{color: 'white', fontSize: 18}}>비추천</Text>
             <Image
               source={require('../Assets/Images/unrecommend.png')}
@@ -235,4 +280,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChabakjiInfo;
+export default ReviewInfo;
