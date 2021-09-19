@@ -154,7 +154,7 @@ const MyPage = ({navigation}) => {
         }}>
         <Image
           source={
-            profileImage === null
+            userInfo.profile === null
               ? require('../Assets/Images/empty_profile.png')
               : {uri: userInfo.profile}
           }
