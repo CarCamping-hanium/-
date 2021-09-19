@@ -16,6 +16,8 @@ const UserContextProvider = ({children}) => {
   const [chabak_ID, setChabak_ID] = useState('');
   const [chabak_name, setChabak_name] = useState('');
   const [Review_ID, setReview_ID] = useState('');
+  const [review_name, setReview_name] = useState('');
+
   const login = (id_data, password_data) => {
     // AsyncStorage.setItem('token', 'save your token').then(() => {
     //   setUserInfo({
@@ -145,6 +147,9 @@ const UserContextProvider = ({children}) => {
   const selectedReview_ID = data => {
     setReview_ID(data);
   };
+  const selectedReview_name = data => {
+    setReview_name(data);
+  };
   useEffect(() => {
     getUserInfo();
   }, []);
@@ -166,6 +171,8 @@ const UserContextProvider = ({children}) => {
         chabak_name,
         selectedReview_ID,
         Review_ID,
+        selectedReview_name,
+        review_name,
       }}>
       {children}
     </UserContext.Provider>
