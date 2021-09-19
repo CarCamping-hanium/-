@@ -22,8 +22,7 @@ const ChabakjiInfo = ({navigation}) => {
   const [facilities, setFacilities] = useState('');
 
   const getInfo = () => {
-    var url = 'http://3.38.85.251:8080/api/camping/' + chabak_ID;
-    fetch(url, {
+    fetch(`http://3.38.85.251:8080/api/camping/${chabak_ID}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -158,20 +157,6 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 30,
     fontWeight: 'bold',
-  },
-  name: {
-    fontSize: 24,
-    fontWeight: '500',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: '5%',
-    width: '90%',
-    height: 40,
-    paddingLeft: 10,
-    borderLeftWidth: 2,
-    borderRightWidth: 2,
-    borderTopWidth: 2,
-    borderBottomWidth: 2,
   },
   content: {
     fontSize: 18,
