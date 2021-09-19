@@ -70,8 +70,7 @@ const LoginNavigator = ({navigation}) => {
 };
 
 const HomeScreenNavigator = navigation => {
-  const {area} = useContext(UserContext);
-  const {chabak_name} = useContext(UserContext);
+  const {area, chabak_name, review_name} = useContext(UserContext);
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -150,7 +149,7 @@ const HomeScreenNavigator = navigation => {
         name="ReviewInfo"
         component={ReviewInfo}
         options={{
-          title: '리뷰 정보',
+          title: review_name,
           headerBackTitleVisible: false,
         }}
       />
@@ -171,7 +170,7 @@ const ChabakjiEnrollmentNavigator = () => {
 };
 
 const MyPageNavigator = navigation => {
-  const {chabak_name} = useContext(UserContext);
+  const {chabak_name, userInfo, review_name} = useContext(UserContext);
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -225,7 +224,7 @@ const MyPageNavigator = navigation => {
         name="MyReviewInfo"
         component={MyReviewInfo}
         options={{
-          title: '리뷰 정보',
+          title: review_name,
           headerBackTitleVisible: false,
         }}
       />
