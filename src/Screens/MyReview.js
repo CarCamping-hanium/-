@@ -1,4 +1,4 @@
-import React, {useState, useLayoutEffect} from 'react';
+import React, {useState, useLayoutEffect, useCallback, useContext} from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -11,27 +11,40 @@ import {
   Dimensions,
 } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
+import {useFocusEffect} from '@react-navigation/core';
+import {UserContext} from '../Context/Context';
 
 const screenWidth = Dimensions.get('window').width;
 const sort = ['추천순', '최신순', '오래된순'];
-const DATA = [
-  {
-    title: '리뷰제목1',
-    recommendcount: '5',
-    starcount: '★★★★★',
-  },
-  {
-    title: '리뷰제목2',
-    recommendcount: '1',
-    starcount: '★★★★☆',
-  },
-  {
-    title: '리뷰제목3',
-    recommendcount: '1',
-    starcount: '★★★☆☆',
-  },
-];
 const MyReview = ({navigation}) => {
+  const [list, setList] = useState([]);
+  const {userInfo, selectedReview_ID, selectedReview_name} =
+    useContext(UserContext);
+
+  const getMyReview = () => {
+    fetch(`http://3.38.85.251:8080/api/myReview`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        token: userInfo.token,
+      },
+    })
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+        setList(json.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      getMyReview();
+    }, []),
+  );
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -82,7 +95,7 @@ const MyReview = ({navigation}) => {
 
       <FlatList
         style={{marginTop: 20}}
-        data={DATA}
+        data={list}
         renderItem={({item, index}) => (
           <TouchableOpacity
             style={{
@@ -94,6 +107,8 @@ const MyReview = ({navigation}) => {
               justifyContent: 'center',
             }}
             onPress={() => {
+              selectedReview_ID(item.review_id);
+              selectedReview_name(item.title);
               navigation.navigate('MyReviewInfo');
             }}>
             <Text
@@ -111,10 +126,10 @@ const MyReview = ({navigation}) => {
                 marginTop: 7,
               }}>
               <Text style={{marginLeft: 10, color: 'white'}}>
-                추천 수 : {item.recommendcount}
+                추천 수 : {item.recommend}
               </Text>
               <Text style={{position: 'absolute', right: 10, color: 'white'}}>
-                별점 : {item.starcount}
+                별점 : {item.score}
               </Text>
             </View>
           </TouchableOpacity>
