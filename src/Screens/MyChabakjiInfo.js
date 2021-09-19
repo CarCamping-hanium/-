@@ -166,7 +166,6 @@ const MyChabakjiInfo = ({navigation}) => {
                         .then(json => {
                           console.log(json);
                           if (json.msg === 'success') {
-                            getUserInfo();
                             Alert.alert('차박지가 삭제되었습니다.');
                             navigation.navigate('MyChabakji');
                           } else {
