@@ -1,4 +1,4 @@
-import React, {useState, useLayoutEffect, useContext} from 'react';
+import React, {useState, useLayoutEffect, useContext, useCallback} from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
 import {UserContext} from '../Context/Context';
+import {useFocusEffect} from '@react-navigation/native';
 const screenWidth = Dimensions.get('window').width;
 const sort = ['별점순', '최신순', '오래된순'];
 const ReviewBoard = ({navigation}) => {
@@ -19,6 +20,12 @@ const ReviewBoard = ({navigation}) => {
   const {userInfo, chabak_name, chabak_ID} = useContext(UserContext);
   const [Sorting, setSorting] = useState('gradeUp');
   const {selectedReview_ID} = useContext(UserContext);
+
+  useFocusEffect(
+    useCallback(() => {
+      getReview();
+    }, []),
+  );
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -34,7 +41,6 @@ const ReviewBoard = ({navigation}) => {
         </TouchableOpacity>
       ),
     });
-    getReview();
   }, [Sorting]);
 
   const getReview = () => {
