@@ -14,7 +14,7 @@ import {
 import {Rating} from 'react-native-ratings';
 
 const screenWidth = Dimensions.get('window').width;
-const ChabakjiInfo = ({navigation}) => {
+const MyReviewInfo = ({navigation}) => {
   const [image, setImage] = useState([]);
 
   useLayoutEffect(() => {
@@ -223,4 +223,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ChabakjiInfo;
+export default MyReviewInfo;
