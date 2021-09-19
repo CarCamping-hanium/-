@@ -1,4 +1,5 @@
-import React, {useLayoutEffect, useState} from 'react';
+import {getIsDrawerOpenFromState} from '@react-navigation/drawer';
+import React, {useLayoutEffect, useState, useContext} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -12,12 +13,37 @@ import {
   Alert,
 } from 'react-native';
 import {Rating} from 'react-native-ratings';
+import {UserContext} from '../Context/Context';
 
 const screenWidth = Dimensions.get('window').width;
 const MyReviewInfo = ({navigation}) => {
-  const [image, setImage] = useState([]);
+  const [image, setImage] = useState('');
+  const [description, setDescription] = useState('');
+  const [score, setScore] = useState();
+  const {Review_ID, userInfo} = useContext(UserContext);
+
+  const getInfo = () => {
+    fetch(`http://3.38.85.251:8080/api/campingReview/${Review_ID}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        token: userInfo.token,
+      },
+    })
+      .then(response => response.json())
+      .then(json => {
+        setImage(json.data.images);
+        setScore(json.data.score);
+        setDescription(json.data.contents);
+        console.log(json.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
 
   useLayoutEffect(() => {
+    getInfo();
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
@@ -48,36 +74,17 @@ const MyReviewInfo = ({navigation}) => {
           marginHorizontal: 20,
           width: screenWidth,
         }}>
-        <View style={{alignItems: 'center'}}>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              fontSize: 25,
-            }}>
-            제목
-          </Text>
-        </View>
         <View
           style={{
             borderColor: '#295eba',
+            marginTop: 30,
           }}>
-          <FlatList
-            style={{height: 200, width: screenWidth}}
-            horizontal={true}
-            pagingEnabled={true}
-            data={image}
-            keyExtractor={(item, index) => {
-              return `image-${index}`;
-            }}
-            renderItem={({item, index}) => (
-              <View>
-                <Image
-                  source={{uri: image[index]}}
-                  style={{width: screenWidth, height: 200}}
-                />
-              </View>
-            )}
-          />
+          <View>
+            <Image
+              source={{uri: image}}
+              style={{width: screenWidth, height: 200}}
+            />
+          </View>
         </View>
         <View>
           <Text
@@ -95,9 +102,7 @@ const MyReviewInfo = ({navigation}) => {
               height: 300,
               justifyContent: 'center',
             }}>
-            <Text style={styles.content}>
-              너무 좋았습니다. 볼거리 굉장히 많았어요. 차박 장소로 강추!!
-            </Text>
+            <Text style={styles.content}>{description}</Text>
           </View>
         </View>
         <View>
@@ -123,49 +128,13 @@ const MyReviewInfo = ({navigation}) => {
               jumpValue={0.5}
               showRating={true}
               fractions={10}
+              startingValue={score}
             />
           </View>
         </View>
         <View
           style={{
-            alignItems: 'center',
-            marginTop: 80,
-          }}>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              fontSize: 17,
-            }}>
-            해당 리뷰가 도움이 되었다면?
-          </Text>
-        </View>
-        <View
-          style={{
-            marginBottom: 20,
-            marginTop: 30,
-            alignItems: 'center',
-            justifyContent: 'space-evenly',
-            flexDirection: 'row',
-          }}>
-          <TouchableOpacity style={styles.recommend}>
-            <Text style={{color: 'white', fontSize: 18}}>추천</Text>
-            <Image
-              source={require('../Assets/Images/recommend.png')}
-              style={{width: 20, height: 20}}
-            />
-          </TouchableOpacity>
-          <TouchableOpacity style={styles.recommend}>
-            <Text style={{color: 'white', fontSize: 18}}>비추천</Text>
-            <Image
-              source={require('../Assets/Images/unrecommend.png')}
-              style={{width: 20, height: 20}}
-            />
-          </TouchableOpacity>
-        </View>
-
-        <View
-          style={{
-            marginTop: 30,
+            marginTop: 70,
             justifyContent: 'center',
             alignItems: 'center',
           }}>
@@ -176,7 +145,27 @@ const MyReviewInfo = ({navigation}) => {
                 {
                   text: '삭제',
                   onPress: () => {
-                    Alert.alert('리뷰가 삭제되었습니다.');
+                    fetch(
+                      `http://3.38.85.251:8080/api/campingReview/${Review_ID}`,
+                      {
+                        //서버로 아이디, 비번 보내서 일치하는지 확인
+                        method: 'DELETE',
+                        headers: {
+                          'Content-Type': 'application/json',
+                          token: userInfo.token,
+                        },
+                      },
+                    )
+                      .then(response => response.json())
+                      .then(json => {
+                        console.log(json);
+                        if (json.msg === 'success') {
+                          Alert.alert('리뷰가 삭제되었습니다.');
+                          navigation.navigate('MyReview');
+                        } else {
+                          Alert.alert(json.msg);
+                        }
+                      });
                     navigation.navigate('MyReview');
                   },
                 },
