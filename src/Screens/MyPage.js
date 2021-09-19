@@ -1,4 +1,10 @@
-import React, {useState, useContext, useLayoutEffect, useEffect} from 'react';
+import React, {
+  useState,
+  useContext,
+  useLayoutEffect,
+  useEffect,
+  useCallback,
+} from 'react';
 import {UserContext} from '../Context/Context';
 import Modal from '../Components/Modal';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -15,6 +21,7 @@ import {
 } from 'react-native';
 import {DrawerActions} from '@react-navigation/native';
 import ImagePicker from 'react-native-image-crop-picker';
+import {useFocusEffect} from '@react-navigation/core';
 
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
@@ -26,6 +33,7 @@ const MyPage = ({navigation}) => {
   const [profileModalVisible, setProfileModalVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
+  const [point, setPoint] = useState(0);
 
   //사진을 서버로 보내는 함수
   const uploadProfile = () => {
@@ -106,10 +114,11 @@ const MyPage = ({navigation}) => {
       .catch(e => console.log('Error: ', e.message));
   };
 
-  useEffect(() => {
-    getUserInfo();
-    setProfileImage(userInfo.profile);
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getUserInfo();
+    }, []),
+  );
 
   //프사가 변경될 때마다 프로필을 변경된 프사로 새로고침 하기 위함
   useEffect(() => {
