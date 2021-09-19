@@ -16,8 +16,7 @@ import {UserContext} from '../Context/Context';
 const screenWidth = Dimensions.get('window').width;
 const ReviewInfo = ({navigation}) => {
   const {userInfo, Review_ID} = useContext(UserContext);
-  const [image, setImage] = useState([]);
-  const [title, setTitle] = useState('');
+  const [image, setImage] = useState('');
   const [Description, setDescription] = useState('');
   const [Score, setScore] = useState();
   useLayoutEffect(() => {
@@ -48,7 +47,7 @@ const ReviewInfo = ({navigation}) => {
     })
       .then(response => response.json())
       .then(json => {
-        setTitle(json.data.title);
+        setImage(json.data.images);
         setScore(json.data.score);
         setDescription(json.data.contents);
         console.log(json.data);
@@ -71,18 +70,10 @@ const ReviewInfo = ({navigation}) => {
           marginHorizontal: 20,
           width: screenWidth,
         }}>
-        <View style={{alignItems: 'center'}}>
-          <Text
-            style={{
-              fontWeight: 'bold',
-              fontSize: 25,
-            }}>
-            {title}
-          </Text>
-        </View>
         <View
           style={{
             borderColor: '#295eba',
+            marginTop: 30,
           }}>
           <FlatList
             style={{height: 200, width: screenWidth}}

@@ -13,13 +13,14 @@ import {
 import SelectDropdown from 'react-native-select-dropdown';
 import {UserContext} from '../Context/Context';
 import {useFocusEffect} from '@react-navigation/native';
+import {interpolateNode} from 'react-native-reanimated';
 const screenWidth = Dimensions.get('window').width;
 const sort = ['별점순', '최신순', '오래된순'];
 const ReviewBoard = ({navigation}) => {
   const [ReviewList, setReviewList] = useState();
   const {userInfo, chabak_name, chabak_ID} = useContext(UserContext);
   const [Sorting, setSorting] = useState('gradeUp');
-  const {selectedReview_ID} = useContext(UserContext);
+  const {selectedReview_ID, selectedReview_name} = useContext(UserContext);
 
   useFocusEffect(
     useCallback(() => {
@@ -117,6 +118,7 @@ const ReviewBoard = ({navigation}) => {
             }}
             onPress={() => {
               selectedReview_ID(item.review_id);
+              selectedReview_name(item.title);
               navigation.navigate('ReviewInfo');
             }}>
             <Text
