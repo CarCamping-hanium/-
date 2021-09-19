@@ -171,6 +171,7 @@ const ChabakjiEnrollmentNavigator = () => {
 };
 
 const MyPageNavigator = navigation => {
+  const {chabak_name} = useContext(UserContext);
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -216,7 +217,7 @@ const MyPageNavigator = navigation => {
         name="MyChabakjiInfo"
         component={MyChabakjiInfo}
         options={{
-          title: '차박지 정보',
+          title: chabak_name,
           headerBackTitleVisible: false,
         }}
       />
