@@ -1,4 +1,10 @@
-import React, {useState, useLayoutEffect} from 'react';
+import React, {
+  useState,
+  useLayoutEffect,
+  useEffect,
+  useContext,
+  useCallback,
+} from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -11,28 +17,41 @@ import {
   Dimensions,
 } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
+import {UserContext} from '../Context/Context';
+import {useFocusEffect} from '@react-navigation/native';
 
 const screenWidth = Dimensions.get('window').width;
 
 const sort = ['최신순', '오래된순'];
-const DATA = [
-  {
-    title: '차박지1',
-    recommendcount: '5',
-    starcount: '★★★★★',
-  },
-  {
-    title: '차박지2',
-    recommendcount: '1',
-    starcount: '★★★★☆',
-  },
-  {
-    title: '차박지3',
-    recommendcount: '1',
-    starcount: '★★★☆☆',
-  },
-];
 const MyChabakji = ({navigation}) => {
+  const [list, setList] = useState([]);
+  const {userInfo, selectedChabak_ID, selectedChabak_name} =
+    useContext(UserContext);
+
+  const getMyChabakjiInfo = () => {
+    fetch(`http://3.38.85.251:8080/api/myCampSite`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        token: userInfo.token,
+      },
+    })
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+        setList(json.data);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      getMyChabakjiInfo();
+    }, []),
+  );
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -83,7 +102,7 @@ const MyChabakji = ({navigation}) => {
 
       <FlatList
         style={{marginTop: 20}}
-        data={DATA}
+        data={list}
         renderItem={({item, index}) => (
           <TouchableOpacity
             style={{
@@ -95,6 +114,8 @@ const MyChabakji = ({navigation}) => {
               justifyContent: 'center',
             }}
             onPress={() => {
+              selectedChabak_ID(item.campsite_id);
+              selectedChabak_name(item.name);
               navigation.navigate('MyChabakjiInfo');
             }}>
             <Text
@@ -104,7 +125,7 @@ const MyChabakji = ({navigation}) => {
                 fontWeight: 'bold',
                 color: 'white',
               }}>
-              {item.title}
+              {item.name}
             </Text>
             <View
               style={{
@@ -112,10 +133,10 @@ const MyChabakji = ({navigation}) => {
                 marginTop: 7,
               }}>
               <Text style={{marginLeft: 10, color: 'white'}}>
-                추천 수 : {item.recommendcount}
+                위치 : {item.address}
               </Text>
               <Text style={{position: 'absolute', right: 10, color: 'white'}}>
-                별점 : {item.starcount}
+                별점 : {item.score}
               </Text>
             </View>
           </TouchableOpacity>
