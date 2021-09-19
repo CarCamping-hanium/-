@@ -14,7 +14,6 @@ import {useFocusEffect} from '@react-navigation/native';
 import NaverMapView, {Marker, Path} from 'react-native-nmap';
 import Modal from '../../Components/Modal';
 import {UserContext} from '../../Context/Context';
-import {DebugInstructions} from 'react-native/Libraries/NewAppScreen';
 
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
@@ -74,6 +73,7 @@ const Chungcheong = ({navigation}) => {
         console.log(e);
       });
   };
+
   useFocusEffect(
     useCallback(() => {
       getChabakLocation();
