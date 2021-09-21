@@ -22,6 +22,7 @@ import {
 import {DrawerActions} from '@react-navigation/native';
 import ImagePicker from 'react-native-image-crop-picker';
 import {useFocusEffect} from '@react-navigation/core';
+import {isExportNamedDeclaration} from '@babel/types';
 
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
@@ -112,6 +113,30 @@ const MyPage = ({navigation}) => {
         setProfileModalVisible(false);
       })
       .catch(e => console.log('Error: ', e.message));
+  };
+
+  const isAdmin = () => {
+    if (userInfo.id === 'admin') {
+      return (
+        <TouchableOpacity
+          style={{
+            marginTop: 50,
+            backgroundColor: '#295eba',
+            width: 130,
+            height: 50,
+            alignItems: 'center',
+            justifyContent: 'center',
+            borderRadius: 8,
+          }}
+          onPress={() => {
+            navigation.navigate('CheckChabakji');
+          }}>
+          <Text style={{color: 'white', fontWeight: 'bold', fontSize: 16}}>
+            차박지 승인
+          </Text>
+        </TouchableOpacity>
+      );
+    }
   };
 
   useFocusEffect(
@@ -385,6 +410,7 @@ const MyPage = ({navigation}) => {
           </Text>
         </TouchableOpacity>
       </View>
+      {isAdmin()}
       <View
         style={{
           flex: 1,
