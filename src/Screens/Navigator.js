@@ -44,6 +44,8 @@ import MyReviewInfo from './MyReviewInfo';
 import MyChabakjiInfo from './MyChabakjiInfo';
 import MyPointHistory from './MyPointHistory';
 import PointRanking from './PointRanking';
+import CheckChabakji from './CheckChabakji';
+import WaitingChabakjiInfo from './WaitingChabakjiInfo';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -170,7 +172,7 @@ const ChabakjiEnrollmentNavigator = () => {
 };
 
 const MyPageNavigator = navigation => {
-  const {chabak_name, userInfo, review_name} = useContext(UserContext);
+  const {chabak_name, waiting_name, review_name} = useContext(UserContext);
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -241,6 +243,22 @@ const MyPageNavigator = navigation => {
         component={ModifyPassword}
         options={{
           title: '비밀번호 변경',
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="CheckChabakji"
+        component={CheckChabakji}
+        options={{
+          title: '차박지 승인',
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="WaitingChabakjiInfo"
+        component={WaitingChabakjiInfo}
+        options={{
+          title: waiting_name,
           headerBackTitleVisible: false,
         }}
       />
