@@ -19,50 +19,137 @@ import {Rating} from 'react-native-ratings';
 import {UserContext} from '../Context/Context';
 const screenWidth = Dimensions.get('window').width;
 let imageList = [];
-
 const ReviewUpload = ({navigation}) => {
   const {userInfo, chabak_ID} = useContext(UserContext);
-  const [image, setImage] = useState([]);
+  const [changedImage, setChangedImage] = useState(''); //S3에 의해 변환된 후의 주소
+  const [checkImageUpload, setCheckImageUpload] = useState(false);
+  const [image, setImage] = useState(''); //image
+  const [image2, setImage2] = useState(''); //useEffect에서 사진 값이 추가될 때만 실행되기 위해 사용
   const [reviewTitle, setReviewTitle] = useState('');
   const [reviewDescription, setReviewDescription] = useState('');
-  const [score, setScore] = useState(0);
-
-  const chooseImageFromLibrary = () => {
+  const [score, setScore] = useState(2.5);
+  useEffect(() => {
+    uploadPhoto();
+  }, [image2]);
   
-    ImagePicker.openPicker({
-      width: screenWidth,
-      height: screenWidth,
-      cropping: true,
-      showCropGuidelines: true,
-      compressImageMaxWidth: screenWidth,
-      compressImageMaxHeight: screenWidth,
-      multiple: true,
-      waitAnimationEnd: false,
-      includeExif: true,
-      forceJpg: true,
-      maxFiles: 10,
-      compressImageQuality: 0.8,
-      mediaType: 'photo',
-    })
-      .then(response => {
-        //각각의 사진들을 imageList 배열에 넣는 과정
-        console.log('Response: ', response);
-        response.map(img => {
-          imageList.push(img.path);
-          //imageList = [...image, img.path];
-        });
-        setImage(imageList);
-      })
-      .catch(e => console.log('Error: ', e.message));
+  const showImage = () => {
+    if (image === '') {
+      return (
+        <View>
+          <Image
+            source={require('../Assets/Images/wait_photo.png')}
+            style={{width: screenWidth, height: screenWidth}}
+          />
+        </View>
+      );
+    } else {
+      return (
+        <View>
+          <Image
+            source={{uri: image.path}}
+            style={{width: screenWidth, height: screenWidth}}
+          />
+          <TouchableOpacity
+            style={{
+              position: 'absolute',
+              right: 0,
+            }}
+            onPress={() => {
+              removeImage();
+            }}>
+            <Text style={{fontSize: 30}}>❎</Text>
+          </TouchableOpacity>
+        </View>
+      );
+    }
   };
+    //갤러리에서 사진을 가져옴
+    const chooseImageFromLibrary = () => {
+      if (image === '') {
+        ImagePicker.openPicker({
+          width: screenWidth,
+          height: screenWidth,
+          cropping: true,
+          waitAnimationEnd: false,
+          includeExif: true,
+          forceJpg: true, //ios live photo를 jpg로 바꿔줌
+          compressImageQuality: 1, //이미지 압축 0~1
+          mediaType: 'photo',
+          includeBase64: true,
+        })
+          .then(response => {
+            console.log('Response: ', response);
+            setImage(response);
+            setImage2(response);
+          })
+          .catch(e => console.log('Error: ', e.message));
+      } else {
+        Alert.alert('이미 사진이 존재합니다.');
+      }
+    };
+  const removeImage = index => {
+    // let new_imageList = [...image];
+    // new_imageList.splice(index, 1);
+    // setImage(new_imageList);
+    // imageList = [...new_imageList];
+    setImage('');
+    fetch(`http://3.38.85.251:8080/api/delete?images=${changedImage}`, {
+      method: 'POST',
+      headers: {
+        // 'Content-Type': 'multipart/form-data',
+        token: userInfo.token,
+      },
+    })
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
+  //가져온 사진을 서버에 먼저 업로드하는 과정의 함수
+  const uploadPhoto = () => {
+    if (checkImageUpload === false) {
+      const formData = new FormData();
+      formData.append('images', {
+        name: 'name',
+        type: 'image/jpeg',
+        uri: image.path,
+      });
+      fetch('http://3.38.85.251:8080/api/upload', {
+        method: 'POST',
+        headers: {
+          // 'Content-Type': 'multipart/form-data',
+          token: userInfo.token,
+        },
+        body: formData,
+      })
+        .then(response => response.json())
+        .then(json => {
+          console.log('upload api : ', json);
+          console.log(json.data);
+          if (json.success === true) {
+            setCheckImageUpload(true);
+            setChangedImage(json.data);
+          }
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
+  };
+
 const ReviewUpload=()=>{ 
   if (
-    //image === '' ||
+    image === '' ||
     reviewTitle==='' ||
    reviewDescription === ''
+
   ) {
     Alert.alert('입력되지 않은 정보가 있습니다.');
-  } else { 
+  } else {     console.log(image);
   var url = 'http://3.38.85.251:8080/api/review/' + chabak_ID;
   fetch(url, {
     method: 'POST',
@@ -72,8 +159,10 @@ const ReviewUpload=()=>{
     },
     body: JSON.stringify({
    content:reviewDescription,
+   images: changedImage,
    score:score,
    title:reviewTitle,
+ 
     }),
   })
   .then(response => response.json())
@@ -86,15 +175,10 @@ const ReviewUpload=()=>{
    navigation.navigate('ReviewBoard');}
   })
   .catch(e => {
+
     console.log(e);
   });
 };}
-  const removeImage = index => {
-    let new_imageList = [...image];
-    new_imageList.splice(index, 1);
-    setImage(new_imageList);
-    imageList = [...new_imageList];
-  };
   return (
     <SafeAreaView
       style={{
@@ -118,33 +202,7 @@ const ReviewUpload=()=>{
           marginHorizontal: 20,
           width: screenWidth,
         }}>
-        <FlatList
-          style={{height: screenWidth, width: screenWidth}}
-          horizontal={true}
-          pagingEnabled={true}
-          data={image}
-          keyExtractor={(item, index) => {
-            return `image-${index}`;
-          }}
-          renderItem={({item, index}) => (
-            <View>
-              <Image
-                source={{uri: image[index]}}
-                style={{width: screenWidth, height: screenWidth}}
-              />
-              <TouchableOpacity
-                style={{
-                  position: 'absolute',
-                  right: 0,
-                }}
-                onPress={() => {
-                  removeImage(index);
-                }}>
-                <Text style={{fontSize: 30}}>❎</Text>
-              </TouchableOpacity>
-            </View>
-          )}
-        />
+              {showImage()}
         <View style={{alignItems: 'center'}}>
           <Text style={{marginTop: 20, fontWeight: '500', fontSize: 15}}>
             정방형(정사각형) 사진을 추천드려요!

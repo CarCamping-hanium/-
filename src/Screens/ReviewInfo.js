@@ -19,6 +19,8 @@ const ReviewInfo = ({navigation}) => {
   const [image, setImage] = useState('');
   const [Description, setDescription] = useState('');
   const [Score, setScore] = useState();
+  const[writer,setWriter]=useState('');
+  const[profileImage,setProfileImage]=useState('');
   useLayoutEffect(() => {
     getInfo();
     navigation.setOptions({
@@ -50,6 +52,11 @@ const ReviewInfo = ({navigation}) => {
         setImage(json.data.images);
         setScore(json.data.score);
         setDescription(json.data.contents);
+        setWriter(json.data.writer);
+
+setProfileImage(json.data.profile);
+ 
+        console.log(profileImage);
         console.log(json.data);
       })
       .catch(e => {
@@ -75,24 +82,31 @@ const ReviewInfo = ({navigation}) => {
             borderColor: '#295eba',
             marginTop: 30,
           }}>
-          <FlatList
-            style={{height: 200, width: screenWidth}}
-            horizontal={true}
-            pagingEnabled={true}
-            data={image}
-            keyExtractor={(item, index) => {
-              return `image-${index}`;
-            }}
-            renderItem={({item, index}) => (
-              <View>
+          <View style={{    flexDirection: 'row',}}>
+          <Image style={{height:50,width:50,marginLeft:30,}}
+  source={
+   profileImage=== null
+      ? require('../Assets/Images/empty_profile.png')
+      : {uri: profileImage}
+  }
+>
+</Image>
+<Text style={{
+  marginTop:10,
+  marginLeft:10,
+fontWeight:'bold',
+justifyContent:'center',
+fontSize:15,
+}}>{writer}</Text>
+              </View> 
                 <Image
-                  source={{uri: image[index]}}
-                  style={{width: screenWidth, height: 200}}
+                  source={{uri: image}}
+                  style={{
+                    marginTop:25,width: screenWidth,   width: screenWidth,
+                    height: screenWidth,}}
                 />
               </View>
-            )}
-          />
-        </View>
+         
         <View>
           <Text
             style={{

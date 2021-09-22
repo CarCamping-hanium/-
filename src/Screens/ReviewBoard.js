@@ -121,6 +121,7 @@ const ReviewBoard = ({navigation}) => {
               selectedReview_name(item.title);
               navigation.navigate('ReviewInfo');
             }}>
+              <View style={{    flexDirection: 'row',}}>
             <Text
               style={{
                 marginLeft: 10,
@@ -130,6 +131,16 @@ const ReviewBoard = ({navigation}) => {
               }}>
               {item.title}
             </Text>
+            <Text
+              style={{
+                position:'absolute',right:10,
+                marginLeft: 10,
+                fontSize: 15,
+                color: 'white',
+              }}>
+              {item.writer}
+            </Text>
+            </View>
             <View
               style={{
                 flexDirection: 'row',

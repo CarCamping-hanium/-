@@ -20,9 +20,7 @@ import Modal from '../Components/Modal';
 import Postcode from '@actbase/react-daum-postcode';
 import {UserContext} from '../Context/Context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
 const screenWidth = Dimensions.get('window').width;
-
 const ChabakjiEnrollment = ({navigation}) => {
   const [changedImage, setChangedImage] = useState(''); //S3에 의해 변환된 후의 주소
   const [checkImageUpload, setCheckImageUpload] = useState(false);
@@ -37,11 +35,8 @@ const ChabakjiEnrollment = ({navigation}) => {
     //address
     '아래 버튼을 눌러 차박지를 검색해주세요.',
   );
-
   const [modifyVisible, setModifyVisible] = useState(false);
-
   const {userInfo, getUserInfo} = useContext(UserContext);
-
   useEffect(() => {
     uploadPhoto();
   }, [image2]);

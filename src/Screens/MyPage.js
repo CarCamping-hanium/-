@@ -56,11 +56,13 @@ const MyPage = ({navigation}) => {
       })
         .then(response => response.json())
         .then(json => {
+          console.log("이게오바임2");
           console.log('upload api console : ', json);
           if (json.msg === 'success') {
             console.log('succe:', json);
             getUserInfo();
           } else {
+           
             Alert.alert(json.msg);
           }
         });
@@ -107,12 +109,11 @@ const MyPage = ({navigation}) => {
         //   imageList.push(img.path);
         //   console.log(typeof img.path);
         //   //imageList = [...image, img.path];
-        // });
-        console.log('Response: ', response);
+        // }); 
         setProfileImage(response);
         setProfileModalVisible(false);
       })
-      .catch(e => console.log('Error: ', e.message));
+   
   };
 
   const isAdmin = () => {
@@ -129,7 +130,7 @@ const MyPage = ({navigation}) => {
             borderRadius: 8,
           }}
           onPress={() => {
-            navigation.navigate('CheckChabakji');
+          navigation.navigate('CheckChabakji');
           }}>
           <Text style={{color: 'white', fontWeight: 'bold', fontSize: 16}}>
             차박지 승인
