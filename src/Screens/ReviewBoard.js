@@ -15,7 +15,7 @@ import {UserContext} from '../Context/Context';
 import {useFocusEffect} from '@react-navigation/native';
 import {interpolateNode} from 'react-native-reanimated';
 const screenWidth = Dimensions.get('window').width;
-const sort = ['별점순', '최신순', '오래된순'];
+const sort = ['별점 높은순', '별점 낮은순', '최신순', '오래된순'];
 const ReviewBoard = ({navigation}) => {
   const [ReviewList, setReviewList] = useState();
   const {userInfo, chabak_name, chabak_ID} = useContext(UserContext);
@@ -28,6 +28,7 @@ const ReviewBoard = ({navigation}) => {
     }, []),
   );
   useLayoutEffect(() => {
+    getReview();
     navigation.setOptions({
       headerRight: () => (
         <TouchableOpacity
@@ -88,11 +89,12 @@ const ReviewBoard = ({navigation}) => {
             fontSize: 17,
           }}
           data={sort}
-          defaultValue={'별점순'}
+          defaultValue={'별점 높은순'}
           onSelect={(selectedItem, index) => {
             if (index === 0) setSorting('gradeUp');
-            else if (index === 1) setSorting('latestUP');
-            else if (index === 2) setSorting('latestDOWN');
+            else if (index === 1) setSorting('gradeDown');
+            else if (index === 2) setSorting('latestUP');
+            else if (index === 3) setSorting('latestDOWN');
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;
