@@ -19,8 +19,8 @@ const ReviewInfo = ({navigation}) => {
   const [image, setImage] = useState('');
   const [Description, setDescription] = useState('');
   const [Score, setScore] = useState();
-  const[writer,setWriter]=useState('');
-  const[profileImage,setProfileImage]=useState('');
+  const [writer, setWriter] = useState('');
+  const [profileImage, setProfileImage] = useState('');
   useLayoutEffect(() => {
     getInfo();
     navigation.setOptions({
@@ -54,8 +54,8 @@ const ReviewInfo = ({navigation}) => {
         setDescription(json.data.contents);
         setWriter(json.data.writer);
 
-setProfileImage(json.data.profile);
- 
+        setProfileImage(json.data.profile);
+
         console.log(profileImage);
         console.log(json.data);
       })
@@ -82,31 +82,36 @@ setProfileImage(json.data.profile);
             borderColor: '#295eba',
             marginTop: 30,
           }}>
-          <View style={{    flexDirection: 'row',}}>
-          <Image style={{height:50,width:50,marginLeft:30,}}
-  source={
-   profileImage=== null
-      ? require('../Assets/Images/empty_profile.png')
-      : {uri: profileImage}
-  }
->
-</Image>
-<Text style={{
-  marginTop:10,
-  marginLeft:10,
-fontWeight:'bold',
-justifyContent:'center',
-fontSize:15,
-}}>{writer}</Text>
-              </View> 
-                <Image
-                  source={{uri: image}}
-                  style={{
-                    marginTop:25,width: screenWidth,   width: screenWidth,
-                    height: screenWidth,}}
-                />
-              </View>
-         
+          <View style={{flexDirection: 'row'}}>
+            <Image
+              style={{height: 50, width: 50, marginLeft: 30, borderRadius: 8}}
+              source={
+                profileImage === null
+                  ? require('../Assets/Images/empty_profile.png')
+                  : {uri: profileImage}
+              }></Image>
+            <Text
+              style={{
+                marginTop: 10,
+                marginLeft: 10,
+                fontWeight: 'bold',
+                justifyContent: 'center',
+                fontSize: 20,
+              }}>
+              {writer}
+            </Text>
+          </View>
+          <Image
+            source={{uri: image}}
+            style={{
+              marginTop: 25,
+              width: screenWidth,
+              width: screenWidth,
+              height: screenWidth,
+            }}
+          />
+        </View>
+
         <View>
           <Text
             style={{
