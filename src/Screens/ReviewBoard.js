@@ -121,25 +121,26 @@ const ReviewBoard = ({navigation}) => {
               selectedReview_name(item.title);
               navigation.navigate('ReviewInfo');
             }}>
-              <View style={{    flexDirection: 'row',}}>
-            <Text
-              style={{
-                marginLeft: 10,
-                fontSize: 18,
-                fontWeight: 'bold',
-                color: 'white',
-              }}>
-              {item.title}
-            </Text>
-            <Text
-              style={{
-                position:'absolute',right:10,
-                marginLeft: 10,
-                fontSize: 15,
-                color: 'white',
-              }}>
-              {item.writer}
-            </Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text
+                style={{
+                  marginLeft: 10,
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                  color: 'white',
+                }}>
+                {item.title}
+              </Text>
+              <Text
+                style={{
+                  position: 'absolute',
+                  right: 10,
+                  marginLeft: 10,
+                  fontSize: 15,
+                  color: 'white',
+                }}>
+                작성자 : {item.writer}
+              </Text>
             </View>
             <View
               style={{
