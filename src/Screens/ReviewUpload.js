@@ -1,4 +1,4 @@
-import React, {useState, useEffect,useContext} from 'react';
+import React, {useState, useEffect, useContext} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -22,16 +22,14 @@ let imageList = [];
 const ReviewUpload = ({navigation}) => {
   const {userInfo, chabak_ID} = useContext(UserContext);
   const [changedImage, setChangedImage] = useState(''); //S3에 의해 변환된 후의 주소
-  const [checkImageUpload, setCheckImageUpload] = useState(false);
   const [image, setImage] = useState(''); //image
-  const [image2, setImage2] = useState(''); //useEffect에서 사진 값이 추가될 때만 실행되기 위해 사용
   const [reviewTitle, setReviewTitle] = useState('');
   const [reviewDescription, setReviewDescription] = useState('');
   const [score, setScore] = useState(2.5);
   useEffect(() => {
-    uploadPhoto();
-  }, [image2]);
-  
+    if (image !== '') uploadPhoto();
+  }, [image]);
+
   const showImage = () => {
     if (image === '') {
       return (
@@ -63,30 +61,29 @@ const ReviewUpload = ({navigation}) => {
       );
     }
   };
-    //갤러리에서 사진을 가져옴
-    const chooseImageFromLibrary = () => {
-      if (image === '') {
-        ImagePicker.openPicker({
-          width: screenWidth,
-          height: screenWidth,
-          cropping: true,
-          waitAnimationEnd: false,
-          includeExif: true,
-          forceJpg: true, //ios live photo를 jpg로 바꿔줌
-          compressImageQuality: 1, //이미지 압축 0~1
-          mediaType: 'photo',
-          includeBase64: true,
+  //갤러리에서 사진을 가져옴
+  const chooseImageFromLibrary = () => {
+    if (image === '') {
+      ImagePicker.openPicker({
+        width: screenWidth,
+        height: screenWidth,
+        cropping: true,
+        waitAnimationEnd: false,
+        includeExif: true,
+        forceJpg: true, //ios live photo를 jpg로 바꿔줌
+        compressImageQuality: 1, //이미지 압축 0~1
+        mediaType: 'photo',
+        includeBase64: true,
+      })
+        .then(response => {
+          console.log('Response: ', response);
+          setImage(response);
         })
-          .then(response => {
-            console.log('Response: ', response);
-            setImage(response);
-            setImage2(response);
-          })
-          .catch(e => console.log('Error: ', e.message));
-      } else {
-        Alert.alert('이미 사진이 존재합니다.');
-      }
-    };
+        .catch(e => console.log('Error: ', e.message));
+    } else {
+      Alert.alert('이미 사진이 존재합니다.');
+    }
+  };
   const removeImage = index => {
     // let new_imageList = [...image];
     // new_imageList.splice(index, 1);
@@ -111,28 +108,60 @@ const ReviewUpload = ({navigation}) => {
 
   //가져온 사진을 서버에 먼저 업로드하는 과정의 함수
   const uploadPhoto = () => {
-    if (checkImageUpload === false) {
-      const formData = new FormData();
-      formData.append('images', {
-        name: 'name',
-        type: 'image/jpeg',
-        uri: image.path,
+    const formData = new FormData();
+    formData.append('images', {
+      name: 'name',
+      type: 'image/jpeg',
+      uri: image.path,
+    });
+    fetch('http://3.38.85.251:8080/api/upload', {
+      method: 'POST',
+      headers: {
+        // 'Content-Type': 'multipart/form-data',
+        token: userInfo.token,
+      },
+      body: formData,
+    })
+      .then(response => response.json())
+      .then(json => {
+        console.log('upload api : ', json);
+        console.log(json.data);
+        if (json.success === true) {
+          setChangedImage(json.data);
+        }
+      })
+      .catch(e => {
+        console.log(e);
       });
-      fetch('http://3.38.85.251:8080/api/upload', {
+  };
+
+  const ReviewUpload = () => {
+    if (image === '' || reviewTitle === '' || reviewDescription === '') {
+      Alert.alert('입력되지 않은 정보가 있습니다.');
+    } else {
+      console.log(image);
+      var url = 'http://3.38.85.251:8080/api/review/' + chabak_ID;
+      fetch(url, {
         method: 'POST',
         headers: {
-          // 'Content-Type': 'multipart/form-data',
+          'Content-Type': 'application/json',
           token: userInfo.token,
         },
-        body: formData,
+        body: JSON.stringify({
+          content: reviewDescription,
+          images: changedImage,
+          score: score,
+          title: reviewTitle,
+        }),
       })
         .then(response => response.json())
         .then(json => {
-          console.log('upload api : ', json);
-          console.log(json.data);
+          console.log(json);
           if (json.success === true) {
-            setCheckImageUpload(true);
-            setChangedImage(json.data);
+            imageList.length = 0;
+            setImage([]);
+            Alert.alert('차박린이', '회원님의 소중한 리뷰가 등록되었습니다.');
+            navigation.navigate('ReviewBoard');
           }
         })
         .catch(e => {
@@ -140,45 +169,6 @@ const ReviewUpload = ({navigation}) => {
         });
     }
   };
-
-const ReviewUpload=()=>{ 
-  if (
-    image === '' ||
-    reviewTitle==='' ||
-   reviewDescription === ''
-
-  ) {
-    Alert.alert('입력되지 않은 정보가 있습니다.');
-  } else {     console.log(image);
-  var url = 'http://3.38.85.251:8080/api/review/' + chabak_ID;
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      token: userInfo.token,
-    },
-    body: JSON.stringify({
-   content:reviewDescription,
-   images: changedImage,
-   score:score,
-   title:reviewTitle,
- 
-    }),
-  })
-  .then(response => response.json())
-  .then(json => {
-   console.log(json);
-   if(json.success===true){
-   imageList.length = 0;
-   setImage([]);
-   Alert.alert('차박린이', '회원님의 소중한 리뷰가 등록되었습니다.');
-   navigation.navigate('ReviewBoard');}
-  })
-  .catch(e => {
-
-    console.log(e);
-  });
-};}
   return (
     <SafeAreaView
       style={{
@@ -202,7 +192,7 @@ const ReviewUpload=()=>{
           marginHorizontal: 20,
           width: screenWidth,
         }}>
-              {showImage()}
+        {showImage()}
         <View style={{alignItems: 'center'}}>
           <Text style={{marginTop: 20, fontWeight: '500', fontSize: 15}}>
             정방형(정사각형) 사진을 추천드려요!
@@ -243,7 +233,7 @@ const ReviewUpload=()=>{
             이 차박지의 점수는?
           </Text>
           <Rating
-        onStartRating={0}
+            onStartRating={0}
             ratingCount={5}
             imageSize={40}
             jumpValue={0.5}
@@ -264,14 +254,12 @@ const ReviewUpload=()=>{
             style={styles.Enroll}
             onPress={() => {
               ReviewUpload();
-           
             }}>
             <Text style={{color: 'white'}}>등록</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.Cancel}
             onPress={() => {
-            
               imageList.length = 0;
               setImage([]);
               navigation.navigate('ReviewBoard');
