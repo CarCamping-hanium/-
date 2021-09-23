@@ -82,7 +82,7 @@ const MyReviewInfo = ({navigation}) => {
           <View>
             <Image
               source={{uri: image}}
-              style={{width: screenWidth, height: 200}}
+              style={{width: screenWidth, height: screenWidth}}
             />
           </View>
         </View>
@@ -99,8 +99,6 @@ const MyReviewInfo = ({navigation}) => {
           <View
             style={{
               alignItems: 'center',
-              height: 300,
-              justifyContent: 'center',
             }}>
             <Text style={styles.content}>{description}</Text>
           </View>

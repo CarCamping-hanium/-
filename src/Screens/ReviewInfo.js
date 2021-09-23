@@ -81,7 +81,6 @@ const ReviewInfo = ({navigation}) => {
         <View
           style={{
             borderColor: '#295eba',
-            marginTop: 30,
           }}>
           <View style={{flexDirection: 'row'}}>
             <Image
@@ -124,7 +123,6 @@ const ReviewInfo = ({navigation}) => {
           </Text>
           <View
             style={{
-              marginTop: 20,
               alignItems: 'center',
             }}>
             <Text style={styles.content}>{Description}</Text>
