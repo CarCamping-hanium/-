@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState, useContext} from 'react';
+import React, {useLayoutEffect, useState, useContext, useEffect} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -16,11 +16,12 @@ import {UserContext} from '../Context/Context';
 const screenWidth = Dimensions.get('window').width;
 const ReviewInfo = ({navigation}) => {
   const {userInfo, Review_ID} = useContext(UserContext);
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState();
   const [Description, setDescription] = useState('');
   const [Score, setScore] = useState();
   const [writer, setWriter] = useState('');
-  const [profileImage, setProfileImage] = useState('');
+  const [profileImage, setProfileImage] = useState();
+
   useLayoutEffect(() => {
     getInfo();
     navigation.setOptions({
@@ -84,7 +85,7 @@ const ReviewInfo = ({navigation}) => {
           }}>
           <View style={{flexDirection: 'row'}}>
             <Image
-              style={{height: 50, width: 50, marginLeft: 30, borderRadius: 8}}
+              style={{height: 50, width: 50, marginLeft: 10, borderRadius: 8}}
               source={
                 profileImage === null
                   ? require('../Assets/Images/empty_profile.png')
@@ -106,7 +107,6 @@ const ReviewInfo = ({navigation}) => {
             style={{
               marginTop: 25,
               width: screenWidth,
-              width: screenWidth,
               height: screenWidth,
             }}
           />
@@ -117,16 +117,15 @@ const ReviewInfo = ({navigation}) => {
             style={{
               fontWeight: 'bold',
               fontSize: 20,
-              marginTop: '10%',
+              marginTop: 40,
               marginLeft: 30,
             }}>
             내용
           </Text>
           <View
             style={{
+              marginTop: 20,
               alignItems: 'center',
-              height: 300,
-              justifyContent: 'center',
             }}>
             <Text style={styles.content}>{Description}</Text>
           </View>
@@ -136,7 +135,7 @@ const ReviewInfo = ({navigation}) => {
             style={{
               fontWeight: 'bold',
               fontSize: 20,
-              marginTop: '10%',
+              marginTop: 40,
               marginLeft: 30,
             }}>
             별점

@@ -18,7 +18,7 @@ const ChabakjiInfo = ({navigation}) => {
   const [address, setAddress] = useState(); //위치
   const [description, setDescription] = useState(''); //설명
   const [videoLink, setVideoLink] = useState(''); //영상링크
-  const [image, setImage] = useState(''); //사진
+  const [image, setImage] = useState(); //사진
   const [facilities, setFacilities] = useState('');
 
   const getInfo = () => {
@@ -87,7 +87,7 @@ const ChabakjiInfo = ({navigation}) => {
             style={{
               fontWeight: 'bold',
               fontSize: 20,
-              marginTop: '10%',
+              marginTop: 40,
               marginLeft: 30,
             }}>
             위치
@@ -99,7 +99,7 @@ const ChabakjiInfo = ({navigation}) => {
             style={{
               fontWeight: 'bold',
               fontSize: 20,
-              marginTop: '10%',
+              marginTop: 40,
               marginLeft: 30,
             }}>
             설명
@@ -111,7 +111,7 @@ const ChabakjiInfo = ({navigation}) => {
             style={{
               fontWeight: 'bold',
               fontSize: 20,
-              marginTop: '10%',
+              marginTop: 40,
               marginLeft: 30,
             }}>
             근처 편의시설 (선택사항)
@@ -123,7 +123,7 @@ const ChabakjiInfo = ({navigation}) => {
             style={{
               fontWeight: 'bold',
               fontSize: 20,
-              marginTop: '10%',
+              marginTop: 40,
               marginLeft: 30,
             }}>
             관련 영상 링크 (선택사항)

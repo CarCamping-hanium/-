@@ -17,7 +17,7 @@ import {UserContext} from '../Context/Context';
 
 const screenWidth = Dimensions.get('window').width;
 const MyReviewInfo = ({navigation}) => {
-  const [image, setImage] = useState('');
+  const [image, setImage] = useState();
   const [description, setDescription] = useState('');
   const [score, setScore] = useState();
   const {Review_ID, userInfo} = useContext(UserContext);
@@ -91,7 +91,7 @@ const MyReviewInfo = ({navigation}) => {
             style={{
               fontWeight: 'bold',
               fontSize: 20,
-              marginTop: '10%',
+              marginTop: 40,
               marginLeft: 30,
             }}>
             내용
@@ -110,7 +110,7 @@ const MyReviewInfo = ({navigation}) => {
             style={{
               fontWeight: 'bold',
               fontSize: 20,
-              marginTop: '10%',
+              marginTop: 40,
               marginLeft: 30,
             }}>
             별점
