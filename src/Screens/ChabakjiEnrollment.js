@@ -23,9 +23,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const screenWidth = Dimensions.get('window').width;
 const ChabakjiEnrollment = ({navigation}) => {
   const [changedImage, setChangedImage] = useState(''); //S3에 의해 변환된 후의 주소
-  const [checkImageUpload, setCheckImageUpload] = useState(false);
   const [image, setImage] = useState(''); //image
-  const [image2, setImage2] = useState(''); //useEffect에서 사진 값이 추가될 때만 실행되기 위해 사용
   const [category, setCategory] = useState('지역'); //region
   const [name, setName] = useState(''); //name
   const [description, setDescription] = useState(''); //explanation
@@ -37,9 +35,6 @@ const ChabakjiEnrollment = ({navigation}) => {
   );
   const [modifyVisible, setModifyVisible] = useState(false);
   const {userInfo, getUserInfo} = useContext(UserContext);
-  useEffect(() => {
-    uploadPhoto();
-  }, [image2]);
 
   //사진을 아직 선택하지 않았을 때와 선택한 후의 보여지는 이미지가 다름
   const showImage = () => {
@@ -97,7 +92,6 @@ const ChabakjiEnrollment = ({navigation}) => {
           // });
           console.log('Response: ', response);
           setImage(response);
-          setImage2(response);
         })
         .catch(e => console.log('Error: ', e.message));
     } else {
@@ -129,35 +123,37 @@ const ChabakjiEnrollment = ({navigation}) => {
 
   //가져온 사진을 서버에 먼저 업로드하는 과정의 함수
   const uploadPhoto = () => {
-    if (checkImageUpload === false) {
-      const formData = new FormData();
-      formData.append('images', {
-        name: 'name',
-        type: 'image/jpeg',
-        uri: image.path,
-      });
-      fetch('http://3.38.85.251:8080/api/upload', {
-        method: 'POST',
-        headers: {
-          // 'Content-Type': 'multipart/form-data',
-          token: userInfo.token,
-        },
-        body: formData,
+    const formData = new FormData();
+    formData.append('images', {
+      name: 'name',
+      type: 'image/jpeg',
+      uri: image.path,
+    });
+    fetch('http://3.38.85.251:8080/api/upload', {
+      method: 'POST',
+      headers: {
+        // 'Content-Type': 'multipart/form-data',
+        token: userInfo.token,
+      },
+      body: formData,
+    })
+      .then(response => response.json())
+      .then(json => {
+        console.log('upload api : ', json);
+        console.log(json.data);
+        if (json.success === true) {
+          //setCheckImageUpload(true);
+          setChangedImage(json.data);
+        }
       })
-        .then(response => response.json())
-        .then(json => {
-          console.log('upload api : ', json);
-          console.log(json.data);
-          if (json.success === true) {
-            setCheckImageUpload(true);
-            setChangedImage(json.data);
-          }
-        })
-        .catch(e => {
-          console.log(e);
-        });
-    }
+      .catch(e => {
+        console.log(e);
+      });
   };
+
+  useEffect(() => {
+    if (image !== '') uploadPhoto();
+  }, [image]);
 
   return (
     <SafeAreaView
@@ -425,8 +421,6 @@ const ChabakjiEnrollment = ({navigation}) => {
                 Alert.alert('입력되지 않은 정보가 있습니다.');
               } else if (category === '지역') {
                 Alert.alert('지역을 선택하세요.');
-              } else if (checkImageUpload === false) {
-                Alert.alert('사진 업로드 버튼을 눌러주세요.');
               } else {
                 fetch('http://3.38.85.251:8080/api/camping/register', {
                   method: 'POST',
@@ -452,14 +446,12 @@ const ChabakjiEnrollment = ({navigation}) => {
                         '감사합니다. 회원님의 차박지 등록 심사가 진행될 예정입니다.',
                       );
                       setImage('');
-                      setImage2('');
                       setName('');
                       setLocation('아래 버튼을 눌러 차박지를 검색해주세요.');
                       setDescription('');
                       setComfort('');
                       setVideoLink('');
                       setCategory('지역');
-                      setCheckImageUpload(false);
                       setChangedImage('');
                       getUserInfo();
                       navigation.navigate('HomeScreen');
@@ -478,14 +470,12 @@ const ChabakjiEnrollment = ({navigation}) => {
             style={styles.Cancel}
             onPress={() => {
               setImage('');
-              setImage2('');
               setName('');
               setLocation('아래 버튼을 눌러 차박지를 검색해주세요.');
               setDescription('');
               setComfort('');
               setVideoLink('');
               setCategory('지역');
-              setCheckImageUpload(false);
               setChangedImage('');
               navigation.navigate('HomeScreen');
             }}>
