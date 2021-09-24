@@ -62,7 +62,10 @@ const ChabakjiEnrollment = ({navigation}) => {
             onPress={() => {
               removeImage();
             }}>
-            <Text style={{fontSize: 30}}>❎</Text>
+            <Image
+              source={require('../Assets/Images/removePhoto.png')}
+              style={{width: 30, height: 30}}
+            />
           </TouchableOpacity>
         </View>
       );
