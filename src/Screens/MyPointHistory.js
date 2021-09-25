@@ -1,4 +1,10 @@
-import React, {useLayoutEffect, useState, useCallback, useContext} from 'react';
+import React, {
+  useLayoutEffect,
+  useState,
+  useCallback,
+  useContext,
+  useEffect,
+} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -22,8 +28,9 @@ const screenWidth = Dimensions.get('window').width;
 const MyPointHistory = ({navigation}) => {
   const {userInfo} = useContext(UserContext);
   const [pointInfo, setPointInfo] = useState([]);
+  const [sorting, setSorting] = useState('pointDesc');
   const getPointHistory = () => {
-    fetch(`http://3.38.85.251:8080/api/point`, {
+    fetch(`http://3.38.85.251:8080/api/${sorting}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -57,6 +64,10 @@ const MyPointHistory = ({navigation}) => {
     }, []),
   );
 
+  useEffect(() => {
+    getPointHistory();
+  }, [sorting]);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -73,39 +84,6 @@ const MyPointHistory = ({navigation}) => {
       ),
     });
   }, []);
-
-  const data = [
-    {
-      date: '2021-08-28',
-      time: '02:40',
-      path: '리뷰 등록',
-      point: 25,
-    },
-    {
-      date: '2021-08-25',
-      time: '12:40',
-      path: '차박지 등록',
-      point: 20,
-    },
-    {
-      date: '2021-08-18',
-      time: '16:40',
-      path: '리뷰 등록',
-      point: 15,
-    },
-    {
-      date: '2021-07-28',
-      time: '23:40',
-      path: '추천',
-      point: 10,
-    },
-    {
-      date: '2021-06-28',
-      time: '02:40',
-      path: '리뷰 등록',
-      point: 5,
-    },
-  ];
 
   return (
     <SafeAreaView
@@ -126,7 +104,10 @@ const MyPointHistory = ({navigation}) => {
         buttonTextStyle={{fontSize: 17, color: 'white'}}
         data={sort}
         defaultValue={'최신순'}
-        onSelect={(selectedItem, index) => {}}
+        onSelect={(selectedItem, index) => {
+          if (index === 0) setSorting('pointDesc');
+          if (index === 1) setSorting('point');
+        }}
         buttonTextAfterSelection={(selectedItem, index) => {
           return selectedItem;
         }}

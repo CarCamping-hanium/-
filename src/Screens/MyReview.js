@@ -24,7 +24,7 @@ const screenWidth = Dimensions.get('window').width;
 const sort = ['최신순', '오래된순', '별점 높은순', '별점 낮은순'];
 const MyReview = ({navigation}) => {
   const [list, setList] = useState([]);
-  const [sorting, setSorting] = useState('myReview');
+  const [sorting, setSorting] = useState('myReviewDesc');
   const {userInfo, selectedReview_ID, selectedReview_name} =
     useContext(UserContext);
 
@@ -94,8 +94,8 @@ const MyReview = ({navigation}) => {
           data={sort}
           defaultValue={'최신순'}
           onSelect={(selectedItem, index) => {
-            if (index === 0) setSorting('myReview');
-            if (index === 1) setSorting('myReviewDesc');
+            if (index === 0) setSorting('myReviewDesc');
+            if (index === 1) setSorting('myReview');
             if (index === 2) setSorting('myReviewScoreDesc');
             if (index === 3) setSorting('myReviewScore');
           }}

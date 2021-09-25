@@ -25,7 +25,7 @@ const screenWidth = Dimensions.get('window').width;
 const sort = ['최신순', '오래된순'];
 const MyChabakji = ({navigation}) => {
   const [list, setList] = useState([]);
-  const [sorting, setSorting] = useState('myCampSite');
+  const [sorting, setSorting] = useState('myCampSiteDesc');
   const {userInfo, selectedChabak_ID, selectedChabak_name} =
     useContext(UserContext);
 
@@ -96,8 +96,8 @@ const MyChabakji = ({navigation}) => {
           data={sort}
           defaultValue={'최신순'}
           onSelect={(selectedItem, index) => {
-            if (index === 0) setSorting('myCampSite');
-            else if (index === 1) setSorting('myCampSiteDesc');
+            if (index === 0) setSorting('myCampSiteDesc');
+            else if (index === 1) setSorting('myCampSite');
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;
