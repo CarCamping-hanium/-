@@ -1,4 +1,4 @@
-import React, {useLayoutEffect, useState} from 'react';
+import React, {useLayoutEffect, useState, useCallback, useContext} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -12,12 +12,51 @@ import {
   Linking,
 } from 'react-native';
 import SelectDropdown from 'react-native-select-dropdown';
+import {useFocusEffect} from '@react-navigation/core';
+import {UserContext} from '../Context/Context';
 
 const sort = ['최신순', '오래된순'];
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 
 const MyPointHistory = ({navigation}) => {
+  const {userInfo} = useContext(UserContext);
+  const [pointInfo, setPointInfo] = useState([]);
+  const getPointHistory = () => {
+    fetch(`http://3.38.85.251:8080/api/point`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        token: userInfo.token,
+      },
+    })
+      .then(response => response.json())
+      .then(json => {
+        console.log(json);
+        let list = [];
+        for (let i = 0; i < json.data.length; i++) {
+          list.push({
+            contents: json.data[i].contents,
+            date: json.data[i].date.substr(0, 10),
+            time: json.data[i].date.substr(11, 5),
+            score: json.data[i].score,
+            scoreSum: json.data[i].scoresum,
+          });
+        }
+        console.log(list);
+        setPointInfo(list);
+      })
+      .catch(e => {
+        console.log(e);
+      });
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      getPointHistory();
+    }, []),
+  );
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -96,7 +135,7 @@ const MyPointHistory = ({navigation}) => {
         }}
       />
       <FlatList
-        data={data}
+        data={pointInfo}
         keyExtractor={(item, index) => {
           return `pointHistory-${index}`;
         }}
@@ -113,9 +152,9 @@ const MyPointHistory = ({navigation}) => {
               borderWidth: 2,
             }}>
             <Text>
-              {item.date} · {item.time} · {item.path} +5
+              {item.date} · {item.time} · {item.contents} · {item.score}점
             </Text>
-            <Text style={{fontSize: 18}}>누적 포인트 : {item.point}</Text>
+            <Text style={{fontSize: 18}}>누적 포인트 : {item.scoreSum}</Text>
           </View>
         )}
       />
