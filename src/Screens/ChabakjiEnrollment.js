@@ -250,7 +250,7 @@ const ChabakjiEnrollment = ({navigation}) => {
                 backgroundColor: 'white',
                 borderWidth: 2,
                 borderRadius: 8,
-                width: 100,
+                width: 120,
                 height: 50,
               }}
               buttonTextStyle={{fontSize: 17}}
