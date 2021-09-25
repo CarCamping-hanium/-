@@ -1,4 +1,10 @@
-import React, {useState, useLayoutEffect, useCallback, useContext} from 'react';
+import React, {
+  useState,
+  useLayoutEffect,
+  useCallback,
+  useContext,
+  useEffect,
+} from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -15,14 +21,15 @@ import {useFocusEffect} from '@react-navigation/core';
 import {UserContext} from '../Context/Context';
 
 const screenWidth = Dimensions.get('window').width;
-const sort = ['추천순', '최신순', '오래된순'];
+const sort = ['최신순', '오래된순', '별점 높은순', '별점 낮은순'];
 const MyReview = ({navigation}) => {
   const [list, setList] = useState([]);
+  const [sorting, setSorting] = useState('myReview');
   const {userInfo, selectedReview_ID, selectedReview_name} =
     useContext(UserContext);
 
   const getMyReview = () => {
-    fetch(`http://3.38.85.251:8080/api/myReview`, {
+    fetch(`http://3.38.85.251:8080/api/${sorting}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -45,6 +52,9 @@ const MyReview = ({navigation}) => {
     }, []),
   );
 
+  useEffect(() => {
+    getMyReview();
+  }, [sorting]);
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -82,8 +92,13 @@ const MyReview = ({navigation}) => {
           }}
           buttonTextStyle={{fontSize: 17}}
           data={sort}
-          defaultValue={'추천순'}
-          onSelect={(selectedItem, index) => {}}
+          defaultValue={'최신순'}
+          onSelect={(selectedItem, index) => {
+            if (index === 0) setSorting('myReview');
+            if (index === 1) setSorting('myReviewDesc');
+            if (index === 2) setSorting('myReviewScoreDesc');
+            if (index === 3) setSorting('myReviewScore');
+          }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;
           }}
