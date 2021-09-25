@@ -40,16 +40,7 @@ const MyChabakji = ({navigation}) => {
       .then(response => response.json())
       .then(json => {
         console.log(json);
-        let myChabakji = [];
-        for (let i = 0; i < json.data.length; i++) {
-          myChabakji.push({
-            campsite_id: json.data[i].campsite_id,
-            name: json.data[i].name,
-            address: json.data[i].address,
-            score: json.data[i].score,
-          });
-        }
-        setList(myChabakji);
+        setList(json.data);
       })
       .catch(e => {
         console.log(e);
