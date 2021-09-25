@@ -25,11 +25,12 @@ const screenWidth = Dimensions.get('window').width;
 const sort = ['최신순', '오래된순'];
 const MyChabakji = ({navigation}) => {
   const [list, setList] = useState([]);
+  const [sorting, setSorting] = useState('myCampSite');
   const {userInfo, selectedChabak_ID, selectedChabak_name} =
     useContext(UserContext);
 
   const getMyChabakjiInfo = () => {
-    fetch(`http://3.38.85.251:8080/api/myCampSite`, {
+    fetch(`http://3.38.85.251:8080/api/${sorting}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -39,7 +40,16 @@ const MyChabakji = ({navigation}) => {
       .then(response => response.json())
       .then(json => {
         console.log(json);
-        setList(json.data);
+        let myChabakji = [];
+        for (let i = 0; i < json.data.length; i++) {
+          myChabakji.push({
+            campsite_id: json.data[i].campsite_id,
+            name: json.data[i].name,
+            address: json.data[i].address,
+            score: json.data[i].score,
+          });
+        }
+        setList(myChabakji);
       })
       .catch(e => {
         console.log(e);
@@ -51,6 +61,10 @@ const MyChabakji = ({navigation}) => {
       getMyChabakjiInfo();
     }, []),
   );
+
+  useEffect(() => {
+    getMyChabakjiInfo();
+  }, [sorting]);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -90,7 +104,10 @@ const MyChabakji = ({navigation}) => {
           buttonTextStyle={{fontSize: 17}}
           data={sort}
           defaultValue={'최신순'}
-          onSelect={(selectedItem, index) => {}}
+          onSelect={(selectedItem, index) => {
+            if (index === 0) setSorting('myCampSite');
+            else if (index === 1) setSorting('myCampSiteDesc');
+          }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;
           }}
