@@ -133,7 +133,9 @@ const MyChabakjiInfo = ({navigation}) => {
               관련 영상 링크 (선택사항)
             </Text>
             <Text
-              onPress={() => Linking.openURL(videoLink)}
+              onPress={() => {
+                if (videoLink !== '') Linking.openURL(videoLink);
+              }}
               style={styles.videoLink}>
               {videoLink}
             </Text>
