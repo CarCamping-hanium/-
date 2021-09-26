@@ -20,6 +20,7 @@ const MyReviewInfo = ({navigation}) => {
   const [image, setImage] = useState();
   const [description, setDescription] = useState('');
   const [score, setScore] = useState();
+  const [chabakji, setChabakji] = useState('');
   const {Review_ID, userInfo} = useContext(UserContext);
 
   const getInfo = () => {
@@ -35,6 +36,7 @@ const MyReviewInfo = ({navigation}) => {
         setImage(json.data.images);
         setScore(json.data.score);
         setDescription(json.data.contents);
+        setChabakji(json.data.name);
         console.log(json.data);
       })
       .catch(e => {
@@ -85,6 +87,21 @@ const MyReviewInfo = ({navigation}) => {
               style={{width: screenWidth, height: screenWidth}}
             />
           </View>
+        </View>
+        <Text
+          style={{
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginTop: 20,
+            marginLeft: 30,
+          }}>
+          차박지명
+        </Text>
+        <View
+          style={{
+            alignItems: 'center',
+          }}>
+          <Text style={styles.content}>{chabakji}</Text>
         </View>
         <View>
           <Text
