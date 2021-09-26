@@ -20,6 +20,7 @@ const ChabakjiInfo = ({navigation}) => {
   const [videoLink, setVideoLink] = useState(''); //영상링크
   const [image, setImage] = useState(); //사진
   const [facilities, setFacilities] = useState('');
+  const [registrant, setRegistrant] = useState('');
 
   const getInfo = () => {
     fetch(`http://3.38.85.251:8080/api/camping/${chabak_ID}`, {
@@ -37,6 +38,7 @@ const ChabakjiInfo = ({navigation}) => {
         setVideoLink(json.data.videoLink);
         setDescription(json.data.explanation);
         setFacilities(json.data.facilities);
+        setRegistrant(json.data.registrant);
       })
       .catch(e => {
         console.log(e);
@@ -130,17 +132,31 @@ const ChabakjiInfo = ({navigation}) => {
           </Text>
           <Text
             onPress={() => {
-              if (videoLink !== '') Linking.openURL(videoLink);
+              if (videoLink !== '') {
+                if (videoLink.substr(0, 4) !== 'http')
+                  Linking.openURL('https://' + videoLink);
+                else Linking.openURL(videoLink);
+              }
             }}
             style={styles.videoLink}>
             {videoLink}
+          </Text>
+        </View>
+        <View style={{alignItems: 'center'}}>
+          <Text
+            style={{
+              fontSize: 15,
+              fontWeight: '300',
+              marginTop: 50,
+            }}>
+            {registrant}님께서 등록해주신 차박지입니다.
           </Text>
         </View>
         <View
           style={{
             justifyContent: 'center',
             alignItems: 'center',
-            marginTop: 40,
+            marginTop: 20,
           }}>
           <TouchableOpacity
             style={styles.reviewShow}

@@ -181,7 +181,11 @@ const WaitingChabakjiInfo = ({navigation}) => {
             </Text>
             <Text
               onPress={() => {
-                if (videoLink !== '') Linking.openURL(videoLink);
+                if (videoLink !== '') {
+                  if (videoLink.substr(0, 4) !== 'http')
+                    Linking.openURL('https://' + videoLink);
+                  else Linking.openURL(videoLink);
+                }
               }}
               style={styles.videoLink}>
               {videoLink}
