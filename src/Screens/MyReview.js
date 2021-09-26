@@ -126,15 +126,20 @@ const MyReview = ({navigation}) => {
               selectedReview_name(item.title);
               navigation.navigate('MyReviewInfo');
             }}>
-            <Text
-              style={{
-                marginLeft: 10,
-                fontSize: 18,
-                fontWeight: 'bold',
-                color: 'white',
-              }}>
-              {item.title}
-            </Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text
+                style={{
+                  marginLeft: 10,
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                  color: 'white',
+                }}>
+                {item.title}
+              </Text>
+              <Text style={{position: 'absolute', right: 10, color: 'white'}}>
+                {item.date.substr(0, 10)}
+              </Text>
+            </View>
             <View
               style={{
                 flexDirection: 'row',
