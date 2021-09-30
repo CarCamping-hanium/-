@@ -19,7 +19,27 @@ const ReviewBoard = ({navigation}) => {
   const [ReviewList, setReviewList] = useState();
   const {userInfo, chabak_name, chabak_ID} = useContext(UserContext);
   const [Sorting, setSorting] = useState('gradeUp');
-  const {selectedReview_ID, selectedReview_name} = useContext(UserContext);
+  const {mainColor, selectedReview_ID, selectedReview_name} =
+    useContext(UserContext);
+
+  const styles = StyleSheet.create({
+    Container: {
+      flex: 1,
+      marginTop: StatusBar.currentHeight || 0,
+      backgroundColor: 'white',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    Sort: {marginTop: 10, fontSize: 20},
+    ReviewUpload: {
+      width: 150,
+      height: 50,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: mainColor,
+      borderRadius: 8,
+    },
+  });
 
   useFocusEffect(
     useCallback(() => {
@@ -80,7 +100,7 @@ const ReviewBoard = ({navigation}) => {
           buttonStyle={{
             width: 130,
             height: 50,
-            borderColor: '#295eba',
+            borderColor: mainColor,
             borderWidth: 2,
             borderRadius: 8,
             backgroundColor: 'white',
@@ -112,7 +132,7 @@ const ReviewBoard = ({navigation}) => {
               style={{
                 width: screenWidth / 1.1,
                 height: 70,
-                backgroundColor: '#295eba',
+                backgroundColor: mainColor,
                 marginBottom: 10,
                 borderRadius: 12,
                 justifyContent: 'center',
@@ -179,24 +199,5 @@ const ReviewBoard = ({navigation}) => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  Container: {
-    flex: 1,
-    marginTop: StatusBar.currentHeight || 0,
-    backgroundColor: 'white',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  Sort: {marginTop: 10, fontSize: 20},
-  ReviewUpload: {
-    width: 150,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#295eba',
-    borderRadius: 8,
-  },
-});
 
 export default ReviewBoard;

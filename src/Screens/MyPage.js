@@ -28,13 +28,28 @@ const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 
 const MyPage = ({navigation}) => {
-  const {userInfo, getUserInfo, deleteMember} = useContext(UserContext);
+  const {mainColor, userInfo, getUserInfo, deleteMember} =
+    useContext(UserContext);
   const [password, setPassword] = useState('');
   const [modifyVisible, setModifyVisible] = useState(false);
   const [profileModalVisible, setProfileModalVisible] = useState(false);
   const [deleteVisible, setDeleteVisible] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
   const [point, setPoint] = useState(0);
+
+  const styles = StyleSheet.create({
+    Text: {
+      width: 200,
+      height: 40,
+      borderWidth: 2,
+      borderColor: mainColor,
+      backgroundColor: 'white',
+      paddingLeft: 16,
+      paddingRight: 16,
+      borderRadius: 8,
+      marginTop: 15,
+    },
+  });
 
   //사진을 서버로 보내는 함수
   const uploadProfile = () => {
@@ -119,7 +134,7 @@ const MyPage = ({navigation}) => {
         <TouchableOpacity
           style={{
             marginTop: 50,
-            backgroundColor: '#295eba',
+            backgroundColor: mainColor,
             width: 130,
             height: 50,
             alignItems: 'center',
@@ -195,7 +210,7 @@ const MyPage = ({navigation}) => {
               borderWidth: 3,
               borderRadius: 10,
               backgroundColor: 'white',
-              borderColor: '#295eba',
+              borderColor: mainColor,
             }}>
             <TouchableOpacity
               style={{
@@ -203,7 +218,7 @@ const MyPage = ({navigation}) => {
                 justifyContent: 'center',
                 width: 250,
                 height: 50,
-                backgroundColor: '#295eba',
+                backgroundColor: mainColor,
                 borderRadius: 10,
               }}
               onPress={() => {
@@ -220,7 +235,7 @@ const MyPage = ({navigation}) => {
                 justifyContent: 'center',
                 width: 250,
                 height: 50,
-                backgroundColor: '#295eba',
+                backgroundColor: mainColor,
                 borderRadius: 10,
               }}
               onPress={() => {
@@ -255,7 +270,7 @@ const MyPage = ({navigation}) => {
                 justifyContent: 'center',
                 width: 120,
                 height: 50,
-                backgroundColor: '#295eba',
+                backgroundColor: mainColor,
                 borderRadius: 10,
               }}
               onPress={() => {
@@ -275,13 +290,13 @@ const MyPage = ({navigation}) => {
           width: screenWidth,
           borderTopWidth: 1,
           borderBottomWidth: 1,
-          borderColor: '#295eba',
+          borderColor: mainColor,
         }}>
         <View
           style={{
             flexDirection: 'row',
             borderBottomWidth: 1,
-            borderColor: '#295eba',
+            borderColor: mainColor,
             justifyContent: 'space-evenly',
           }}>
           <View
@@ -289,7 +304,7 @@ const MyPage = ({navigation}) => {
               alignItems: 'center',
               justifyContent: 'center',
               borderRightWidth: 1,
-              borderColor: '#295eba',
+              borderColor: mainColor,
             }}>
             <TouchableOpacity
               style={{
@@ -337,7 +352,7 @@ const MyPage = ({navigation}) => {
                   justifyContent: 'center',
                   height: 200,
                   width: 300,
-                  borderColor: '#295eba',
+                  borderColor: mainColor,
                   borderWidth: 3,
                   borderRadius: 10,
                   backgroundColor: 'white',
@@ -350,7 +365,7 @@ const MyPage = ({navigation}) => {
                   }}>
                   <TouchableOpacity
                     style={{
-                      backgroundColor: '#295eba',
+                      backgroundColor: mainColor,
                       width: 120,
                       height: 50,
                       alignItems: 'center',
@@ -368,7 +383,7 @@ const MyPage = ({navigation}) => {
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={{
-                      backgroundColor: '#295eba',
+                      backgroundColor: mainColor,
                       width: 120,
                       height: 50,
                       alignItems: 'center',
@@ -387,7 +402,7 @@ const MyPage = ({navigation}) => {
                 <View style={{position: 'absolute', bottom: 20}}>
                   <TouchableOpacity
                     style={{
-                      backgroundColor: '#295eba',
+                      backgroundColor: mainColor,
                       width: 100,
                       height: 50,
                       justifyContent: 'center',
@@ -412,7 +427,7 @@ const MyPage = ({navigation}) => {
           <View
             style={{
               borderRightWidth: 1,
-              borderColor: '#295eba',
+              borderColor: mainColor,
               alignItems: 'center',
               justifyContent: 'center',
             }}>
@@ -491,7 +506,7 @@ const MyPage = ({navigation}) => {
             backgroundColor: 'white',
             borderRadius: 8,
             borderWidth: 3,
-            borderColor: '#295eba',
+            borderColor: mainColor,
           }}>
           <Text style={{marginTop: 30, fontSize: 20}}>현재 비밀번호</Text>
           <TextInput
@@ -554,7 +569,7 @@ const MyPage = ({navigation}) => {
             </TouchableOpacity>
             <TouchableOpacity
               style={{
-                backgroundColor: '#295eba',
+                backgroundColor: mainColor,
                 width: 100,
                 height: 50,
                 justifyContent: 'center',
@@ -573,19 +588,5 @@ const MyPage = ({navigation}) => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  Text: {
-    width: 200,
-    height: 40,
-    borderWidth: 2,
-    borderColor: '#295eba',
-    backgroundColor: 'white',
-    paddingLeft: 16,
-    paddingRight: 16,
-    borderRadius: 8,
-    marginTop: 15,
-  },
-});
 
 export default MyPage;

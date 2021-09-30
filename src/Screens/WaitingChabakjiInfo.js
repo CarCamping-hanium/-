@@ -16,7 +16,7 @@ import {UserContext} from '../Context/Context';
 
 const screenWidth = Dimensions.get('window').width;
 const WaitingChabakjiInfo = ({navigation}) => {
-  const {userInfo, waiting_id} = useContext(UserContext);
+  const {mainColor, userInfo, waiting_id} = useContext(UserContext);
   const [address, setAddress] = useState(); //위치
   const [description, setDescription] = useState(''); //설명
   const [videoLink, setVideoLink] = useState(''); //영상링크
@@ -201,7 +201,7 @@ const WaitingChabakjiInfo = ({navigation}) => {
                 borderRadius: 8,
                 width: 120,
                 height: 50,
-                backgroundColor: '#295eba',
+                backgroundColor: mainColor,
                 justifyContent: 'center',
                 alignItems: 'center',
                 marginLeft: 50,
@@ -214,7 +214,7 @@ const WaitingChabakjiInfo = ({navigation}) => {
                 borderRadius: 8,
                 width: 120,
                 height: 50,
-                backgroundColor: '#295eba',
+                backgroundColor: mainColor,
                 justifyContent: 'center',
                 alignItems: 'center',
                 marginLeft: 50,

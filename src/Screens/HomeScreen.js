@@ -15,7 +15,7 @@ import {UserContext} from '../Context/Context';
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 const HomeScreen = ({navigation}) => {
-  const {selectedArea} = useContext(UserContext);
+  const {mainColor, selectedArea} = useContext(UserContext);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -155,7 +155,19 @@ const HomeScreen = ({navigation}) => {
         </Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.openList}
+        style={{
+          position: 'absolute',
+          left: '30%',
+          bottom: '8%',
+          flex: 1,
+          alignItems: 'center',
+          justifyContent: 'center',
+          backgroundColor: mainColor,
+          //backgroundColor: '#3770d4',
+          width: 170,
+          height: 60,
+          borderRadius: 30,
+        }}
         onPress={() => {
           selectedArea('전체');
           navigation.navigate('AllChabakjiList');
@@ -172,19 +184,4 @@ const HomeScreen = ({navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  openList: {
-    position: 'absolute',
-    left: '30%',
-    bottom: '8%',
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#295eba',
-    //backgroundColor: '#3770d4',
-    width: 170,
-    height: 60,
-    borderRadius: 30,
-  },
-});
 export default HomeScreen;

@@ -34,7 +34,81 @@ const ChabakjiEnrollment = ({navigation}) => {
     '아래 버튼을 눌러 차박지를 검색해주세요.',
   );
   const [modifyVisible, setModifyVisible] = useState(false);
-  const {userInfo, getUserInfo} = useContext(UserContext);
+  const {mainColor, userInfo, getUserInfo} = useContext(UserContext);
+
+  const styles = StyleSheet.create({
+    header: {
+      fontSize: 30,
+      fontWeight: 'bold',
+    },
+    name: {
+      fontSize: 18,
+      fontWeight: '500',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: '5%',
+      width: '90%',
+      height: 40,
+      paddingLeft: 10,
+      borderLeftWidth: 2,
+      borderRightWidth: 2,
+      borderTopWidth: 2,
+      borderBottomWidth: 2,
+      borderColor: mainColor,
+      borderRadius: 8,
+    },
+    selectPhoto: {
+      borderRadius: 8,
+      width: 120,
+      height: 50,
+      marginTop: 10,
+      backgroundColor: mainColor,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    uploadPhoto: {
+      marginLeft: 20,
+      borderRadius: 8,
+      width: 120,
+      height: 50,
+      marginTop: 10,
+      backgroundColor: mainColor,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    description: {
+      padding: 10,
+      fontSize: 18,
+      fontWeight: '400',
+      marginTop: 30,
+      marginLeft: 30,
+      width: screenWidth - 60,
+      height: 200,
+      borderLeftWidth: 2,
+      borderRightWidth: 2,
+      borderTopWidth: 2,
+      borderBottomWidth: 2,
+      borderColor: mainColor,
+      borderRadius: 8,
+    },
+    Enroll: {
+      borderRadius: 8,
+      width: 100,
+      height: 40,
+      backgroundColor: mainColor,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    Cancel: {
+      borderRadius: 8,
+      width: 100,
+      height: 40,
+      backgroundColor: mainColor,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginLeft: 50,
+    },
+  });
 
   //사진을 아직 선택하지 않았을 때와 선택한 후의 보여지는 이미지가 다름
   const showImage = () => {
@@ -246,7 +320,7 @@ const ChabakjiEnrollment = ({navigation}) => {
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
             <SelectDropdown
               buttonStyle={{
-                borderColor: '#295eba',
+                borderColor: mainColor,
                 backgroundColor: 'white',
                 borderWidth: 2,
                 borderRadius: 8,
@@ -273,7 +347,7 @@ const ChabakjiEnrollment = ({navigation}) => {
               alignItems: 'center',
               justifyContent: 'center',
               borderWidth: 2,
-              borderColor: '#295eba',
+              borderColor: mainColor,
               borderRadius: 8,
               width: screenWidth - 40,
               height: 40,
@@ -292,7 +366,7 @@ const ChabakjiEnrollment = ({navigation}) => {
             style={{
               alignItems: 'center',
               justifyContent: 'center',
-              backgroundColor: '#295eba',
+              backgroundColor: mainColor,
               width: 120,
               height: 50,
               borderRadius: 8,
@@ -312,7 +386,7 @@ const ChabakjiEnrollment = ({navigation}) => {
               justifyContent: 'center',
               height: 650,
               width: 310,
-              borderColor: '#295eba',
+              borderColor: mainColor,
               borderWidth: 3,
               borderRadius: 10,
               backgroundColor: 'white',
@@ -328,7 +402,7 @@ const ChabakjiEnrollment = ({navigation}) => {
             />
             <TouchableOpacity
               style={{
-                backgroundColor: '#295eba',
+                backgroundColor: mainColor,
                 width: 100,
                 height: 50,
                 justifyContent: 'center',
@@ -367,7 +441,7 @@ const ChabakjiEnrollment = ({navigation}) => {
               height: 40,
               paddingLeft: 10,
               borderWidth: 2,
-              borderColor: '#295eba',
+              borderColor: mainColor,
               borderRadius: 8,
             }}
             placeholder="근처 편의시설(선택 사항)"
@@ -392,7 +466,7 @@ const ChabakjiEnrollment = ({navigation}) => {
               height: 40,
               paddingLeft: 10,
               borderWidth: 2,
-              borderColor: '#295eba',
+              borderColor: mainColor,
               borderRadius: 8,
             }}
             placeholder="관련 영상 링크(선택 사항)"
@@ -490,77 +564,4 @@ const ChabakjiEnrollment = ({navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  header: {
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
-  name: {
-    fontSize: 18,
-    fontWeight: '500',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: '5%',
-    width: '90%',
-    height: 40,
-    paddingLeft: 10,
-    borderLeftWidth: 2,
-    borderRightWidth: 2,
-    borderTopWidth: 2,
-    borderBottomWidth: 2,
-    borderColor: '#295eba',
-    borderRadius: 8,
-  },
-  selectPhoto: {
-    borderRadius: 8,
-    width: 120,
-    height: 50,
-    marginTop: 10,
-    backgroundColor: '#295eba',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  uploadPhoto: {
-    marginLeft: 20,
-    borderRadius: 8,
-    width: 120,
-    height: 50,
-    marginTop: 10,
-    backgroundColor: '#295eba',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  description: {
-    padding: 10,
-    fontSize: 18,
-    fontWeight: '400',
-    marginTop: 30,
-    marginLeft: 30,
-    width: screenWidth - 60,
-    height: 200,
-    borderLeftWidth: 2,
-    borderRightWidth: 2,
-    borderTopWidth: 2,
-    borderBottomWidth: 2,
-    borderColor: '#295eba',
-    borderRadius: 8,
-  },
-  Enroll: {
-    borderRadius: 8,
-    width: 100,
-    height: 40,
-    backgroundColor: '#295eba',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  Cancel: {
-    borderRadius: 8,
-    width: 100,
-    height: 40,
-    backgroundColor: '#295eba',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 50,
-  },
-});
 export default ChabakjiEnrollment;

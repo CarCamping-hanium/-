@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useContext} from 'react';
 import {
   SafeAreaView,
   TextInput,
@@ -8,8 +8,10 @@ import {
   TouchableOpacity,
   Alert,
 } from 'react-native';
+import {UserContext} from '../Context/Context';
 
 const Signup = ({navigation}) => {
+  const {mainColor} = useContext(UserContext);
   const [ID, setID] = useState('');
   const [password, setPassword] = useState('');
   const [repassword, setRepassword] = useState('');
@@ -192,7 +194,7 @@ const Signup = ({navigation}) => {
           />
           <TouchableOpacity
             style={{
-              backgroundColor: '#295eba',
+              backgroundColor: mainColor,
               marginTop: 5,
               marginLeft: 16,
               borderRadius: 8,
@@ -262,7 +264,7 @@ const Signup = ({navigation}) => {
           />
           <TouchableOpacity
             style={{
-              backgroundColor: '#295eba',
+              backgroundColor: mainColor,
               marginTop: 5,
               marginLeft: 16,
               borderRadius: 8,
@@ -293,7 +295,7 @@ const Signup = ({navigation}) => {
           />
           <TouchableOpacity
             style={{
-              backgroundColor: '#295eba',
+              backgroundColor: mainColor,
               marginTop: 5,
               marginLeft: 16,
               borderRadius: 8,
@@ -319,7 +321,7 @@ const Signup = ({navigation}) => {
         }}>
         <TouchableOpacity
           style={{
-            backgroundColor: '#295eba',
+            backgroundColor: mainColor,
             borderRadius: 8,
             width: 130,
             height: 50,

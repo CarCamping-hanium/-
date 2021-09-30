@@ -17,7 +17,7 @@ const ModifyNickname = ({navigation}) => {
   const [nickname, setNickname] = useState('');
   const [nicknameCheckMsg, setNicknameCheckMsg] = useState('');
   const [nicknameCheck, setNicknameCheck] = useState(''); //닉네임 중복 확인 완료 상태 임시 저장
-  const {userInfo, getUserInfo} = useContext(UserContext);
+  const {mainColor, userInfo, getUserInfo} = useContext(UserContext);
 
   const nicknameChecking = str => {
     var regExp = /^([a-zA-Z0-9ㄱ-ㅎ|ㅏ-ㅣ|가-힣]).{1,7}$/;
@@ -118,7 +118,7 @@ const ModifyNickname = ({navigation}) => {
           />
           <TouchableOpacity
             style={{
-              backgroundColor: '#295eba',
+              backgroundColor: mainColor,
               marginLeft: 20,
               marginTop: 5,
               borderRadius: 8,
@@ -137,7 +137,7 @@ const ModifyNickname = ({navigation}) => {
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <TouchableOpacity
           style={{
-            backgroundColor: '#295eba',
+            backgroundColor: mainColor,
             borderRadius: 8,
             width: 150,
             height: 50,

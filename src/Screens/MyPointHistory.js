@@ -26,7 +26,7 @@ const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 
 const MyPointHistory = ({navigation}) => {
-  const {userInfo} = useContext(UserContext);
+  const {mainColor, userInfo} = useContext(UserContext);
   const [pointInfo, setPointInfo] = useState([]);
   const [sorting, setSorting] = useState('pointDesc');
   const getPointHistory = () => {
@@ -98,7 +98,7 @@ const MyPointHistory = ({navigation}) => {
           width: 130,
           height: 50,
           marginTop: 20,
-          backgroundColor: '#295eba',
+          backgroundColor: mainColor,
           borderRadius: 8,
         }}
         buttonTextStyle={{fontSize: 17, color: 'white'}}
@@ -129,7 +129,7 @@ const MyPointHistory = ({navigation}) => {
               justifyContent: 'center',
               marginTop: 10,
               borderRadius: 8,
-              borderColor: '#295eba',
+              borderColor: mainColor,
               borderWidth: 2,
             }}>
             <Text>

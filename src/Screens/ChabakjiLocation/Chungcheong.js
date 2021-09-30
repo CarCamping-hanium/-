@@ -19,14 +19,59 @@ const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 
 const Chungcheong = ({navigation}) => {
-  const {userInfo, area, selectedArea, selectedChabak_ID, selectedChabak_name} =
-    useContext(UserContext);
+  const {
+    mainColor,
+    userInfo,
+    area,
+    selectedArea,
+    selectedChabak_ID,
+    selectedChabak_name,
+  } = useContext(UserContext);
   const [visible, setVisible] = useState(false);
   const [LocationList, setLocationList] = useState([]);
   const [Chabak_Name, setChabak_Name] = useState();
   const [Chabak_Address, setChabak_Address] = useState();
   const [Chabak_Image, setChabak_Image] = useState();
   const [facility, setFacility] = useState('');
+
+  const styles = StyleSheet.create({
+    openList: {
+      position: 'absolute',
+      left: '30%',
+      bottom: '8%',
+      flex: 1,
+      alignItems: 'center',
+      justifyContent: 'center',
+      backgroundColor: mainColor,
+      //backgroundColor: '#3770d4',
+      width: '40%',
+      height: 50,
+      borderRadius: 30,
+    },
+    modalInfo: {
+      backgroundColor: mainColor,
+      width: screenWidth / 4,
+      height: 40,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 10,
+      marginBottom: screenHeight / 30,
+    },
+    modalClose: {
+      backgroundColor: mainColor,
+      width: screenWidth / 4,
+      height: 40,
+      justifyContent: 'center',
+      alignItems: 'center',
+      borderRadius: 10,
+      marginBottom: screenHeight / 30,
+      marginLeft: screenWidth / 15,
+    },
+    modalDescription: {
+      fontSize: 18,
+      marginTop: screenHeight / 50,
+    },
+  });
 
   const openModal = ID => {
     var url = 'http://3.38.85.251:8080/api/camping/' + ID;
@@ -79,6 +124,7 @@ const Chungcheong = ({navigation}) => {
       getChabakLocation();
     }, []),
   );
+
   const P0 = {latitude: 37.54585425908, longitude: 128.2605803183507};
   return (
     <SafeAreaView>
@@ -124,7 +170,7 @@ const Chungcheong = ({navigation}) => {
             justifyContent: 'center',
             alignItems: 'center',
             backgroundColor: 'white',
-            borderColor: '#295eba',
+            borderColor: mainColor,
             borderWidth: 3,
             borderRadius: 10,
           }}>
@@ -184,42 +230,4 @@ const Chungcheong = ({navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  openList: {
-    position: 'absolute',
-    left: '30%',
-    bottom: '8%',
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    backgroundColor: '#295eba',
-    //backgroundColor: '#3770d4',
-    width: '40%',
-    height: 50,
-    borderRadius: 30,
-  },
-  modalInfo: {
-    backgroundColor: '#295eba',
-    width: screenWidth / 4,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-    marginBottom: screenHeight / 30,
-  },
-  modalClose: {
-    backgroundColor: '#295eba',
-    width: screenWidth / 4,
-    height: 40,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderRadius: 10,
-    marginBottom: screenHeight / 30,
-    marginLeft: screenWidth / 15,
-  },
-  modalDescription: {
-    fontSize: 18,
-    marginTop: screenHeight / 50,
-  },
-});
 export default Chungcheong;

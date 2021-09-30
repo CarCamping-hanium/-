@@ -20,12 +20,62 @@ import {UserContext} from '../Context/Context';
 const screenWidth = Dimensions.get('window').width;
 let imageList = [];
 const ReviewUpload = ({navigation}) => {
-  const {userInfo, chabak_ID} = useContext(UserContext);
+  const {mainColor, userInfo, chabak_ID} = useContext(UserContext);
   const [changedImage, setChangedImage] = useState(''); //S3에 의해 변환된 후의 주소
   const [image, setImage] = useState(''); //image
   const [reviewTitle, setReviewTitle] = useState('');
   const [reviewDescription, setReviewDescription] = useState('');
   const [score, setScore] = useState(2.5);
+
+  const styles = StyleSheet.create({
+    header: {
+      fontSize: 30,
+      fontWeight: 'bold',
+    },
+    name: {
+      fontSize: 15,
+      fontWeight: '500',
+      alignItems: 'center',
+      justifyContent: 'center',
+      marginTop: '5%',
+      width: '90%',
+      height: 40,
+      paddingLeft: 10,
+      borderLeftWidth: 2,
+      borderRightWidth: 2,
+      borderTopWidth: 2,
+      borderBottomWidth: 2,
+      borderColor: mainColor,
+      borderRadius: 8,
+    },
+    uploadPhoto: {
+      borderRadius: 8,
+      width: 100,
+      height: 40,
+      marginTop: 10,
+      backgroundColor: mainColor,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    Enroll: {
+      borderRadius: 8,
+      width: 100,
+      height: 40,
+      backgroundColor: mainColor,
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    Cancel: {
+      borderRadius: 8,
+      width: 100,
+      height: 40,
+      backgroundColor: mainColor,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginLeft: 50,
+    },
+  });
+
   useEffect(() => {
     if (image !== '') uploadPhoto();
   }, [image]);
@@ -220,7 +270,7 @@ const ReviewUpload = ({navigation}) => {
               borderRightWidth: 2,
               borderTopWidth: 2,
               borderBottomWidth: 2,
-              borderColor: '#295eba',
+              borderColor: mainColor,
               borderRadius: 8,
             }}
             placeholder="리뷰 내용을 입력하세요."
@@ -275,52 +325,4 @@ const ReviewUpload = ({navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  header: {
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
-  name: {
-    fontSize: 15,
-    fontWeight: '500',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop: '5%',
-    width: '90%',
-    height: 40,
-    paddingLeft: 10,
-    borderLeftWidth: 2,
-    borderRightWidth: 2,
-    borderTopWidth: 2,
-    borderBottomWidth: 2,
-    borderColor: '#295eba',
-    borderRadius: 8,
-  },
-  uploadPhoto: {
-    borderRadius: 8,
-    width: 100,
-    height: 40,
-    marginTop: 10,
-    backgroundColor: '#295eba',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  Enroll: {
-    borderRadius: 8,
-    width: 100,
-    height: 40,
-    backgroundColor: '#295eba',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  Cancel: {
-    borderRadius: 8,
-    width: 100,
-    height: 40,
-    backgroundColor: '#295eba',
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginLeft: 50,
-  },
-});
 export default ReviewUpload;

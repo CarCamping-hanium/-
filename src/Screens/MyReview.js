@@ -25,7 +25,7 @@ const sort = ['최신순', '오래된순', '별점 높은순', '별점 낮은순
 const MyReview = ({navigation}) => {
   const [list, setList] = useState([]);
   const [sorting, setSorting] = useState('myReviewDesc');
-  const {userInfo, selectedReview_ID, selectedReview_name} =
+  const {mainColor, userInfo, selectedReview_ID, selectedReview_name} =
     useContext(UserContext);
 
   const getMyReview = () => {
@@ -85,7 +85,7 @@ const MyReview = ({navigation}) => {
           buttonStyle={{
             width: 130,
             height: 50,
-            borderColor: '#295eba',
+            borderColor: mainColor,
             borderWidth: 2,
             borderRadius: 8,
             backgroundColor: 'white',
@@ -116,7 +116,7 @@ const MyReview = ({navigation}) => {
             style={{
               width: screenWidth / 1.1,
               height: 70,
-              backgroundColor: '#295eba',
+              backgroundColor: mainColor,
               marginBottom: 10,
               borderRadius: 12,
               justifyContent: 'center',

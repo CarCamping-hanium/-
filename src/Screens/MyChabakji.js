@@ -26,7 +26,7 @@ const sort = ['최신순', '오래된순'];
 const MyChabakji = ({navigation}) => {
   const [list, setList] = useState([]);
   const [sorting, setSorting] = useState('myCampSiteDesc');
-  const {userInfo, selectedChabak_ID, selectedChabak_name} =
+  const {mainColor, userInfo, selectedChabak_ID, selectedChabak_name} =
     useContext(UserContext);
 
   const getMyChabakjiInfo = () => {
@@ -87,7 +87,7 @@ const MyChabakji = ({navigation}) => {
           buttonStyle={{
             width: 130,
             height: 50,
-            borderColor: '#295eba',
+            borderColor: mainColor,
             borderWidth: 2,
             borderRadius: 8,
             backgroundColor: 'white',
@@ -116,7 +116,7 @@ const MyChabakji = ({navigation}) => {
             style={{
               width: screenWidth / 1.1,
               height: 70,
-              backgroundColor: '#295eba',
+              backgroundColor: mainColor,
               marginBottom: 10,
               borderRadius: 12,
               justifyContent: 'center',

@@ -23,7 +23,7 @@ const ModifyPassword = ({navigation}) => {
   const [checkPasswordBoxColor, setCheckPasswordBoxColor] =
     useState('transparent');
 
-  const {userInfo, setUserInfo} = useContext(UserContext);
+  const {mainColor, userInfo, setUserInfo} = useContext(UserContext);
 
   const passwordChecking = str => {
     var regExp = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,16}$/;
@@ -162,7 +162,7 @@ const ModifyPassword = ({navigation}) => {
           />
           <TouchableOpacity
             style={{
-              backgroundColor: '#295eba',
+              backgroundColor: mainColor,
               marginLeft: 20,
               marginTop: 15,
               borderRadius: 8,
@@ -181,7 +181,7 @@ const ModifyPassword = ({navigation}) => {
       <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
         <TouchableOpacity
           style={{
-            backgroundColor: '#295eba',
+            backgroundColor: mainColor,
             borderRadius: 8,
             width: 150,
             height: 50,

@@ -19,7 +19,7 @@ import SplashScreen from 'react-native-splash-screen';
 const screenHeight = Dimensions.get('window').height;
 const screenWidth = Dimensions.get('window').width;
 const Login = ({navigation}) => {
-  const {login} = useContext(UserContext);
+  const {mainColor, login} = useContext(UserContext);
   const [ID, setID] = useState('');
   const [password, setPassword] = useState('');
 
@@ -99,7 +99,7 @@ const Login = ({navigation}) => {
             width: 120,
             height: 40,
             borderRadius: 8,
-            backgroundColor: '#295eba',
+            backgroundColor: mainColor,
             justifyContent: 'center',
             alignItems: 'center',
           }}

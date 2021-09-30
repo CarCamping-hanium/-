@@ -23,7 +23,8 @@ import {useFocusEffect} from '@react-navigation/core';
 const screenWidth = Dimensions.get('window').width;
 const CheckChabakji = ({navigation}) => {
   const [list, setList] = useState([]);
-  const {selectedWaiting_id, selectedWaiting_name} = useContext(UserContext);
+  const {mainColor, selectedWaiting_id, selectedWaiting_name} =
+    useContext(UserContext);
 
   useFocusEffect(
     useCallback(() => {
@@ -83,7 +84,7 @@ const CheckChabakji = ({navigation}) => {
             style={{
               width: screenWidth / 1.1,
               height: 70,
-              backgroundColor: '#295eba',
+              backgroundColor: mainColor,
               marginBottom: 10,
               borderRadius: 12,
               justifyContent: 'center',

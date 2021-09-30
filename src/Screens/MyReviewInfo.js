@@ -21,7 +21,37 @@ const MyReviewInfo = ({navigation}) => {
   const [description, setDescription] = useState('');
   const [score, setScore] = useState();
   const [chabakji, setChabakji] = useState('');
-  const {Review_ID, userInfo} = useContext(UserContext);
+  const {mainColor, Review_ID, userInfo} = useContext(UserContext);
+
+  const styles = StyleSheet.create({
+    header: {
+      fontSize: 30,
+      fontWeight: 'bold',
+    },
+    content: {
+      fontSize: 18,
+      fontWeight: '300',
+      marginTop: 10,
+      width: screenWidth - 60,
+    },
+    recommend: {
+      width: 100,
+      height: 45,
+      justifyContent: 'space-evenly',
+      alignItems: 'center',
+      backgroundColor: mainColor,
+      borderRadius: 8,
+      flexDirection: 'row',
+    },
+    deleteReview: {
+      width: 150,
+      height: 50,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#e64f49',
+      borderRadius: 8,
+    },
+  });
 
   const getInfo = () => {
     fetch(`http://3.38.85.251:8080/api/campingReview/${Review_ID}`, {
@@ -78,7 +108,7 @@ const MyReviewInfo = ({navigation}) => {
         }}>
         <View
           style={{
-            borderColor: '#295eba',
+            borderColor: mainColor,
             marginTop: 30,
           }}>
           <View>
@@ -196,35 +226,5 @@ const MyReviewInfo = ({navigation}) => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  header: {
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
-  content: {
-    fontSize: 18,
-    fontWeight: '300',
-    marginTop: 10,
-    width: screenWidth - 60,
-  },
-  recommend: {
-    width: 100,
-    height: 45,
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    backgroundColor: '#295eba',
-    borderRadius: 8,
-    flexDirection: 'row',
-  },
-  deleteReview: {
-    width: 150,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#e64f49',
-    borderRadius: 8,
-  },
-});
 
 export default MyReviewInfo;

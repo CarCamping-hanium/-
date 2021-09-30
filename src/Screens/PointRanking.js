@@ -21,7 +21,7 @@ const PointRanking = ({navigation}) => {
   const [rankNumber, setRankNumber] = useState([]);
   const [myRank, setMyRank] = useState();
 
-  const {userInfo} = useContext(UserContext);
+  const {mainColor, userInfo} = useContext(UserContext);
 
   useLayoutEffect(() => {
     navigation.setOptions({
@@ -125,7 +125,7 @@ const PointRanking = ({navigation}) => {
               justifyContent: 'center',
               marginTop: 10,
               borderRadius: 8,
-              borderColor: '#295eba',
+              borderColor: mainColor,
               borderWidth: 2,
             }}>
             <View
@@ -142,7 +142,7 @@ const PointRanking = ({navigation}) => {
                   borderTopLeftRadius: 6,
                   borderBottomLeftRadius: 6,
                   borderRightWidth: 2,
-                  borderColor: '#295eba',
+                  borderColor: mainColor,
                   height: 56,
                   width: 70,
                   backgroundColor:
@@ -177,7 +177,7 @@ const PointRanking = ({navigation}) => {
           height: 60,
           justifyContent: 'center',
           borderRadius: 8,
-          borderColor: '#295eba',
+          borderColor: mainColor,
           borderWidth: 2,
         }}>
         <View
@@ -194,7 +194,7 @@ const PointRanking = ({navigation}) => {
               borderTopLeftRadius: 6,
               borderBottomLeftRadius: 6,
               borderRightWidth: 2,
-              borderColor: '#295eba',
+              borderColor: mainColor,
               height: 56,
               width: 70,
               backgroundColor:

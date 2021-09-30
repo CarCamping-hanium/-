@@ -21,8 +21,43 @@ const ChabakjiList = ({navigation}) => {
   const [searchText, setSearchText] = useState('');
   const [list, setList] = useState([]);
   const [sorting, setSorting] = useState('grade'); //평점 높은 순이 디폴트
-  const {userInfo, area, selectedChabak_ID, selectedChabak_name} =
+  const {mainColor, userInfo, area, selectedChabak_ID, selectedChabak_name} =
     useContext(UserContext);
+
+  const styles = StyleSheet.create({
+    Search: {
+      marginTop: 20,
+      flexDirection: 'row',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+    textBox: {
+      borderTopWidth: 2,
+      borderLeftWidth: 2,
+      borderBottomWidth: 2,
+      borderColor: mainColor,
+      width: '70%',
+      height: 40,
+      paddingLeft: 5,
+      borderTopLeftRadius: 8,
+      borderBottomLeftRadius: 8,
+    },
+    searchButton: {
+      backgroundColor: mainColor,
+      height: 40,
+      width: screenWidth / 5,
+      alignItems: 'center',
+      justifyContent: 'center',
+      borderTopRightRadius: 8,
+      borderBottomRightRadius: 8,
+    },
+    List: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      marginTop: 10,
+    },
+  });
 
   //검색어로 차박지명 검색하는 함수
   const searchingFunction = () => {
@@ -141,7 +176,7 @@ const ChabakjiList = ({navigation}) => {
           buttonStyle={{
             width: 130,
             height: 50,
-            borderColor: '#295eba',
+            borderColor: mainColor,
             borderWidth: 2,
             borderRadius: 8,
             backgroundColor: 'white',
@@ -177,7 +212,7 @@ const ChabakjiList = ({navigation}) => {
               style={{
                 width: screenWidth / 1.1,
                 height: 70,
-                backgroundColor: '#295eba',
+                backgroundColor: mainColor,
                 marginBottom: 10,
                 borderRadius: 12,
                 justifyContent: 'center',
@@ -216,38 +251,4 @@ const ChabakjiList = ({navigation}) => {
   );
 };
 
-const styles = StyleSheet.create({
-  Search: {
-    marginTop: 20,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  textBox: {
-    borderTopWidth: 2,
-    borderLeftWidth: 2,
-    borderBottomWidth: 2,
-    borderColor: '#295eba',
-    width: '70%',
-    height: 40,
-    paddingLeft: 5,
-    borderTopLeftRadius: 8,
-    borderBottomLeftRadius: 8,
-  },
-  searchButton: {
-    backgroundColor: '#295eba',
-    height: 40,
-    width: screenWidth / 5,
-    alignItems: 'center',
-    justifyContent: 'center',
-    borderTopRightRadius: 8,
-    borderBottomRightRadius: 8,
-  },
-  List: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 10,
-  },
-});
 export default ChabakjiList;

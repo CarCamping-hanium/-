@@ -15,12 +15,42 @@ import {Rating} from 'react-native-ratings';
 import {UserContext} from '../Context/Context';
 const screenWidth = Dimensions.get('window').width;
 const ReviewInfo = ({navigation}) => {
-  const {userInfo, Review_ID} = useContext(UserContext);
+  const {mainColor, userInfo, Review_ID} = useContext(UserContext);
   const [image, setImage] = useState();
   const [Description, setDescription] = useState('');
   const [Score, setScore] = useState();
   const [writer, setWriter] = useState('');
   const [profileImage, setProfileImage] = useState();
+
+  const styles = StyleSheet.create({
+    header: {
+      fontSize: 30,
+      fontWeight: 'bold',
+    },
+    content: {
+      fontSize: 18,
+      fontWeight: '300',
+      marginTop: 10,
+      width: screenWidth - 60,
+    },
+    recommend: {
+      width: 100,
+      height: 45,
+      justifyContent: 'space-evenly',
+      alignItems: 'center',
+      backgroundColor: mainColor,
+      borderRadius: 8,
+      flexDirection: 'row',
+    },
+    toReviewList: {
+      width: 150,
+      height: 50,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: mainColor,
+      borderRadius: 8,
+    },
+  });
 
   useLayoutEffect(() => {
     getInfo();
@@ -80,7 +110,7 @@ const ReviewInfo = ({navigation}) => {
         }}>
         <View
           style={{
-            borderColor: '#295eba',
+            borderColor: mainColor,
           }}>
           <View style={{flexDirection: 'row'}}>
             <Image
@@ -256,35 +286,5 @@ const ReviewInfo = ({navigation}) => {
     </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  header: {
-    fontSize: 30,
-    fontWeight: 'bold',
-  },
-  content: {
-    fontSize: 18,
-    fontWeight: '300',
-    marginTop: 10,
-    width: screenWidth - 60,
-  },
-  recommend: {
-    width: 100,
-    height: 45,
-    justifyContent: 'space-evenly',
-    alignItems: 'center',
-    backgroundColor: '#295eba',
-    borderRadius: 8,
-    flexDirection: 'row',
-  },
-  toReviewList: {
-    width: 150,
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#295eba',
-    borderRadius: 8,
-  },
-});
 
 export default ReviewInfo;
