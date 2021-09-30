@@ -19,6 +19,7 @@ const UserContextProvider = ({children}) => {
   const [review_name, setReview_name] = useState('');
   const [waiting_id, setWaiting_id] = useState('');
   const [waiting_name, setWaiting_name] = useState('');
+  const mainColor = '#518AF0';
 
   const login = (id_data, password_data) => {
     // AsyncStorage.setItem('token', 'save your token').then(() => {
@@ -165,6 +166,7 @@ const UserContextProvider = ({children}) => {
   return (
     <UserContext.Provider
       value={{
+        mainColor,
         userInfo,
         setUserInfo,
         area,
