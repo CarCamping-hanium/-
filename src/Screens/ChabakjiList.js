@@ -240,7 +240,8 @@ const ChabakjiList = ({navigation}) => {
                   위치 : {item.location}
                 </Text>
                 <Text style={{position: 'absolute', right: 10, color: 'white'}}>
-                  리뷰 평점 : {item.score}
+                  리뷰 평점 :{' '}
+                  {item.score !== 0 ? item.score.toFixed(1) : item.score}
                 </Text>
               </View>
             </TouchableOpacity>
