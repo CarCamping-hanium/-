@@ -83,12 +83,13 @@ const ReviewUpload = ({navigation}) => {
   const showImage = () => {
     if (image === '') {
       return (
-        <View>
-          <Image
-            source={require('../Assets/Images/wait_photo.png')}
-            style={{width: screenWidth, height: screenWidth}}
-          />
-        </View>
+        <View
+          style={{
+            width: screenWidth,
+            height: screenWidth,
+            backgroundColor: '#eeeeee',
+          }}
+        />
       );
     } else {
       return (
