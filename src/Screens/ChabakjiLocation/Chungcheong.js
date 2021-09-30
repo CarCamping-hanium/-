@@ -125,7 +125,7 @@ const Chungcheong = ({navigation}) => {
     }, []),
   );
 
-  const P0 = {latitude: 37.54585425908, longitude: 128.2605803183507};
+  const P0 = {latitude: 36.592886, longitude: 127.445505};
   return (
     <SafeAreaView>
       <NaverMapView

@@ -64,14 +64,13 @@ const MyPage = ({navigation}) => {
         //서버로 아이디, 비번 보내서 일치하는지 확인
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+         // 'Content-Type': 'application/json',
           token: userInfo.token,
         },
         body: formData,
       })
         .then(response => response.json())
         .then(json => {
-          console.log('이게오바임2');
           console.log('upload api console : ', json);
           if (json.msg === 'success') {
             console.log('succe:', json);
