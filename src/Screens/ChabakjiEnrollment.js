@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useRef} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -20,7 +20,9 @@ import Modal from '../Components/Modal';
 import Postcode from '@actbase/react-daum-postcode';
 import {UserContext} from '../Context/Context';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const screenWidth = Dimensions.get('window').width;
+
 const ChabakjiEnrollment = ({navigation}) => {
   const [changedImage, setChangedImage] = useState(''); //S3에 의해 변환된 후의 주소
   const [image, setImage] = useState(''); //image
@@ -35,6 +37,7 @@ const ChabakjiEnrollment = ({navigation}) => {
   );
   const [modifyVisible, setModifyVisible] = useState(false);
   const {mainColor, userInfo, getUserInfo} = useContext(UserContext);
+  const scrollRef = useRef();
 
   const styles = StyleSheet.create({
     header: {
@@ -229,6 +232,10 @@ const ChabakjiEnrollment = ({navigation}) => {
       });
   };
 
+  const scrollToTop = () => {
+    scrollRef.current.scrollTo({y: 0});
+  };
+
   useEffect(() => {
     if (image !== '') uploadPhoto();
   }, [image]);
@@ -259,7 +266,8 @@ const ChabakjiEnrollment = ({navigation}) => {
           marginTop: '5%',
           marginHorizontal: 20,
           width: screenWidth,
-        }}>
+        }}
+        ref={scrollRef}>
         {/* <FlatList
           style={{height: screenWidth, width: screenWidth}}
           horizontal={true}
@@ -523,6 +531,7 @@ const ChabakjiEnrollment = ({navigation}) => {
                       Alert.alert(
                         '감사합니다. 회원님의 차박지 등록 심사가 진행될 예정입니다.',
                       );
+                      scrollToTop();
                       setImage('');
                       setName('');
                       setLocation('아래 버튼을 눌러 차박지를 검색해주세요.');
@@ -547,6 +556,7 @@ const ChabakjiEnrollment = ({navigation}) => {
           <TouchableOpacity
             style={styles.Cancel}
             onPress={() => {
+              scrollToTop();
               setImage('');
               setName('');
               setLocation('아래 버튼을 눌러 차박지를 검색해주세요.');

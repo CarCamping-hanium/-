@@ -4,6 +4,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useRef,
 } from 'react';
 import {
   FlatList,
@@ -27,6 +28,7 @@ const MyReview = ({navigation}) => {
   const [sorting, setSorting] = useState('myReviewDesc');
   const {mainColor, userInfo, selectedReview_ID, selectedReview_name} =
     useContext(UserContext);
+  const scrollRef = useRef();
 
   const getMyReview = () => {
     fetch(`http://3.38.85.251:8080/api/${sorting}`, {
@@ -44,6 +46,10 @@ const MyReview = ({navigation}) => {
       .catch(e => {
         console.log(e);
       });
+  };
+
+  const scrollToTop = () => {
+    scrollRef.current.scrollToOffset({offset: 0, animated: true});
   };
 
   useFocusEffect(
@@ -94,10 +100,22 @@ const MyReview = ({navigation}) => {
           data={sort}
           defaultValue={'최신순'}
           onSelect={(selectedItem, index) => {
-            if (index === 0) setSorting('myReviewDesc');
-            if (index === 1) setSorting('myReview');
-            if (index === 2) setSorting('myReviewScoreDesc');
-            if (index === 3) setSorting('myReviewScore');
+            if (index === 0) {
+              setSorting('myReviewDesc');
+              scrollToTop();
+            }
+            if (index === 1) {
+              setSorting('myReview');
+              scrollToTop();
+            }
+            if (index === 2) {
+              setSorting('myReviewScoreDesc');
+              scrollToTop();
+            }
+            if (index === 3) {
+              setSorting('myReviewScore');
+              scrollToTop();
+            }
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;
@@ -110,6 +128,7 @@ const MyReview = ({navigation}) => {
 
       <FlatList
         style={{marginTop: 20}}
+        ref={scrollRef}
         data={list}
         renderItem={({item, index}) => (
           <TouchableOpacity

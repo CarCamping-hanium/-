@@ -4,6 +4,7 @@ import React, {
   useCallback,
   useContext,
   useEffect,
+  useRef,
 } from 'react';
 import {
   SafeAreaView,
@@ -29,6 +30,8 @@ const MyPointHistory = ({navigation}) => {
   const {mainColor, userInfo} = useContext(UserContext);
   const [pointInfo, setPointInfo] = useState([]);
   const [sorting, setSorting] = useState('pointDesc');
+  const scrollRef = useRef();
+
   const getPointHistory = () => {
     fetch(`http://3.38.85.251:8080/api/${sorting}`, {
       method: 'GET',
@@ -56,6 +59,10 @@ const MyPointHistory = ({navigation}) => {
       .catch(e => {
         console.log(e);
       });
+  };
+
+  const scrollToTop = () => {
+    scrollRef.current.scrollToOffset({offset: 0, animated: true});
   };
 
   useFocusEffect(
@@ -105,8 +112,14 @@ const MyPointHistory = ({navigation}) => {
         data={sort}
         defaultValue={'최신순'}
         onSelect={(selectedItem, index) => {
-          if (index === 0) setSorting('pointDesc');
-          if (index === 1) setSorting('point');
+          if (index === 0) {
+            setSorting('pointDesc');
+            scrollToTop();
+          }
+          if (index === 1) {
+            setSorting('point');
+            scrollToTop();
+          }
         }}
         buttonTextAfterSelection={(selectedItem, index) => {
           return selectedItem;
@@ -116,6 +129,8 @@ const MyPointHistory = ({navigation}) => {
         }}
       />
       <FlatList
+        style={{marginTop: 15}}
+        ref={scrollRef}
         data={pointInfo}
         keyExtractor={(item, index) => {
           return `pointHistory-${index}`;

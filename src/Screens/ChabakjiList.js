@@ -1,5 +1,11 @@
 import {response} from 'express';
-import React, {useLayoutEffect, useState, useEffect, useContext} from 'react';
+import React, {
+  useLayoutEffect,
+  useState,
+  useEffect,
+  useContext,
+  useRef,
+} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -23,6 +29,7 @@ const ChabakjiList = ({navigation}) => {
   const [sorting, setSorting] = useState('grade'); //평점 높은 순이 디폴트
   const {mainColor, userInfo, area, selectedChabak_ID, selectedChabak_name} =
     useContext(UserContext);
+  const scrollRef = useRef();
 
   const styles = StyleSheet.create({
     Search: {
@@ -126,6 +133,10 @@ const ChabakjiList = ({navigation}) => {
       });
   };
 
+  const scrollToTop = () => {
+    scrollRef.current.scrollToOffset({offset: 0, animated: true});
+  };
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
@@ -185,13 +196,23 @@ const ChabakjiList = ({navigation}) => {
           data={sort}
           defaultValue={'평점 높은 순'}
           onSelect={(selectedItem, index) => {
-            if (index === 0) setSorting('datedesc');
-            //최신순
-            else if (index === 1) setSorting('dateasc');
-            //오래된순
-            else if (index === 2) setSorting('grade');
-            //평점 높은 순
-            else if (index === 3) setSorting('gradeasc'); //평점 낮은 순
+            if (index === 0) {
+              //최신순
+              setSorting('datedesc');
+              scrollToTop();
+            } else if (index === 1) {
+              //오래된순
+              setSorting('dateasc');
+              scrollToTop();
+            } else if (index === 2) {
+              //평점 높은 순
+              setSorting('scoredesc');
+              scrollToTop();
+            } else if (index === 3) {
+              //평점 낮은 순
+              setSorting('scoreasc');
+              scrollToTop();
+            }
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;
@@ -203,6 +224,7 @@ const ChabakjiList = ({navigation}) => {
       </View>
       <View style={styles.List}>
         <FlatList
+          ref={scrollRef}
           data={list}
           keyExtractor={(item, index) => {
             return `ChabakjiList-${index}`;

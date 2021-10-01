@@ -4,6 +4,7 @@ import React, {
   useEffect,
   useContext,
   useCallback,
+  useRef,
 } from 'react';
 import {
   FlatList,
@@ -28,6 +29,7 @@ const MyChabakji = ({navigation}) => {
   const [sorting, setSorting] = useState('myCampSiteDesc');
   const {mainColor, userInfo, selectedChabak_ID, selectedChabak_name} =
     useContext(UserContext);
+  const scrollRef = useRef();
 
   const getMyChabakjiInfo = () => {
     fetch(`http://3.38.85.251:8080/api/${sorting}`, {
@@ -45,6 +47,10 @@ const MyChabakji = ({navigation}) => {
       .catch(e => {
         console.log(e);
       });
+  };
+
+  const scrollToTop = () => {
+    scrollRef.current.scrollToOffset({offset: 0, animated: true});
   };
 
   useFocusEffect(
@@ -96,8 +102,13 @@ const MyChabakji = ({navigation}) => {
           data={sort}
           defaultValue={'최신순'}
           onSelect={(selectedItem, index) => {
-            if (index === 0) setSorting('myCampSiteDesc');
-            else if (index === 1) setSorting('myCampSite');
+            if (index === 0) {
+              setSorting('myCampSiteDesc');
+              scrollToTop();
+            } else if (index === 1) {
+              setSorting('myCampSite');
+              scrollToTop();
+            }
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;
@@ -110,6 +121,7 @@ const MyChabakji = ({navigation}) => {
 
       <FlatList
         style={{marginTop: 20}}
+        ref={scrollRef}
         data={list}
         renderItem={({item, index}) => (
           <TouchableOpacity

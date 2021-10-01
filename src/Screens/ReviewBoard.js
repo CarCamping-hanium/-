@@ -1,4 +1,10 @@
-import React, {useState, useLayoutEffect, useContext, useCallback} from 'react';
+import React, {
+  useState,
+  useLayoutEffect,
+  useContext,
+  useCallback,
+  useRef,
+} from 'react';
 import {
   FlatList,
   SafeAreaView,
@@ -21,6 +27,7 @@ const ReviewBoard = ({navigation}) => {
   const [Sorting, setSorting] = useState('gradeUp');
   const {mainColor, selectedReview_ID, selectedReview_name} =
     useContext(UserContext);
+  const scrollRef = useRef();
 
   const styles = StyleSheet.create({
     Container: {
@@ -63,6 +70,10 @@ const ReviewBoard = ({navigation}) => {
       ),
     });
   }, [Sorting]);
+
+  const scrollToTop = () => {
+    scrollRef.current.scrollToOffset({offset: 0, animated: true});
+  };
 
   const getReview = () => {
     console.log(Sorting);
@@ -111,10 +122,19 @@ const ReviewBoard = ({navigation}) => {
           data={sort}
           defaultValue={'별점 높은순'}
           onSelect={(selectedItem, index) => {
-            if (index === 0) setSorting('gradeUp');
-            else if (index === 1) setSorting('gradeDown');
-            else if (index === 2) setSorting('latestUP');
-            else if (index === 3) setSorting('latestDOWN');
+            if (index === 0) {
+              setSorting('gradeUp');
+              scrollToTop();
+            } else if (index === 1) {
+              setSorting('gradeDown');
+              scrollToTop();
+            } else if (index === 2) {
+              setSorting('latestUP');
+              scrollToTop();
+            } else if (index === 3) {
+              setSorting('latestDOWN');
+              scrollToTop();
+            }
           }}
           buttonTextAfterSelection={(selectedItem, index) => {
             return selectedItem;
@@ -126,6 +146,7 @@ const ReviewBoard = ({navigation}) => {
       </View>
       <View style={{flex: 8}}>
         <FlatList
+          ref={scrollRef}
           data={ReviewList}
           renderItem={({item, index}) => (
             <TouchableOpacity
