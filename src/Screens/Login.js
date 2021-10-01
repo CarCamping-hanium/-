@@ -56,10 +56,10 @@ const Login = ({navigation}) => {
           style={{
             width: '60%',
             height: 40,
-            paddingLeft: 16,
-            borderRadius: 8,
-            backgroundColor: '#cccccc',
-            marginTop: 10,
+            paddingLeft: 10,
+            borderBottomWidth: 2,
+            borderBottomColor: '#aaaaaa',
+            marginTop: 20,
           }}
           selectionColor="black"
           autoCapitalize="none"
@@ -76,10 +76,10 @@ const Login = ({navigation}) => {
           style={{
             width: '60%',
             height: 40,
-            paddingLeft: 16,
-            borderRadius: 8,
-            backgroundColor: '#cccccc',
-            marginTop: 8,
+            paddingLeft: 10,
+            borderBottomWidth: 2,
+            borderBottomColor: '#aaaaaa',
+            marginTop: 10,
           }}
           selectionColor="black"
           autoCapitalize="none"
@@ -95,8 +95,8 @@ const Login = ({navigation}) => {
         />
         <TouchableOpacity
           style={{
-            marginTop: 8,
-            width: 120,
+            marginTop: 20,
+            width: '60%',
             height: 40,
             borderRadius: 8,
             backgroundColor: mainColor,
@@ -108,14 +108,23 @@ const Login = ({navigation}) => {
           }}>
           <Text style={{color: 'white', fontWeight: 'bold'}}>로그인</Text>
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() => {
-            navigation.navigate('Signup');
-          }}>
-          <Text style={{marginTop: 18, textDecorationLine: 'underline'}}>
-            아직 회원이 아니신가요?
-          </Text>
-        </TouchableOpacity>
+        <View style={{flexDirection: 'row', marginTop: 25}}>
+          <Text>아직 회원이 아니신가요? </Text>
+          <TouchableOpacity
+            onPress={() => {
+              navigation.navigate('Signup');
+            }}>
+            <Text
+              style={{
+                textDecorationLine: 'underline',
+                color: '#295eba',
+                fontSize: 15,
+              }}>
+              {' '}
+              회원가입하기
+            </Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );

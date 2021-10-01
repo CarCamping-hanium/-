@@ -158,10 +158,9 @@ const styles = StyleSheet.create({
   Text: {
     width: 200,
     height: 40,
-    backgroundColor: '#cccccc',
-    paddingLeft: 16,
-    paddingRight: 16,
-    borderRadius: 8,
+    paddingLeft: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: '#aaaaaa',
     marginTop: 5,
   },
 });

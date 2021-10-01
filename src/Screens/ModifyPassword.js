@@ -20,8 +20,7 @@ const ModifyPassword = ({navigation}) => {
   const [passwordCheck, setPasswordCheck] = useState(''); //비밀번호 중복 확인 완료 상태 임시 저장
   const [msgColor, setMsgColor] = useState(''); //passwordRight TextColor
 
-  const [checkPasswordBoxColor, setCheckPasswordBoxColor] =
-    useState('transparent');
+  const [checkPasswordBoxColor, setCheckPasswordBoxColor] = useState('#aaaaaa');
 
   const {mainColor, userInfo, setUserInfo} = useContext(UserContext);
 
@@ -39,7 +38,7 @@ const ModifyPassword = ({navigation}) => {
       setRepassword('');
       setPasswordRight('');
     } else if (password === repassword) {
-      setCheckPasswordBoxColor('transparent');
+      setCheckPasswordBoxColor('#aaaaaa');
       setPasswordCheck(password);
       setPasswordRight('비밀번호가 일치합니다.');
       setMsgColor('#295eba');
@@ -141,13 +140,10 @@ const ModifyPassword = ({navigation}) => {
             style={{
               width: 200,
               height: 40,
-              backgroundColor: '#cccccc',
-              paddingLeft: 16,
-              paddingRight: 16,
-              borderRadius: 8,
               marginTop: 15,
-              borderWidth: 2,
-              borderColor: checkPasswordBoxColor,
+              paddingLeft: 10,
+              borderBottomWidth: 2,
+              borderBottomColor: checkPasswordBoxColor,
             }}
             autoCapitalize="none"
             autoCorrect={false}
@@ -202,10 +198,9 @@ const styles = StyleSheet.create({
   Text: {
     width: 200,
     height: 40,
-    backgroundColor: '#cccccc',
-    paddingLeft: 16,
-    paddingRight: 16,
-    borderRadius: 8,
+    paddingLeft: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: '#aaaaaa',
     marginTop: 15,
   },
 });

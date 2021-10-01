@@ -26,8 +26,7 @@ const Signup = ({navigation}) => {
   const [nicknameCheck, setNicknameCheck] = useState(''); //닉네임 중복 확인 완료 상태 임시 저장
 
   const [msgColor, setMsgColor] = useState(''); //passwordRight TextColor
-  const [checkPasswordBoxColor, setCheckPasswordBoxColor] =
-    useState('transparent');
+  const [checkPasswordBoxColor, setCheckPasswordBoxColor] = useState('#aaaaaa');
 
   const IDChecking = str => {
     var regExp = /^[A-za-z0-9]{4,16}$/g;
@@ -84,7 +83,7 @@ const Signup = ({navigation}) => {
       setPasswordCheck(password);
       setPasswordRight('비밀번호가 일치합니다.');
       setMsgColor('#295eba');
-      setCheckPasswordBoxColor('transparent');
+      setCheckPasswordBoxColor('#aaaaaa');
     } else {
       setPasswordRight('비밀번호가 일치하지 않습니다.');
       setMsgColor('red');
@@ -243,13 +242,11 @@ const Signup = ({navigation}) => {
             style={{
               width: '50%',
               height: 40,
-              backgroundColor: '#cccccc',
-              paddingLeft: 16,
-              paddingRight: 16,
-              borderRadius: 8,
+              paddingLeft: 10,
+              borderBottomWidth: 2,
+              borderBottomColor: '#aaaaaa',
               marginTop: 5,
-              borderColor: checkPasswordBoxColor,
-              borderWidth: 2,
+              borderBottomColor: checkPasswordBoxColor,
             }}
             autoCapitalize="none"
             autoCorrect={false}
@@ -342,10 +339,9 @@ const styles = StyleSheet.create({
   Text: {
     width: '50%',
     height: 40,
-    backgroundColor: '#cccccc',
-    paddingLeft: 16,
-    paddingRight: 16,
-    borderRadius: 8,
+    paddingLeft: 10,
+    borderBottomWidth: 2,
+    borderBottomColor: '#aaaaaa',
     marginTop: 5,
   },
 });
