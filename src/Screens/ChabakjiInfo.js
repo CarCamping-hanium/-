@@ -146,7 +146,7 @@ const ChabakjiInfo = ({navigation}) => {
               marginTop: 40,
               marginLeft: 30,
             }}>
-            근처 편의시설 (선택사항)
+            근처 편의시설
           </Text>
           <Text style={styles.content}>{facilities}</Text>
         </View>
@@ -158,7 +158,7 @@ const ChabakjiInfo = ({navigation}) => {
               marginTop: 40,
               marginLeft: 30,
             }}>
-            관련 영상 링크 (선택사항)
+            관련 영상 링크
           </Text>
           <Text
             onPress={() => {
