@@ -64,7 +64,7 @@ const MyPage = ({navigation}) => {
         //서버로 아이디, 비번 보내서 일치하는지 확인
         method: 'POST',
         headers: {
-         // 'Content-Type': 'application/json',
+          // 'Content-Type': 'application/json',
           token: userInfo.token,
         },
         body: formData,
@@ -132,7 +132,7 @@ const MyPage = ({navigation}) => {
       return (
         <TouchableOpacity
           style={{
-            marginTop: 50,
+            marginTop: 10,
             backgroundColor: mainColor,
             width: 130,
             height: 50,
