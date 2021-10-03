@@ -18,6 +18,7 @@ import {
   TextInput,
   Alert,
   StyleSheet,
+  ScrollView,
 } from 'react-native';
 import {DrawerActions} from '@react-navigation/native';
 import ImagePicker from 'react-native-image-crop-picker';
@@ -130,23 +131,37 @@ const MyPage = ({navigation}) => {
   const isAdmin = () => {
     if (userInfo.id === 'admin') {
       return (
-        <TouchableOpacity
+        <View
           style={{
-            marginTop: 10,
-            backgroundColor: mainColor,
-            width: 130,
-            height: 50,
             alignItems: 'center',
-            justifyContent: 'center',
-            borderRadius: 8,
-          }}
-          onPress={() => {
-            navigation.navigate('CheckChabakji');
+            marginTop: 20,
+            backgroundColor: 'white',
           }}>
-          <Text style={{color: 'white', fontWeight: 'bold', fontSize: 16}}>
-            차박지 승인
-          </Text>
-        </TouchableOpacity>
+          <TouchableOpacity
+            style={{
+              width: screenWidth,
+              height: 60,
+              paddingLeft: 30,
+              justifyContent: 'center',
+              borderRadius: 8,
+            }}
+            onPress={() => {
+              navigation.navigate('CheckChabakji');
+            }}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={{fontSize: 18}}>차박지 승인</Text>
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: '#aaaaaa',
+                  position: 'absolute',
+                  right: 20,
+                }}>
+                {'>'}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
       );
     }
   };
@@ -183,407 +198,451 @@ const MyPage = ({navigation}) => {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: 'white',
+        //backgroundColor: 'white',
       }}>
-      <View style={{marginTop: 20}}>
-        <TouchableOpacity
-          onPress={() => {
-            setProfileModalVisible(true);
-          }}>
-          <Image
-            source={
-              userInfo.profile === null
-                ? require('../Assets/Images/empty_profile.png')
-                : {uri: userInfo.profile}
-            }
-            style={{width: 200, height: 200, borderRadius: 20}}
-          />
-        </TouchableOpacity>
-        <Modal visible={profileModalVisible}>
-          <View
-            style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: 300,
-              height: 300,
-              borderWidth: 3,
-              borderRadius: 10,
-              backgroundColor: 'white',
-              borderColor: mainColor,
-            }}>
-            <TouchableOpacity
-              style={{
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: 250,
-                height: 50,
-                backgroundColor: mainColor,
-                borderRadius: 10,
-              }}
-              onPress={() => {
-                chooseImageFromLibrary();
-              }}>
-              <Text style={{color: 'white', fontSize: 18}}>
-                갤러리에서 가져오기
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                marginTop: 20,
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: 250,
-                height: 50,
-                backgroundColor: mainColor,
-                borderRadius: 10,
-              }}
-              onPress={() => {
-                setProfileModalVisible(false);
-                if (profileImage === null) {
-                  Alert.alert('프로필 사진이 설정되어 있지 않습니다.');
-                } else {
-                  Alert.alert('프로필 사진을 삭제하시겠습니까?', '', [
-                    {
-                      text: '삭제',
-                      onPress: () => {
-                        deleteProfile();
-                      },
-                    },
-                    {
-                      text: '취소',
-                      onPress: () => {
-                        setProfileImage(userInfo.profile);
-                      },
-                    },
-                  ]);
-                }
-              }}>
-              <Text style={{color: 'white', fontSize: 18}}>
-                프로필 사진 삭제
-              </Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                marginTop: 20,
-                alignItems: 'center',
-                justifyContent: 'center',
-                width: 120,
-                height: 50,
-                backgroundColor: mainColor,
-                borderRadius: 10,
-              }}
-              onPress={() => {
-                setProfileModalVisible(false);
-              }}>
-              <Text style={{color: 'white', fontSize: 18}}>취소</Text>
-            </TouchableOpacity>
-          </View>
-        </Modal>
-      </View>
-      <View style={{marginTop: 20, alignItems: 'center'}}>
-        <Text style={{fontSize: 20}}>환영해요, {userInfo.nickname}님!</Text>
-      </View>
-      <View
-        style={{
-          marginTop: 30,
-          width: screenWidth,
-          borderTopWidth: 1,
-          borderBottomWidth: 1,
-          borderColor: mainColor,
-        }}>
+      <ScrollView style={{marginTop: 20}}>
         <View
           style={{
-            flexDirection: 'row',
-            borderBottomWidth: 1,
-            borderColor: mainColor,
-            justifyContent: 'space-evenly',
+            alignItems: 'center',
+            backgroundColor: 'white',
+            paddingVertical: 20,
           }}>
-          <View
-            style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              borderRightWidth: 1,
-              borderColor: mainColor,
-            }}>
+          <View>
             <TouchableOpacity
-              style={{
-                width: screenWidth / 2,
-                height: 90,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
               onPress={() => {
-                navigation.navigate('MyPointHistory');
+                setProfileModalVisible(true);
               }}>
               <Image
-                source={require('../Assets/Images/point.png')}
-                style={{width: 50, height: 50}}
+                source={
+                  userInfo.profile === null
+                    ? require('../Assets/Images/empty_profile.png')
+                    : {uri: userInfo.profile}
+                }
+                style={{
+                  width: 200,
+                  height: 200,
+                  borderRadius: 20,
+                }}
               />
-              <Text style={{fontSize: 18, marginTop: 7}}>
-                내 포인트 : {userInfo.point}
-              </Text>
             </TouchableOpacity>
-          </View>
-          <View
-            style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}>
-            <TouchableOpacity
-              style={{
-                width: screenWidth / 2,
-                alignItems: 'center',
-                justifyContent: 'center',
-              }}
-              onPress={() => {
-                setModifyVisible(true);
-              }}>
-              <Image
-                source={require('../Assets/Images/edit.png')}
-                style={{width: 50, height: 50}}
-              />
-              <Text style={{fontSize: 18, marginTop: 7}}>회원 정보 수정</Text>
-            </TouchableOpacity>
-            <Modal visible={modifyVisible}>
+            <Modal visible={profileModalVisible}>
               <View
                 style={{
                   alignItems: 'center',
                   justifyContent: 'center',
-                  height: 200,
                   width: 300,
-                  borderColor: mainColor,
+                  height: 300,
                   borderWidth: 3,
                   borderRadius: 10,
                   backgroundColor: 'white',
+                  borderColor: mainColor,
                 }}>
-                <View
+                <TouchableOpacity
                   style={{
-                    flexDirection: 'row',
-                    position: 'absolute',
-                    top: 40,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 250,
+                    height: 50,
+                    backgroundColor: mainColor,
+                    borderRadius: 10,
+                  }}
+                  onPress={() => {
+                    chooseImageFromLibrary();
                   }}>
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: mainColor,
-                      width: 120,
-                      height: 50,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      borderRadius: 8,
-                      marginRight: 20,
-                    }}
-                    onPress={() => {
-                      setModifyVisible(false);
-                      navigation.navigate('ModifyNickname');
-                    }}>
-                    <Text style={{color: 'white', fontSize: 18}}>
-                      닉네임 변경
-                    </Text>
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: mainColor,
-                      width: 120,
-                      height: 50,
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      borderRadius: 8,
-                    }}
-                    onPress={() => {
-                      setModifyVisible(false);
-                      navigation.navigate('ModifyPassword');
-                    }}>
-                    <Text style={{color: 'white', fontSize: 18}}>
-                      비밀번호 변경
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={{position: 'absolute', bottom: 20}}>
-                  <TouchableOpacity
-                    style={{
-                      backgroundColor: mainColor,
-                      width: 100,
-                      height: 50,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                      borderRadius: 10,
-                    }}
-                    onPress={() => {
-                      setModifyVisible(false);
-                    }}>
-                    <Text style={{color: 'white', fontSize: 18}}>닫기</Text>
-                  </TouchableOpacity>
-                </View>
+                  <Text style={{color: 'white', fontSize: 18}}>
+                    갤러리에서 가져오기
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    marginTop: 20,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 250,
+                    height: 50,
+                    backgroundColor: mainColor,
+                    borderRadius: 10,
+                  }}
+                  onPress={() => {
+                    setProfileModalVisible(false);
+                    if (profileImage === null) {
+                      Alert.alert('프로필 사진이 설정되어 있지 않습니다.');
+                    } else {
+                      Alert.alert('프로필 사진을 삭제하시겠습니까?', '', [
+                        {
+                          text: '삭제',
+                          onPress: () => {
+                            deleteProfile();
+                          },
+                        },
+                        {
+                          text: '취소',
+                          onPress: () => {
+                            setProfileImage(userInfo.profile);
+                          },
+                        },
+                      ]);
+                    }
+                  }}>
+                  <Text style={{color: 'white', fontSize: 18}}>
+                    프로필 사진 삭제
+                  </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                  style={{
+                    marginTop: 20,
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 120,
+                    height: 50,
+                    backgroundColor: mainColor,
+                    borderRadius: 10,
+                  }}
+                  onPress={() => {
+                    setProfileModalVisible(false);
+                  }}>
+                  <Text style={{color: 'white', fontSize: 18}}>취소</Text>
+                </TouchableOpacity>
               </View>
             </Modal>
           </View>
+          <View style={{marginTop: 20, alignItems: 'center'}}>
+            <Text style={{fontSize: 20}}>환영해요, {userInfo.nickname}님!</Text>
+          </View>
         </View>
         <View
           style={{
-            flexDirection: 'row',
-            justifyContent: 'space-evenly',
+            marginTop: 2,
+            width: screenWidth,
           }}>
           <View
             style={{
-              borderRightWidth: 1,
-              borderColor: mainColor,
-              alignItems: 'center',
-              justifyContent: 'center',
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
             }}>
-            <TouchableOpacity
+            <View
               style={{
-                width: screenWidth / 2,
-                height: 90,
                 alignItems: 'center',
                 justifyContent: 'center',
-              }}
-              onPress={() => {
-                navigation.navigate('MyChabakji');
+                backgroundColor: 'white',
+                marginRight: 2,
               }}>
-              <Image
-                source={require('../Assets/Images/tent.png')}
-                style={{width: 60, height: 50}}
-              />
-              <Text style={{fontSize: 18, marginTop: 7}}>
-                내가 등록한 차박지
-              </Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  width: screenWidth / 2,
+                  height: 90,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onPress={() => {
+                  navigation.navigate('MyPointHistory');
+                }}>
+                <Image
+                  source={require('../Assets/Images/point.png')}
+                  style={{width: 50, height: 50}}
+                />
+                <Text style={{fontSize: 18, marginTop: 7}}>
+                  내 포인트 : {userInfo.point}
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: 'white',
+              }}>
+              <TouchableOpacity
+                style={{
+                  width: screenWidth / 2,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onPress={() => {
+                  setModifyVisible(true);
+                }}>
+                <Image
+                  source={require('../Assets/Images/edit.png')}
+                  style={{width: 50, height: 50}}
+                />
+                <Text style={{fontSize: 18, marginTop: 7}}>회원 정보 수정</Text>
+              </TouchableOpacity>
+              <Modal visible={modifyVisible}>
+                <View
+                  style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    height: 200,
+                    width: 300,
+                    borderColor: mainColor,
+                    borderWidth: 3,
+                    borderRadius: 10,
+                    backgroundColor: 'white',
+                  }}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      position: 'absolute',
+                      top: 40,
+                    }}>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: mainColor,
+                        width: 120,
+                        height: 50,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: 8,
+                        marginRight: 20,
+                      }}
+                      onPress={() => {
+                        setModifyVisible(false);
+                        navigation.navigate('ModifyNickname');
+                      }}>
+                      <Text style={{color: 'white', fontSize: 18}}>
+                        닉네임 변경
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: mainColor,
+                        width: 120,
+                        height: 50,
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        borderRadius: 8,
+                      }}
+                      onPress={() => {
+                        setModifyVisible(false);
+                        navigation.navigate('ModifyPassword');
+                      }}>
+                      <Text style={{color: 'white', fontSize: 18}}>
+                        비밀번호 변경
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  <View style={{position: 'absolute', bottom: 20}}>
+                    <TouchableOpacity
+                      style={{
+                        backgroundColor: mainColor,
+                        width: 100,
+                        height: 50,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        borderRadius: 10,
+                      }}
+                      onPress={() => {
+                        setModifyVisible(false);
+                      }}>
+                      <Text style={{color: 'white', fontSize: 18}}>닫기</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </Modal>
+            </View>
           </View>
           <View
             style={{
-              alignItems: 'center',
-              justifyContent: 'center',
+              marginTop: 2,
+              flexDirection: 'row',
+              justifyContent: 'space-evenly',
             }}>
-            <TouchableOpacity
+            <View
               style={{
-                width: screenWidth / 2,
                 alignItems: 'center',
                 justifyContent: 'center',
-              }}
-              onPress={() => {
-                navigation.navigate('MyReview');
+                marginRight: 2,
+                backgroundColor: 'white',
               }}>
-              <Image
-                source={require('../Assets/Images/review.png')}
-                style={{width: 50, height: 50}}
-              />
-              <Text style={{fontSize: 18, marginTop: 7}}>내가 등록한 리뷰</Text>
-            </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  width: screenWidth / 2,
+                  height: 90,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onPress={() => {
+                  navigation.navigate('MyChabakji');
+                }}>
+                <Image
+                  source={require('../Assets/Images/tent.png')}
+                  style={{width: 60, height: 50}}
+                />
+                <Text style={{fontSize: 18, marginTop: 7}}>
+                  내가 등록한 차박지
+                </Text>
+              </TouchableOpacity>
+            </View>
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: 'white',
+              }}>
+              <TouchableOpacity
+                style={{
+                  width: screenWidth / 2,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+                onPress={() => {
+                  navigation.navigate('MyReview');
+                }}>
+                <Image
+                  source={require('../Assets/Images/review.png')}
+                  style={{width: 50, height: 50}}
+                />
+                <Text style={{fontSize: 18, marginTop: 7}}>
+                  내가 등록한 리뷰
+                </Text>
+              </TouchableOpacity>
+            </View>
           </View>
         </View>
-      </View>
-      {isAdmin()}
-      <View
-        style={{
-          flex: 1,
-          alignItems: 'center',
-          justifyContent: 'flex-end',
-          marginBottom: 10,
-        }}>
-        <TouchableOpacity
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-            backgroundColor: '#e64f49',
-            width: 130,
-            height: 50,
-            borderRadius: 8,
-          }}
-          onPress={() => {
-            setDeleteVisible(true);
-          }}>
-          <Text style={{fontWeight: 'bold', color: 'white'}}>회원 탈퇴</Text>
-        </TouchableOpacity>
-      </View>
-      <Modal visible={deleteVisible}>
+        {isAdmin()}
         <View
           style={{
-            height: 300,
-            width: 300,
             alignItems: 'center',
-            justifyContent: 'center',
+            marginTop: userInfo.id === 'admin' ? 2 : 20,
             backgroundColor: 'white',
-            borderRadius: 8,
-            borderWidth: 3,
-            borderColor: mainColor,
           }}>
-          <Text style={{marginTop: 30, fontSize: 20}}>현재 비밀번호</Text>
-          <TextInput
-            style={styles.Text}
-            autoCapitalize="none"
-            autoCorrect={false}
-            allowFontScaling={false}
-            placeholder={'현재 비밀번호를 입력하세요.'}
-            placeholderTextColor="#777777"
-            clearButtonMode={'while-editing'}
-            secureTextEntry={true}
-            onChangeText={text => {
-              setPassword(text);
+          <TouchableOpacity
+            style={{
+              width: screenWidth,
+              height: 60,
+              paddingLeft: 30,
+              justifyContent: 'center',
+              borderRadius: 8,
             }}
-          />
-          <View style={{flexDirection: 'row', marginTop: 60}}>
-            <TouchableOpacity
-              style={{
-                backgroundColor: '#e64f49',
-                width: 100,
-                height: 50,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 10,
-              }}
-              onPress={() => {
-                Alert.alert('정말로 회원을 탈퇴하시겠습니까?', '', [
-                  {
-                    text: '탈퇴',
-                    onPress: () => {
-                      fetch('http://3.38.85.251:8080/api/memberDelete', {
-                        //서버로 아이디, 비번 보내서 일치하는지 확인
-                        method: 'DELETE',
-                        headers: {
-                          'Content-Type': 'application/json',
-                          token: userInfo.token,
-                        },
-                        body: JSON.stringify({
-                          check: password,
-                        }),
-                      })
-                        .then(response => response.json())
-                        .then(json => {
-                          console.log(json);
-                          if (json.msg === 'success') {
-                            deleteMember();
-                            Alert.alert('회원 탈퇴가 완료되었습니다.');
-                          } else {
-                            Alert.alert(json.msg);
-                          }
-                        });
-                    },
-                  },
-                  {
-                    text: '취소',
-                  },
-                ]);
-              }}>
-              <Text style={{color: 'white', fontSize: 18}}>회원 탈퇴</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{
-                backgroundColor: mainColor,
-                width: 100,
-                height: 50,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 10,
-                marginLeft: 25,
-              }}
-              onPress={() => {
-                setDeleteVisible(false);
-              }}>
-              <Text style={{color: 'white', fontSize: 18}}>닫기</Text>
-            </TouchableOpacity>
-          </View>
+            onPress={() => {
+              navigation.navigate('CustomerService');
+            }}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={{fontSize: 18}}>고객센터</Text>
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: '#aaaaaa',
+                  position: 'absolute',
+                  right: 20,
+                }}>
+                {'>'}
+              </Text>
+            </View>
+          </TouchableOpacity>
         </View>
-      </Modal>
+        <View
+          style={{
+            flex: 1,
+            alignItems: 'center',
+            justifyContent: 'flex-end',
+            marginTop: 50,
+          }}>
+          <TouchableOpacity
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: '#e64f49',
+              width: 130,
+              height: 50,
+              borderRadius: 8,
+            }}
+            onPress={() => {
+              setDeleteVisible(true);
+            }}>
+            <Text style={{fontWeight: 'bold', color: 'white'}}>회원 탈퇴</Text>
+          </TouchableOpacity>
+        </View>
+        <Modal visible={deleteVisible}>
+          <View
+            style={{
+              height: 300,
+              width: 300,
+              alignItems: 'center',
+              justifyContent: 'center',
+              backgroundColor: 'white',
+              borderRadius: 8,
+              borderWidth: 3,
+              borderColor: mainColor,
+            }}>
+            <Text style={{marginTop: 30, fontSize: 20}}>현재 비밀번호</Text>
+            <TextInput
+              style={styles.Text}
+              autoCapitalize="none"
+              autoCorrect={false}
+              allowFontScaling={false}
+              placeholder={'현재 비밀번호를 입력하세요.'}
+              placeholderTextColor="#777777"
+              clearButtonMode={'while-editing'}
+              secureTextEntry={true}
+              onChangeText={text => {
+                setPassword(text);
+              }}
+            />
+            <View style={{flexDirection: 'row', marginTop: 60}}>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: '#e64f49',
+                  width: 100,
+                  height: 50,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: 10,
+                }}
+                onPress={() => {
+                  Alert.alert('정말로 회원을 탈퇴하시겠습니까?', '', [
+                    {
+                      text: '탈퇴',
+                      onPress: () => {
+                        fetch('http://3.38.85.251:8080/api/memberDelete', {
+                          //서버로 아이디, 비번 보내서 일치하는지 확인
+                          method: 'DELETE',
+                          headers: {
+                            'Content-Type': 'application/json',
+                            token: userInfo.token,
+                          },
+                          body: JSON.stringify({
+                            check: password,
+                          }),
+                        })
+                          .then(response => response.json())
+                          .then(json => {
+                            console.log(json);
+                            if (json.msg === 'success') {
+                              deleteMember();
+                              Alert.alert('회원 탈퇴가 완료되었습니다.');
+                            } else {
+                              Alert.alert(json.msg);
+                            }
+                          });
+                      },
+                    },
+                    {
+                      text: '취소',
+                    },
+                  ]);
+                }}>
+                <Text style={{color: 'white', fontSize: 18}}>회원 탈퇴</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={{
+                  backgroundColor: mainColor,
+                  width: 100,
+                  height: 50,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: 10,
+                  marginLeft: 25,
+                }}
+                onPress={() => {
+                  setDeleteVisible(false);
+                }}>
+                <Text style={{color: 'white', fontSize: 18}}>닫기</Text>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+      </ScrollView>
     </SafeAreaView>
   );
 };
