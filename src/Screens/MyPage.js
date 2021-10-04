@@ -515,6 +515,37 @@ const MyPage = ({navigation}) => {
               borderRadius: 8,
             }}
             onPress={() => {
+              navigation.navigate('Notice');
+            }}>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={{fontSize: 18}}>공지사항</Text>
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: '#aaaaaa',
+                  position: 'absolute',
+                  right: 20,
+                }}>
+                {'>'}
+              </Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        <View
+          style={{
+            alignItems: 'center',
+            marginTop: 2,
+            backgroundColor: 'white',
+          }}>
+          <TouchableOpacity
+            style={{
+              width: screenWidth,
+              height: 60,
+              paddingLeft: 30,
+              justifyContent: 'center',
+              borderRadius: 8,
+            }}
+            onPress={() => {
               navigation.navigate('CustomerService');
             }}>
             <View style={{flexDirection: 'row'}}>
@@ -533,24 +564,33 @@ const MyPage = ({navigation}) => {
         </View>
         <View
           style={{
-            flex: 1,
             alignItems: 'center',
-            justifyContent: 'flex-end',
-            marginTop: 50,
+            marginTop: 20,
+            backgroundColor: 'white',
           }}>
           <TouchableOpacity
             style={{
-              alignItems: 'center',
+              width: screenWidth,
+              height: 60,
+              paddingLeft: 30,
               justifyContent: 'center',
-              backgroundColor: '#e64f49',
-              width: 130,
-              height: 50,
               borderRadius: 8,
             }}
             onPress={() => {
               setDeleteVisible(true);
             }}>
-            <Text style={{fontWeight: 'bold', color: 'white'}}>회원 탈퇴</Text>
+            <View style={{flexDirection: 'row'}}>
+              <Text style={{fontSize: 18, color: 'red'}}>회원 탈퇴</Text>
+              <Text
+                style={{
+                  fontSize: 18,
+                  color: '#aaaaaa',
+                  position: 'absolute',
+                  right: 20,
+                }}>
+                {'>'}
+              </Text>
+            </View>
           </TouchableOpacity>
         </View>
         <Modal visible={deleteVisible}>
