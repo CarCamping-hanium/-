@@ -47,6 +47,7 @@ import PointRanking from './PointRanking';
 import CheckChabakji from './CheckChabakji';
 import WaitingChabakjiInfo from './WaitingChabakjiInfo';
 import CustomerService from './CustomerService';
+import Notice from './Notice';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -260,6 +261,14 @@ const MyPageNavigator = navigation => {
         component={WaitingChabakjiInfo}
         options={{
           title: waiting_name,
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="Notice"
+        component={Notice}
+        options={{
+          title: '공지사항',
           headerBackTitleVisible: false,
         }}
       />
