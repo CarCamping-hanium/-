@@ -50,8 +50,8 @@ const ReviewUpload = ({navigation}) => {
     },
     uploadPhoto: {
       borderRadius: 8,
-      width: 100,
-      height: 40,
+      width: 120,
+      height: 50,
       marginTop: 10,
       backgroundColor: mainColor,
       justifyContent: 'center',
@@ -254,7 +254,7 @@ const ReviewUpload = ({navigation}) => {
           <TouchableOpacity
             style={styles.uploadPhoto}
             onPress={chooseImageFromLibrary}>
-            <Text style={{color: 'white'}}>사진 업로드</Text>
+            <Text style={{color: 'white', fontSize: 15}}>사진 업로드</Text>
           </TouchableOpacity>
         </View>
         <View style={{marginTop: 20}}>
