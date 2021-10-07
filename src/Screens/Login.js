@@ -29,12 +29,13 @@ const Login = ({navigation}) => {
     }, 2000);
   }, []);
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
       <View
         style={{
           justifyContent: 'center',
           alignItems: 'center',
           backgroundColor: 'white',
+          marginTop: 20,
         }}>
         <Image
           style={{

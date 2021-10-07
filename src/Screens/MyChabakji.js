@@ -72,7 +72,7 @@ const MyChabakji = ({navigation}) => {
             navigation.navigate('MyPage');
           }}>
           <Image
-            style={{height: 30, width: 30}}
+            style={{height: 30, width: 30, marginBottom: 10}}
             source={require('../Assets/Images/Home.png')}
           />
         </TouchableOpacity>

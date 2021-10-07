@@ -186,7 +186,10 @@ const MyPage = ({navigation}) => {
           onPress={() => {
             navigation.dispatch(DrawerActions.openDrawer());
           }}>
-          <Image source={require('../Assets/Images/Menu.png')} />
+          <Image
+            source={require('../Assets/Images/Menu.png')}
+            style={{marginBottom: 10}}
+          />
         </TouchableOpacity>
       ),
     });
@@ -200,7 +203,7 @@ const MyPage = ({navigation}) => {
         justifyContent: 'center',
         //backgroundColor: 'white',
       }}>
-      <ScrollView style={{marginTop: 20}}>
+      <ScrollView style={{marginTop: 0}}>
         <View
           style={{
             alignItems: 'center',

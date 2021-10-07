@@ -55,18 +55,38 @@ const Stack = createStackNavigator();
 const screenHeight = Dimensions.get('window').height;
 
 const LoginNavigator = ({navigation}) => {
+  const {mainColor} = useContext(UserContext);
   return (
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
           name="Login"
           component={Login}
-          options={{title: '로그인'}}
+          options={{
+            title: '로그인',
+            headerTintColor: 'white',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: 20,
+              marginBottom: 10,
+            },
+            headerStyle: {backgroundColor: mainColor},
+          }}
         />
         <Stack.Screen
           name="Signup"
           component={Signup}
-          options={{title: '회원가입'}}
+          options={{
+            title: '회원가입',
+            headerTintColor: 'white',
+            headerTitleStyle: {
+              fontWeight: 'bold',
+              fontSize: 20,
+              marginBottom: 10,
+            },
+            headerBackTitleVisible: false,
+            headerStyle: {backgroundColor: mainColor},
+          }}
         />
       </Stack.Navigator>
     </NavigationContainer>
@@ -74,7 +94,7 @@ const LoginNavigator = ({navigation}) => {
 };
 
 const HomeScreenNavigator = navigation => {
-  const {area, chabak_name, review_name} = useContext(UserContext);
+  const {area, chabak_name, review_name, mainColor} = useContext(UserContext);
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -82,38 +102,102 @@ const HomeScreenNavigator = navigation => {
         component={HomeScreen}
         options={{
           title: '지역을 선택하세요',
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
         }}
       />
       <Stack.Screen
         name="Gyeonggi"
         component={Gyeonggi}
-        options={{title: '경기도', headerBackTitleVisible: false}}
+        options={{
+          title: '경기도',
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
+          headerBackTitleVisible: false,
+        }}
       />
       <Stack.Screen
         name="Gangwon"
         component={Gangwon}
-        options={{title: '강원도', headerBackTitleVisible: false}}
+        options={{
+          title: '강원도',
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
+          headerBackTitleVisible: false,
+        }}
       />
       <Stack.Screen
         name="Chungcheong"
         component={Chungcheong}
-        options={{title: '충청도', headerBackTitleVisible: false}}
+        options={{
+          title: '충청도',
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
+          headerBackTitleVisible: false,
+        }}
       />
       <Stack.Screen
         name="Gyeongsang"
         component={Gyeongsang}
-        options={{title: '경상도', headerBackTitleVisible: false}}
+        options={{
+          title: '경상도',
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
+          headerBackTitleVisible: false,
+        }}
       />
       <Stack.Screen
         name="Jeolla"
         component={Jeolla}
-        options={{title: '전라도', headerBackTitleVisible: false}}
+        options={{
+          title: '전라도',
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
+          headerBackTitleVisible: false,
+        }}
       />
       <Stack.Screen
         name="AllChabakjiList"
         component={AllChabakjiList}
         options={{
           title: '선택된 지역  :  ' + area,
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
           headerBackTitleVisible: false,
         }}
       />
@@ -122,6 +206,13 @@ const HomeScreenNavigator = navigation => {
         component={ChabakjiList}
         options={{
           title: '선택된 지역  :  ' + area,
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
           headerBackTitleVisible: false,
         }}
       />
@@ -130,6 +221,13 @@ const HomeScreenNavigator = navigation => {
         component={ChabakjiInfo}
         options={{
           title: chabak_name,
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
           headerBackTitleVisible: false,
         }}
       />
@@ -138,6 +236,13 @@ const HomeScreenNavigator = navigation => {
         component={ReviewBoard}
         options={{
           title: chabak_name + '의 리뷰',
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
           headerBackTitleVisible: false,
         }}
       />
@@ -146,6 +251,13 @@ const HomeScreenNavigator = navigation => {
         component={ReviewUpload}
         options={{
           title: '리뷰 등록',
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
           headerBackTitleVisible: false,
         }}
       />
@@ -154,6 +266,13 @@ const HomeScreenNavigator = navigation => {
         component={ReviewInfo}
         options={{
           title: review_name,
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
           headerBackTitleVisible: false,
         }}
       />
@@ -162,19 +281,30 @@ const HomeScreenNavigator = navigation => {
 };
 
 const ChabakjiEnrollmentNavigator = () => {
+  const {mainColor} = useContext(UserContext);
   return (
     <Stack.Navigator>
       <Stack.Screen
         name="ChabakjiEnrollment"
         component={ChabakjiEnrollment}
-        options={{title: '차박지 등록'}}
+        options={{
+          title: '차박지 등록',
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
+        }}
       />
     </Stack.Navigator>
   );
 };
 
 const MyPageNavigator = navigation => {
-  const {chabak_name, waiting_name, review_name} = useContext(UserContext);
+  const {chabak_name, waiting_name, review_name, mainColor} =
+    useContext(UserContext);
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -182,6 +312,13 @@ const MyPageNavigator = navigation => {
         component={MyPage}
         options={{
           title: '마이 페이지',
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
         }}
       />
       <Stack.Screen
@@ -189,6 +326,13 @@ const MyPageNavigator = navigation => {
         component={MyPointHistory}
         options={{
           title: '포인트 적립 내역',
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
           headerBackTitleVisible: false,
         }}
       />
@@ -197,6 +341,13 @@ const MyPageNavigator = navigation => {
         component={PointRanking}
         options={{
           title: '포인트 랭킹',
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
           headerBackTitleVisible: false,
         }}
       />
@@ -205,6 +356,13 @@ const MyPageNavigator = navigation => {
         component={MyReview}
         options={{
           title: '내가 등록한 리뷰',
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
           headerBackTitleVisible: false,
         }}
       />
@@ -213,6 +371,13 @@ const MyPageNavigator = navigation => {
         component={MyChabakji}
         options={{
           title: '내가 등록한 차박지',
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
           headerBackTitleVisible: false,
         }}
       />
@@ -221,6 +386,13 @@ const MyPageNavigator = navigation => {
         component={MyChabakjiInfo}
         options={{
           title: chabak_name,
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
           headerBackTitleVisible: false,
         }}
       />
@@ -229,6 +401,13 @@ const MyPageNavigator = navigation => {
         component={MyReviewInfo}
         options={{
           title: review_name,
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
           headerBackTitleVisible: false,
         }}
       />
@@ -237,6 +416,13 @@ const MyPageNavigator = navigation => {
         component={ModifyNickname}
         options={{
           title: '닉네임 변경',
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
           headerBackTitleVisible: false,
         }}
       />
@@ -245,6 +431,13 @@ const MyPageNavigator = navigation => {
         component={ModifyPassword}
         options={{
           title: '비밀번호 변경',
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
           headerBackTitleVisible: false,
         }}
       />
@@ -253,6 +446,13 @@ const MyPageNavigator = navigation => {
         component={CheckChabakji}
         options={{
           title: '차박지 승인',
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
           headerBackTitleVisible: false,
         }}
       />
@@ -261,6 +461,13 @@ const MyPageNavigator = navigation => {
         component={WaitingChabakjiInfo}
         options={{
           title: waiting_name,
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
           headerBackTitleVisible: false,
         }}
       />
@@ -269,6 +476,13 @@ const MyPageNavigator = navigation => {
         component={Notice}
         options={{
           title: '공지사항',
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
           headerBackTitleVisible: false,
         }}
       />
@@ -277,6 +491,13 @@ const MyPageNavigator = navigation => {
         component={CustomerService}
         options={{
           title: '고객센터',
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
           headerBackTitleVisible: false,
         }}
       />
@@ -295,12 +516,6 @@ const MainNavigator = () => {
             return (
               <DrawerContentScrollView>
                 <DrawerItemList {...props} />
-                {/* <DrawerItem
-                  label="로그아웃"
-                  onPress={() => {
-                    logout();
-                  }}
-                /> */}
                 <View style={{marginTop: screenHeight / 1.5}}>
                   <TouchableOpacity
                     onPress={() => {

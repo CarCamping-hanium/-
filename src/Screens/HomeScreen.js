@@ -25,7 +25,10 @@ const HomeScreen = ({navigation}) => {
           onPress={() => {
             navigation.dispatch(DrawerActions.openDrawer());
           }}>
-          <Image source={require('../Assets/Images/Menu.png')} />
+          <Image
+            source={require('../Assets/Images/Menu.png')}
+            style={{marginBottom: 10}}
+          />
         </TouchableOpacity>
       ),
     });

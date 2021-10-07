@@ -37,7 +37,7 @@ const ReviewUpload = ({navigation}) => {
       fontWeight: '500',
       alignItems: 'center',
       justifyContent: 'center',
-      marginTop: '5%',
+      marginTop: 30,
       width: '90%',
       height: 40,
       paddingLeft: 10,
@@ -242,7 +242,7 @@ const ReviewUpload = ({navigation}) => {
       />
       <ScrollView
         style={{
-          marginTop: '5%',
+          marginTop: 20,
           marginHorizontal: 20,
           width: screenWidth,
         }}>

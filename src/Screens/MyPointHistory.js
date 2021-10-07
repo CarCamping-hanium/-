@@ -84,7 +84,7 @@ const MyPointHistory = ({navigation}) => {
             navigation.navigate('PointRanking');
           }}>
           <Image
-            style={{height: 25, width: 25}}
+            style={{height: 30, width: 30, marginBottom: 10}}
             source={require('../Assets/Images/crown.png')}
           />
         </TouchableOpacity>
