@@ -4,6 +4,7 @@ import React, {
   useLayoutEffect,
   useEffect,
   useCallback,
+  useRef,
 } from 'react';
 import {UserContext} from '../Context/Context';
 import Modal from '../Components/Modal';
@@ -37,6 +38,7 @@ const MyPage = ({navigation}) => {
   const [deleteVisible, setDeleteVisible] = useState(false);
   const [profileImage, setProfileImage] = useState(null);
   const [point, setPoint] = useState(0);
+  const scrollRef = useRef();
 
   const styles = StyleSheet.create({
     Text: {
@@ -166,8 +168,13 @@ const MyPage = ({navigation}) => {
     }
   };
 
+  const scrollToTop = () => {
+    scrollRef.current.scrollTo({y: 0});
+  };
+
   useFocusEffect(
     useCallback(() => {
+      scrollToTop();
       getUserInfo();
     }, []),
   );
@@ -203,7 +210,7 @@ const MyPage = ({navigation}) => {
         justifyContent: 'center',
         //backgroundColor: 'white',
       }}>
-      <ScrollView style={{marginTop: 0}}>
+      <ScrollView style={{marginTop: 0}} ref={scrollRef}>
         <View
           style={{
             alignItems: 'center',
