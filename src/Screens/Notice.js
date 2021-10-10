@@ -84,7 +84,7 @@ const Notice = ({navigation}) => {
   }, []);
 
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+    <SafeAreaView style={{flex: 1}}>
       <View
         style={{
           flex: 1,
@@ -99,39 +99,45 @@ const Notice = ({navigation}) => {
             return `Notice-${index}`;
           }}
           renderItem={({item, index}) => (
-            <TouchableOpacity
+            <View
               style={{
-                width: screenWidth / 1.1,
-                height: 70,
-                backgroundColor: mainColor,
-                marginBottom: 10,
-                borderRadius: 12,
-                justifyContent: 'center',
-              }}
-              onPress={() => {
-                selectedNotice_id(item.id);
-                selectedNotice_name(item.title);
-                navigation.navigate('NoticeInfo');
+                alignItems: 'center',
+                marginTop: 2,
+                backgroundColor: 'white',
               }}>
-              <Text
+              <TouchableOpacity
                 style={{
-                  marginLeft: 10,
-                  fontSize: 18,
-                  fontWeight: 'bold',
-                  color: 'white',
+                  width: screenWidth,
+                  height: 80,
+                  paddingLeft: 30,
+                  justifyContent: 'center',
+                  borderRadius: 8,
+                }}
+                onPress={() => {
+                  selectedNotice_id(item.id);
+                  selectedNotice_name(item.title);
+                  navigation.navigate('NoticeInfo');
                 }}>
-                {item.title}
-              </Text>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  marginTop: 7,
-                }}>
-                <Text style={{marginLeft: 10, color: 'white'}}>
-                  {item.year}.{item.month}.{item.date}
-                </Text>
-              </View>
-            </TouchableOpacity>
+                <View style={{flexDirection: 'row'}}>
+                  <View>
+                    <Text style={{fontSize: 18}}>{item.title}</Text>
+                    <Text style={{marginTop: 5, color: '#777777'}}>
+                      {item.year}.{item.month}.{item.date}
+                    </Text>
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: 18,
+                      color: '#aaaaaa',
+                      position: 'absolute',
+                      right: 20,
+                      top: 10,
+                    }}>
+                    {'>'}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
           )}
         />
       </View>

@@ -529,7 +529,7 @@ const MyPageNavigator = navigation => {
         name="NoticeInfo"
         component={NoticeInfo}
         options={{
-          title: notice_name,
+          title: '공지사항',
           headerTintColor: 'white',
           headerTitleStyle: {
             fontWeight: 'bold',
