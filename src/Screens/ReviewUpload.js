@@ -18,7 +18,6 @@ import ImagePicker from 'react-native-image-crop-picker';
 import {Rating} from 'react-native-ratings';
 import {UserContext} from '../Context/Context';
 const screenWidth = Dimensions.get('window').width;
-let imageList = [];
 const ReviewUpload = ({navigation}) => {
   const {mainColor, userInfo, chabak_ID} = useContext(UserContext);
   const [changedImage, setChangedImage] = useState(''); //S3에 의해 변환된 후의 주소
@@ -194,7 +193,7 @@ const ReviewUpload = ({navigation}) => {
       Alert.alert('입력되지 않은 정보가 있습니다.');
     } else {
       console.log(image);
-      var url = 'http://3.38.85.251:8080/api/review/' + chabak_ID;
+      var url = `http://3.38.85.251:8080/api/review/${chabak_ID}`;
       fetch(url, {
         method: 'POST',
         headers: {
@@ -212,11 +211,10 @@ const ReviewUpload = ({navigation}) => {
         .then(json => {
           console.log(json);
           if (json.success === true) {
-            imageList.length = 0;
-            setImage([]);
             Alert.alert('차박린이', '회원님의 소중한 리뷰가 등록되었습니다.');
+            setImage('');
             navigation.navigate('ReviewBoard');
-          }
+          } else Alert.alert(json.msg);
         })
         .catch(e => {
           console.log(e);
@@ -314,8 +312,7 @@ const ReviewUpload = ({navigation}) => {
           <TouchableOpacity
             style={styles.Cancel}
             onPress={() => {
-              imageList.length = 0;
-              setImage([]);
+              setImage('');
               navigation.navigate('ReviewBoard');
             }}>
             <Text style={{color: 'white'}}>취소</Text>
