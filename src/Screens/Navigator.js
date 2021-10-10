@@ -48,6 +48,7 @@ import CheckChabakji from './CheckChabakji';
 import WaitingChabakjiInfo from './WaitingChabakjiInfo';
 import CustomerService from './CustomerService';
 import Notice from './Notice';
+import NoticeInfo from './NoticeInfo';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -303,7 +304,7 @@ const ChabakjiEnrollmentNavigator = () => {
 };
 
 const MyPageNavigator = navigation => {
-  const {chabak_name, waiting_name, review_name, mainColor} =
+  const {chabak_name, waiting_name, review_name, notice_name, mainColor} =
     useContext(UserContext);
   return (
     <Stack.Navigator>
@@ -476,6 +477,21 @@ const MyPageNavigator = navigation => {
         component={Notice}
         options={{
           title: '공지사항',
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="NoticeInfo"
+        component={NoticeInfo}
+        options={{
+          title: notice_name,
           headerTintColor: 'white',
           headerTitleStyle: {
             fontWeight: 'bold',

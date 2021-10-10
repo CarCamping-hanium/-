@@ -17,6 +17,8 @@ const UserContextProvider = ({children}) => {
   const [chabak_name, setChabak_name] = useState('');
   const [Review_ID, setReview_ID] = useState('');
   const [review_name, setReview_name] = useState('');
+  const [notice_ID, setNotice_ID] = useState('');
+  const [notice_name, setNotice_name] = useState('');
   const [waiting_id, setWaiting_id] = useState('');
   const [waiting_name, setWaiting_name] = useState('');
   const mainColor = '#518AF0';
@@ -159,6 +161,12 @@ const UserContextProvider = ({children}) => {
   const selectedWaiting_name = data => {
     setWaiting_name(data);
   };
+  const selectedNotice_id = data => {
+    setNotice_ID(data);
+  };
+  const selectedNotice_name = data => {
+    setNotice_name(data);
+  };
   useEffect(() => {
     getUserInfo();
   }, []);
@@ -187,6 +195,10 @@ const UserContextProvider = ({children}) => {
         selectedWaiting_id,
         waiting_name,
         selectedWaiting_name,
+        notice_ID,
+        notice_name,
+        selectedNotice_id,
+        selectedNotice_name,
       }}>
       {children}
     </UserContext.Provider>
