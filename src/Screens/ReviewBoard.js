@@ -4,6 +4,7 @@ import React, {
   useContext,
   useCallback,
   useRef,
+  useEffect,
 } from 'react';
 import {
   FlatList,
@@ -24,7 +25,7 @@ const sort = ['별점 높은순', '별점 낮은순', '최신순', '오래된순
 const ReviewBoard = ({navigation}) => {
   const [ReviewList, setReviewList] = useState();
   const {userInfo, chabak_name, chabak_ID} = useContext(UserContext);
-  const [Sorting, setSorting] = useState('gradeUp');
+  const [sorting, setSorting] = useState('gradeUp');
   const {mainColor, selectedReview_ID, selectedReview_name} =
     useContext(UserContext);
   const scrollRef = useRef();
@@ -48,11 +49,15 @@ const ReviewBoard = ({navigation}) => {
     },
   });
 
-  useFocusEffect(
-    useCallback(() => {
-      getReview();
-    }, []),
-  );
+  // useFocusEffect(
+  //   useCallback(() => {
+  //     getReview();
+  //   }, []),
+  // );
+  useEffect(() => {
+    getReview();
+  }, [sorting]);
+
   useLayoutEffect(() => {
     getReview();
     navigation.setOptions({
@@ -69,16 +74,15 @@ const ReviewBoard = ({navigation}) => {
         </TouchableOpacity>
       ),
     });
-  }, [Sorting]);
+  }, []);
 
   const scrollToTop = () => {
     scrollRef.current.scrollToOffset({offset: 0, animated: true});
   };
 
   const getReview = () => {
-    console.log(Sorting);
-    var url =
-      'http://3.38.85.251:8080/api/campingReview/' + chabak_ID + '/' + Sorting;
+    console.log(sorting);
+    var url = `http://3.38.85.251:8080/api/campingReview/${chabak_ID}/${sorting}`;
     console.log(url);
     fetch(url, {
       method: 'GET',

@@ -52,15 +52,10 @@ const MyReview = ({navigation}) => {
     scrollRef.current.scrollToOffset({offset: 0, animated: true});
   };
 
-  useFocusEffect(
-    useCallback(() => {
-      getMyReview();
-    }, []),
-  );
-
   useEffect(() => {
     getMyReview();
   }, [sorting]);
+
   useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => (
