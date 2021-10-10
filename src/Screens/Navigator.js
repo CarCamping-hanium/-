@@ -49,6 +49,8 @@ import WaitingChabakjiInfo from './WaitingChabakjiInfo';
 import CustomerService from './CustomerService';
 import Notice from './Notice';
 import NoticeInfo from './NoticeInfo';
+import ReportedReviewList from './ReportedReviewList';
+import ReportedReviewInfo from './ReportedReviewInfo';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -304,8 +306,14 @@ const ChabakjiEnrollmentNavigator = () => {
 };
 
 const MyPageNavigator = navigation => {
-  const {chabak_name, waiting_name, review_name, notice_name, mainColor} =
-    useContext(UserContext);
+  const {
+    chabak_name,
+    waiting_name,
+    review_name,
+    notice_name,
+    Review_name,
+    mainColor,
+  } = useContext(UserContext);
   return (
     <Stack.Navigator>
       <Stack.Screen
@@ -462,6 +470,36 @@ const MyPageNavigator = navigation => {
         component={WaitingChabakjiInfo}
         options={{
           title: waiting_name,
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="ReportedReviewList"
+        component={ReportedReviewList}
+        options={{
+          title: '신고된 리뷰 확인',
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="ReportedReviewInfo"
+        component={ReportedReviewInfo}
+        options={{
+          title: Review_name,
           headerTintColor: 'white',
           headerTitleStyle: {
             fontWeight: 'bold',

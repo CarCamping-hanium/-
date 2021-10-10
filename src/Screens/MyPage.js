@@ -133,36 +133,69 @@ const MyPage = ({navigation}) => {
   const isAdmin = () => {
     if (userInfo.id === 'admin') {
       return (
-        <View
-          style={{
-            alignItems: 'center',
-            marginTop: 20,
-            backgroundColor: 'white',
-          }}>
-          <TouchableOpacity
+        <View>
+          <View
             style={{
-              width: screenWidth,
-              height: 60,
-              paddingLeft: 30,
-              justifyContent: 'center',
-              borderRadius: 8,
-            }}
-            onPress={() => {
-              navigation.navigate('CheckChabakji');
+              alignItems: 'center',
+              marginTop: 20,
+              backgroundColor: 'white',
             }}>
-            <View style={{flexDirection: 'row'}}>
-              <Text style={{fontSize: 18}}>차박지 승인</Text>
-              <Text
-                style={{
-                  fontSize: 18,
-                  color: '#aaaaaa',
-                  position: 'absolute',
-                  right: 20,
-                }}>
-                {'>'}
-              </Text>
-            </View>
-          </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                width: screenWidth,
+                height: 60,
+                paddingLeft: 30,
+                justifyContent: 'center',
+                borderRadius: 8,
+              }}
+              onPress={() => {
+                navigation.navigate('CheckChabakji');
+              }}>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={{fontSize: 18}}>차박지 승인</Text>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    color: '#aaaaaa',
+                    position: 'absolute',
+                    right: 20,
+                  }}>
+                  {'>'}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              alignItems: 'center',
+              marginTop: 2,
+              backgroundColor: 'white',
+            }}>
+            <TouchableOpacity
+              style={{
+                width: screenWidth,
+                height: 60,
+                paddingLeft: 30,
+                justifyContent: 'center',
+                borderRadius: 8,
+              }}
+              onPress={() => {
+                navigation.navigate('ReportedReviewList');
+              }}>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={{fontSize: 18}}>신고된 리뷰 확인</Text>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    color: '#aaaaaa',
+                    position: 'absolute',
+                    right: 20,
+                  }}>
+                  {'>'}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
       );
     }

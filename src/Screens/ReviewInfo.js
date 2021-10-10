@@ -59,18 +59,49 @@ const ReviewInfo = ({navigation}) => {
         <TouchableOpacity
           style={{marginRight: 15}}
           onPress={() => {
-            navigation.navigate('HomeScreen');
+            report();
           }}>
           <Image
             style={{height: 30, width: 30, marginBottom: 10}}
-            source={require('../Assets/Images/Home.png')}
+            source={require('../Assets/Images/report.png')}
           />
         </TouchableOpacity>
       ),
     });
   }, []);
+
+  const report = () => {
+    Alert.alert('해당 리뷰를 신고하시겠습니까?', '', [
+      {
+        text: '신고',
+        onPress: () => {
+          fetch(`http://3.38.85.251:8080/api/reportReview/${Review_ID}`, {
+            //서버로 아이디, 비번 보내서 일치하는지 확인
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+              token: userInfo.token,
+            },
+          })
+            .then(response => response.json())
+            .then(json => {
+              console.log(json);
+              if (json.msg === 'success') {
+                Alert.alert('신고가 접수되었습니다.');
+              } else {
+                Alert.alert(json.msg);
+              }
+            });
+        },
+      },
+      {
+        text: '취소',
+      },
+    ]);
+  };
+
   const getInfo = () => {
-    var url = 'http://3.38.85.251:8080/api/campingReview/' + Review_ID;
+    var url = `http://3.38.85.251:8080/api/campingReview/${Review_ID}`;
     fetch(url, {
       method: 'GET',
       headers: {
@@ -84,9 +115,7 @@ const ReviewInfo = ({navigation}) => {
         setScore(json.data.score);
         setDescription(json.data.contents);
         setWriter(json.data.writer);
-
         setProfileImage(json.data.profile);
-
         console.log(profileImage);
         console.log(json.data);
       })
