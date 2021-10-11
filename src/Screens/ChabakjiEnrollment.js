@@ -223,7 +223,6 @@ const ChabakjiEnrollment = ({navigation}) => {
         console.log('upload api : ', json);
         console.log(json.data);
         if (json.success === true) {
-          //setCheckImageUpload(true);
           setChangedImage(json.data);
         }
       })
@@ -528,9 +527,12 @@ const ChabakjiEnrollment = ({navigation}) => {
                   .then(json => {
                     console.log(json);
                     if (json.success === true) {
-                      Alert.alert(
-                        '감사합니다. 회원님의 차박지 등록 심사가 진행될 예정입니다.',
-                      );
+                      if (userInfo.id === 'admin')
+                        Alert.alert('차박지가 등록되었습니다.');
+                      else
+                        Alert.alert(
+                          '감사합니다. 회원님의 차박지 등록 심사가 진행될 예정입니다.',
+                        );
                       scrollToTop();
                       setImage('');
                       setName('');
