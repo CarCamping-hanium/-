@@ -138,7 +138,7 @@ const MyPointHistory = ({navigation}) => {
         renderItem={({item, index}) => (
           <View
             style={{
-              width: screenWidth / 1.2,
+              width: screenWidth - 10,
               height: 60,
               alignItems: 'center',
               justifyContent: 'center',
