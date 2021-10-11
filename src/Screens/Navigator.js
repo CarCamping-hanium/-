@@ -51,6 +51,7 @@ import Notice from './Notice';
 import NoticeInfo from './NoticeInfo';
 import ReportedReviewList from './ReportedReviewList';
 import ReportedReviewInfo from './ReportedReviewInfo';
+import NoticeUpload from './NoticeUpload';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -530,6 +531,21 @@ const MyPageNavigator = navigation => {
         component={NoticeInfo}
         options={{
           title: '공지사항',
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="NoticeUpload"
+        component={NoticeUpload}
+        options={{
+          title: '공지사항 작성',
           headerTintColor: 'white',
           headerTitleStyle: {
             fontWeight: 'bold',

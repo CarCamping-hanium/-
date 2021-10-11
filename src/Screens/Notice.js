@@ -140,6 +140,27 @@ const Notice = ({navigation}) => {
             </View>
           )}
         />
+        <View
+          style={{
+            justifyContent: 'flex-end',
+            alignItems: 'center',
+            flex: 1,
+          }}>
+          <TouchableOpacity
+            style={{
+              width: 150,
+              height: 50,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: mainColor,
+              borderRadius: 8,
+            }}
+            onPress={() => {
+              navigation.navigate('NoticeUpload');
+            }}>
+            <Text style={{color: 'white', fontSize: 20}}>공지사항 작성</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </SafeAreaView>
   );
