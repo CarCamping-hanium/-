@@ -100,6 +100,58 @@ const ReviewInfo = ({navigation}) => {
     ]);
   };
 
+  const isAdmin = () => {
+    if (userInfo.id === 'admin') {
+      return (
+        <TouchableOpacity
+          style={{
+            marginTop: 30,
+            width: 150,
+            height: 50,
+            justifyContent: 'center',
+            alignItems: 'center',
+            backgroundColor: '#e64f49',
+            borderRadius: 8,
+          }}
+          onPress={() => {
+            Alert.alert('이 리뷰를 삭제하시겠습니까?', '', [
+              {
+                text: '삭제',
+                onPress: () => {
+                  fetch(
+                    `http://3.38.85.251:8080/api/admin/campingReview/${Review_ID}`,
+                    {
+                      //서버로 아이디, 비번 보내서 일치하는지 확인
+                      method: 'DELETE',
+                      headers: {
+                        'Content-Type': 'application/json',
+                        token: userInfo.token,
+                      },
+                    },
+                  )
+                    .then(response => response.json())
+                    .then(json => {
+                      console.log(json);
+                      if (json.msg === 'success') {
+                        Alert.alert('리뷰가 삭제되었습니다.');
+                        navigation.navigate('ReviewBoard');
+                      } else {
+                        Alert.alert(json.msg);
+                      }
+                    });
+                },
+              },
+              {
+                text: '취소',
+              },
+            ]);
+          }}>
+          <Text style={{color: 'white', fontSize: 18}}>리뷰 삭제</Text>
+        </TouchableOpacity>
+      );
+    }
+  };
+
   const getInfo = () => {
     var url = `http://3.38.85.251:8080/api/campingReview/${Review_ID}`;
     fetch(url, {
@@ -310,6 +362,7 @@ const ReviewInfo = ({navigation}) => {
             }}>
             <Text style={{color: 'white', fontSize: 18}}>리뷰 목록으로</Text>
           </TouchableOpacity>
+          {isAdmin()}
         </View>
       </ScrollView>
     </SafeAreaView>
