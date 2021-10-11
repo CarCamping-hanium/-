@@ -34,27 +34,29 @@ const Notice = ({navigation}) => {
   const isAdmin = () => {
     if (userInfo.id === 'admin') {
       return (
-        <View
-          style={{
-            justifyContent: 'flex-end',
-            alignItems: 'center',
-            flex: 1,
+        <TouchableOpacity
+          style={{marginRight: 15}}
+          onPress={() => {
+            navigation.navigate('NoticeUpload');
           }}>
-          <TouchableOpacity
-            style={{
-              width: 150,
-              height: 50,
-              justifyContent: 'center',
-              alignItems: 'center',
-              backgroundColor: mainColor,
-              borderRadius: 8,
-            }}
-            onPress={() => {
-              navigation.navigate('NoticeUpload');
-            }}>
-            <Text style={{color: 'white', fontSize: 20}}>공지사항 작성</Text>
-          </TouchableOpacity>
-        </View>
+          <Image
+            style={{height: 30, width: 30, marginBottom: 10}}
+            source={require('../Assets/Images/noticeUpload.png')}
+          />
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <TouchableOpacity
+          style={{marginRight: 15}}
+          onPress={() => {
+            navigation.navigate('MyPage');
+          }}>
+          <Image
+            style={{height: 30, width: 30, marginBottom: 10}}
+            source={require('../Assets/Images/Home.png')}
+          />
+        </TouchableOpacity>
       );
     }
   };
@@ -96,23 +98,12 @@ const Notice = ({navigation}) => {
 
   useLayoutEffect(() => {
     navigation.setOptions({
-      headerRight: () => (
-        <TouchableOpacity
-          style={{marginRight: 15}}
-          onPress={() => {
-            navigation.navigate('MyPage');
-          }}>
-          <Image
-            style={{height: 30, width: 30, marginBottom: 10}}
-            source={require('../Assets/Images/Home.png')}
-          />
-        </TouchableOpacity>
-      ),
+      headerRight: () => isAdmin(),
     });
   }, []);
 
   return (
-    <SafeAreaView style={{flex: 1}}>
+    <View style={{flex: 1}}>
       <View
         style={{
           flex: 1,
@@ -168,9 +159,8 @@ const Notice = ({navigation}) => {
             </View>
           )}
         />
-        {isAdmin()}
       </View>
-    </SafeAreaView>
+    </View>
   );
 };
 
