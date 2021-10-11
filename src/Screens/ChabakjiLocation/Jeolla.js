@@ -1,4 +1,10 @@
-import React, {useState, useContext, useEffect, useCallback} from 'react';
+import React, {
+  useState,
+  useContext,
+  useEffect,
+  useCallback,
+  useLayoutEffect,
+} from 'react';
 import {
   View,
   Text,
@@ -124,6 +130,24 @@ const Jeolla = ({navigation}) => {
       getChabakLocation();
     }, []),
   );
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <TouchableOpacity
+          style={{marginRight: 15}}
+          onPress={() => {
+            navigation.goBack();
+          }}>
+          <Image
+            style={{height: 30, width: 30, marginBottom: 10}}
+            source={require('../../Assets/Images/back.png')}
+          />
+        </TouchableOpacity>
+      ),
+    });
+  }, []);
+
   const P0 = {latitude: 35.74585425908, longitude: 127.2605803183507};
   return (
     <SafeAreaView>

@@ -1,4 +1,10 @@
-import React, {useState, useContext, useEffect, useCallback} from 'react';
+import React, {
+  useState,
+  useContext,
+  useEffect,
+  useCallback,
+  useLayoutEffect,
+} from 'react';
 import {
   View,
   Text,
@@ -124,6 +130,23 @@ const Chungcheong = ({navigation}) => {
       getChabakLocation();
     }, []),
   );
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <TouchableOpacity
+          style={{marginRight: 15}}
+          onPress={() => {
+            navigation.goBack();
+          }}>
+          <Image
+            style={{height: 30, width: 30, marginBottom: 10}}
+            source={require('../../Assets/Images/back.png')}
+          />
+        </TouchableOpacity>
+      ),
+    });
+  }, []);
 
   const P0 = {latitude: 36.592886, longitude: 127.445505};
   return (

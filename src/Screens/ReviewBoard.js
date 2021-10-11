@@ -61,6 +61,18 @@ const ReviewBoard = ({navigation}) => {
   useLayoutEffect(() => {
     getReview();
     navigation.setOptions({
+      headerLeft: () => (
+        <TouchableOpacity
+          style={{marginRight: 15}}
+          onPress={() => {
+            navigation.goBack();
+          }}>
+          <Image
+            style={{height: 30, width: 30, marginBottom: 10}}
+            source={require('../Assets/Images/back.png')}
+          />
+        </TouchableOpacity>
+      ),
       headerRight: () => (
         <TouchableOpacity
           style={{marginRight: 15}}

@@ -1,4 +1,4 @@
-import React, {useState, useContext} from 'react';
+import React, {useState, useContext, useLayoutEffect} from 'react';
 import {
   SafeAreaView,
   TextInput,
@@ -164,6 +164,23 @@ const Signup = ({navigation}) => {
       Alert.alert('입력된 정보를 다시 확인해주세요.');
     }
   };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <TouchableOpacity
+          style={{marginRight: 15}}
+          onPress={() => {
+            navigation.goBack();
+          }}>
+          <Image
+            style={{height: 30, width: 30, marginBottom: 10}}
+            source={require('../Assets/Images/back.png')}
+          />
+        </TouchableOpacity>
+      ),
+    });
+  }, []);
 
   return (
     <SafeAreaView

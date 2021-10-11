@@ -1,4 +1,4 @@
-import React, {useState, useEffect, useContext} from 'react';
+import React, {useState, useEffect, useContext, useLayoutEffect} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -78,6 +78,23 @@ const ReviewUpload = ({navigation}) => {
   useEffect(() => {
     if (image !== '') uploadPhoto();
   }, [image]);
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      headerLeft: () => (
+        <TouchableOpacity
+          style={{marginRight: 15}}
+          onPress={() => {
+            navigation.goBack();
+          }}>
+          <Image
+            style={{height: 30, width: 30, marginBottom: 10}}
+            source={require('../Assets/Images/back.png')}
+          />
+        </TouchableOpacity>
+      ),
+    });
+  }, []);
 
   const showImage = () => {
     if (image === '') {
