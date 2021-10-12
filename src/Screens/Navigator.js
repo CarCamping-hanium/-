@@ -52,6 +52,9 @@ import NoticeInfo from './NoticeInfo';
 import ReportedReviewList from './ReportedReviewList';
 import ReportedReviewInfo from './ReportedReviewInfo';
 import NoticeUpload from './NoticeUpload';
+import EditChabakji from './EditChabakji';
+import CheckEditedChabakji from './CheckEditedChabakji';
+import EditedChabakjiInfo from './EditedChabakjiInfo';
 
 const Drawer = createDrawerNavigator();
 const Stack = createStackNavigator();
@@ -407,6 +410,21 @@ const MyPageNavigator = navigation => {
         }}
       />
       <Stack.Screen
+        name="EditChabakji"
+        component={EditChabakji}
+        options={{
+          title: '차박지 정보 수정',
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
         name="MyReviewInfo"
         component={MyReviewInfo}
         options={{
@@ -469,6 +487,36 @@ const MyPageNavigator = navigation => {
       <Stack.Screen
         name="WaitingChabakjiInfo"
         component={WaitingChabakjiInfo}
+        options={{
+          title: waiting_name,
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="CheckEditedChabakji"
+        component={CheckEditedChabakji}
+        options={{
+          title: '차박지 수정 승인',
+          headerTintColor: 'white',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+            fontSize: 20,
+            marginBottom: 10,
+          },
+          headerStyle: {backgroundColor: mainColor},
+          headerBackTitleVisible: false,
+        }}
+      />
+      <Stack.Screen
+        name="EditedChabakjiInfo"
+        component={EditedChabakjiInfo}
         options={{
           title: waiting_name,
           headerTintColor: 'white',
