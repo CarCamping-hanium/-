@@ -69,16 +69,17 @@ const MyChabakjiInfo = ({navigation}) => {
         <TouchableOpacity
           style={{marginRight: 15}}
           onPress={() => {
-            navigation.navigate('MyPage');
+            navigation.navigate('EditChabakji');
           }}>
           <Image
             style={{height: 30, width: 30, marginBottom: 10}}
-            source={require('../Assets/Images/Home.png')}
+            source={require('../Assets/Images/noticeUpload.png')}
           />
         </TouchableOpacity>
       ),
     });
   }, []);
+
   return (
     <SafeAreaView
       style={{
