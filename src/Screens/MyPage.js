@@ -180,6 +180,37 @@ const MyPage = ({navigation}) => {
                 borderRadius: 8,
               }}
               onPress={() => {
+                navigation.navigate('CheckEditedChabakji');
+              }}>
+              <View style={{flexDirection: 'row'}}>
+                <Text style={{fontSize: 18}}>차박지 수정 승인</Text>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    color: '#aaaaaa',
+                    position: 'absolute',
+                    right: 20,
+                  }}>
+                  {'>'}
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View
+            style={{
+              alignItems: 'center',
+              marginTop: 2,
+              backgroundColor: 'white',
+            }}>
+            <TouchableOpacity
+              style={{
+                width: screenWidth,
+                height: 60,
+                paddingLeft: 30,
+                justifyContent: 'center',
+                borderRadius: 8,
+              }}
+              onPress={() => {
                 navigation.navigate('ReportedReviewList');
               }}>
               <View style={{flexDirection: 'row'}}>
