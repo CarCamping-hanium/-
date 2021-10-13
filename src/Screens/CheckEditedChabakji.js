@@ -116,7 +116,9 @@ const CheckEditedChabakji = ({navigation}) => {
               }}>
               {item.name}
             </Text>
-            <Text style={{marginLeft: 10, color: 'white'}}>위치 :</Text>
+            <Text style={{marginLeft: 10, color: 'white'}}>
+              위치 : {item.address}
+            </Text>
           </TouchableOpacity>
         )}
       />

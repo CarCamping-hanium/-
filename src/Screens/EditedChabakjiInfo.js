@@ -80,6 +80,7 @@ const EditedChabakjiInfo = ({navigation}) => {
       .then(response => response.json())
       .then(json => {
         console.log(json);
+        setAddress(json.data.address);
         setExplanation(json.data.explanation);
         setFacilities(json.data.facilities);
         setImages(json.data.images);
