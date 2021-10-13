@@ -1,4 +1,10 @@
-import React, {useLayoutEffect, useState, useContext, useEffect} from 'react';
+import React, {
+  useLayoutEffect,
+  useState,
+  useContext,
+  useEffect,
+  useCallback,
+} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -13,10 +19,11 @@ import {
   Alert,
 } from 'react-native';
 import {UserContext} from '../Context/Context';
+import {useFocusEffect} from '@react-navigation/core';
 
 const screenWidth = Dimensions.get('window').width;
 const MyChabakjiInfo = ({navigation}) => {
-  const {userInfo, chabak_ID, getUserInfo} = useContext(UserContext);
+  const {userInfo, chabak_ID} = useContext(UserContext);
   const [address, setAddress] = useState(); //위치
   const [description, setDescription] = useState(''); //설명
   const [videoLink, setVideoLink] = useState(''); //영상링크
@@ -47,9 +54,11 @@ const MyChabakjiInfo = ({navigation}) => {
       });
   };
 
-  useEffect(() => {
-    getInfo();
-  }, []);
+  useFocusEffect(
+    useCallback(() => {
+      getInfo();
+    }, []),
+  );
 
   useLayoutEffect(() => {
     navigation.setOptions({

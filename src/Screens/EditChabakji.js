@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  useEffect,
-  useContext,
-  useRef,
-  useLayoutEffect,
-} from 'react';
+import React, {useState, useEffect, useContext, useLayoutEffect} from 'react';
 import {
   SafeAreaView,
   Text,
@@ -30,7 +24,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const screenWidth = Dimensions.get('window').width;
 
 const EditChabakji = ({navigation}) => {
-  const {mainColor, userInfo, getUserInfo, chabak_ID, chabak_name} =
+  const {mainColor, userInfo, selectedChabak_name, chabak_ID, chabak_name} =
     useContext(UserContext);
   const [address, setAddress] = useState(
     //address
@@ -45,7 +39,6 @@ const EditChabakji = ({navigation}) => {
   const [changedImage, setChangedImage] = useState(''); //S3에 의해 변환된 후의 주소
   const [category, setCategory] = useState('지역'); //region
   const [name, setName] = useState(chabak_name); //name
-  const scrollRef = useRef();
 
   const styles = StyleSheet.create({
     header: {
@@ -121,6 +114,11 @@ const EditChabakji = ({navigation}) => {
     },
   });
 
+  const tmp = () => {
+    console.log('imgsdsd: ' + image);
+    console.log('changed: ' + changedImage);
+    console.log('exp' + explanation);
+  };
   const getInfo = () => {
     fetch(`http://3.38.85.251:8080/api/camping/${chabak_ID}`, {
       method: 'GET',
@@ -263,18 +261,57 @@ const EditChabakji = ({navigation}) => {
       });
   };
 
-  const scrollToTop = () => {
-    scrollRef.current.scrollTo({y: 0});
+  const apply = () => {
+    tmp();
+    if (changedImage === '' || explanation === '' || name === '') {
+      Alert.alert('입력되지 않은 정보가 있습니다.');
+      console.log(changedImage);
+      console.log(explanation);
+      console.log(name);
+    } else {
+      fetch('http://3.38.85.251:8080/api/change/campsite', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          token: userInfo.token,
+        },
+        body: JSON.stringify({
+          campsite_id,
+          explanation,
+          facilities,
+          images: changedImage,
+          name,
+          videoLink,
+        }),
+      })
+        .then(response => response.json())
+        .then(json => {
+          console.log(json);
+          if (json.success === true) {
+            if (userInfo.id === 'admin') {
+              console.log(changedImage);
+              console.log(explanation);
+              console.log(name);
+              selectedChabak_name(name);
+              Alert.alert('차박지가 수정되었습니다.');
+            } else
+              Alert.alert(
+                '감사합니다. 회원님의 차박지 수정 심사가 진행될 예정입니다.',
+              );
+            navigation.navigate('MyChabakjiInfo');
+          } else {
+            Alert.alert(json.msg);
+          }
+        })
+        .catch(e => {
+          console.log(e);
+        });
+    }
   };
 
   useEffect(() => {
-    if (image !== '') uploadPhoto();
+    if (image.path !== undefined && image !== changedImage) uploadPhoto();
   }, [image]);
-
-  let check = 0;
-  useEffect(() => {
-    console.log(name);
-  }, [name]);
 
   useLayoutEffect(() => {
     getInfo();
@@ -295,46 +332,7 @@ const EditChabakji = ({navigation}) => {
         <TouchableOpacity
           style={{marginRight: 20}}
           onPress={() => {
-            if (changedImage === '' || explanation === '' || name === '') {
-              Alert.alert('입력되지 않은 정보가 있습니다.');
-              console.log(image);
-              console.log(explanation);
-              console.log(name);
-            } else {
-              fetch('http://3.38.85.251:8080/api/change/campsite', {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  token: userInfo.token,
-                },
-                body: JSON.stringify({
-                  campsite_id,
-                  explanation,
-                  facilities,
-                  images: changedImage,
-                  name,
-                  videoLink,
-                }),
-              })
-                .then(response => response.json())
-                .then(json => {
-                  console.log(json);
-                  if (json.success === true) {
-                    if (userInfo.id === 'admin')
-                      Alert.alert('차박지가 수정되었습니다.');
-                    else
-                      Alert.alert(
-                        '감사합니다. 회원님의 차박지 수정 심사가 진행될 예정입니다.',
-                      );
-                    navigation.navigate('MyChabakjiInfo');
-                  } else {
-                    Alert.alert(json.msg);
-                  }
-                })
-                .catch(e => {
-                  console.log(e);
-                });
-            }
+            apply();
           }}>
           <Text
             style={{
@@ -349,6 +347,26 @@ const EditChabakji = ({navigation}) => {
       ),
     });
   }, []);
+
+  navigation.setOptions({
+    headerRight: () => (
+      <TouchableOpacity
+        style={{marginRight: 20}}
+        onPress={() => {
+          apply();
+        }}>
+        <Text
+          style={{
+            color: 'white',
+            fontSize: 18,
+            fontWeight: 'bold',
+            marginBottom: 10,
+          }}>
+          완료
+        </Text>
+      </TouchableOpacity>
+    ),
+  });
 
   return (
     <SafeAreaView
@@ -376,8 +394,7 @@ const EditChabakji = ({navigation}) => {
           marginTop: '5%',
           marginHorizontal: 20,
           width: screenWidth,
-        }}
-        ref={scrollRef}>
+        }}>
         {showImage()}
         <View style={{alignItems: 'center', justifyContent: 'center'}}>
           <Text style={{marginTop: 20, fontWeight: '500', fontSize: 15}}>
@@ -479,90 +496,6 @@ const EditChabakji = ({navigation}) => {
             }}
             value={videoLink}
           />
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            marginTop: 30,
-            justifyContent: 'center',
-          }}>
-          <TouchableOpacity
-            style={styles.Enroll}
-            onPress={() => {
-              if (
-                image === '' ||
-                address === '아래 버튼을 눌러 차박지를 검색해주세요.' ||
-                explanation === '' ||
-                name === ''
-              ) {
-                Alert.alert('입력되지 않은 정보가 있습니다.');
-              } else if (category === '지역') {
-                Alert.alert('지역을 선택하세요.');
-              } else {
-                fetch('http://3.38.85.251:8080/api/camping/register', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                    token: userInfo.token,
-                  },
-                  body: JSON.stringify({
-                    address: address,
-                    explanation: explanation,
-                    facilities: facilities,
-                    images: changedImage,
-                    name: name,
-                    region: category,
-                    videoLink: videoLink,
-                  }),
-                })
-                  .then(response => response.json())
-                  .then(json => {
-                    console.log(json);
-                    if (json.success === true) {
-                      if (userInfo.id === 'admin')
-                        Alert.alert('차박지가 등록되었습니다.');
-                      else
-                        Alert.alert(
-                          '감사합니다. 회원님의 차박지 등록 심사가 진행될 예정입니다.',
-                        );
-                      scrollToTop();
-                      setImage('');
-                      setName('');
-                      setAddress('아래 버튼을 눌러 차박지를 검색해주세요.');
-                      setExplanation('');
-                      setFacilities('');
-                      setVideoLink('');
-                      setCategory('지역');
-                      setChangedImage('');
-                      getUserInfo();
-                      navigation.navigate('HomeScreen');
-                    } else {
-                      Alert.alert(json.msg);
-                    }
-                  })
-                  .catch(e => {
-                    console.log(e);
-                  });
-              }
-            }}>
-            <Text style={{color: 'white', fontSize: 15}}>등록</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.Cancel}
-            onPress={() => {
-              scrollToTop();
-              setImage('');
-              setName('');
-              setAddress('아래 버튼을 눌러 차박지를 검색해주세요.');
-              setExplanation('');
-              setFacilities('');
-              setVideoLink('');
-              setCategory('지역');
-              setChangedImage('');
-              navigation.navigate('HomeScreen');
-            }}>
-            <Text style={{color: 'white', fontSize: 15}}>취소</Text>
-          </TouchableOpacity>
         </View>
       </ScrollView>
     </SafeAreaView>
