@@ -163,8 +163,7 @@ const Gyeongsang = ({navigation}) => {
             <Marker
               coordinate={{latitude: val.lat, longitude: val.lng}}
               pinColor="blue"
-              key={id}
-              // + '_' + Date.now()
+              key={id + '_' + Date.now()}
               onClick={() => openModal(val.campsite_id)}
             />
           );
