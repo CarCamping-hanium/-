@@ -35,7 +35,19 @@ const CustomerService = ({navigation}) => {
       ),
     });
   }, []);
-  return <Text>개발자에게 문의하기</Text>;
+  return (
+    <SafeAreaView
+      style={{flex: 1, alignItems: 'center', justifyContent: 'flex-start'}}>
+      <View style={{marginTop: 30}}>
+        <Text style={{fontSize: 15, fontWeight: 'bold'}}>
+          개발자 이메일 : chabakrini@gmail.com
+        </Text>
+        <Text style={{marginTop: 5, fontSize: 15}}>
+          피드백 및 건의사항이 있으시다면 위 메일로 보내주세요!
+        </Text>
+      </View>
+    </SafeAreaView>
+  );
 };
 
 export default CustomerService;
