@@ -26,19 +26,21 @@ const screenWidth = Dimensions.get('window').width;
 const EditChabakji = ({navigation}) => {
   const {mainColor, userInfo, selectedChabak_name, chabak_ID, chabak_name} =
     useContext(UserContext);
-  const [address, setAddress] = useState(
-    //address
-    '아래 버튼을 눌러 차박지를 검색해주세요.',
-  );
+  const [address, setAddress] = useState('');
   const [image, setImage] = useState(''); //image
   const [videoLink, setVideoLink] = useState(''); //videoLink
   const [explanation, setExplanation] = useState(''); //explanation
   const [facilities, setFacilities] = useState(''); //facilities
   const [campsite_id, setCampsite_id] = useState('');
-
   const [changedImage, setChangedImage] = useState(''); //S3에 의해 변환된 후의 주소
-  const [category, setCategory] = useState('지역'); //region
   const [name, setName] = useState(chabak_name); //name
+
+  //기존 정보와 변동 여부를 체크하는 state
+  const [cmpImage, setCmpImage] = useState('');
+  const [cmpName, setCmpName] = useState('');
+  const [cmpExp, setCmpExp] = useState('');
+  const [cmpFaci, setCmpFaci] = useState('');
+  const [cmpVideo, setCmpVideo] = useState('');
 
   const styles = StyleSheet.create({
     header: {
@@ -114,11 +116,6 @@ const EditChabakji = ({navigation}) => {
     },
   });
 
-  const tmp = () => {
-    console.log('imgsdsd: ' + image);
-    console.log('changed: ' + changedImage);
-    console.log('exp' + explanation);
-  };
   const getInfo = () => {
     fetch(`http://3.38.85.251:8080/api/camping/${chabak_ID}`, {
       method: 'GET',
@@ -133,10 +130,15 @@ const EditChabakji = ({navigation}) => {
         setAddress(json.data.address);
         setImage(json.data.image);
         setChangedImage(json.data.image);
+        setCmpImage(json.data.image);
         setVideoLink(json.data.videoLink);
+        setCmpVideo(json.data.videoLink);
         setExplanation(json.data.explanation);
+        setCmpExp(json.data.explanation);
         setFacilities(json.data.facilities);
+        setCmpFaci(json.data.facilities);
         setCampsite_id(json.data.campsite_id);
+        setCmpName(json.data.name);
       })
       .catch(e => {
         console.log(e);
@@ -262,50 +264,55 @@ const EditChabakji = ({navigation}) => {
   };
 
   const apply = () => {
-    tmp();
-    if (changedImage === '' || explanation === '' || name === '') {
-      Alert.alert('입력되지 않은 정보가 있습니다.');
-      console.log(changedImage);
-      console.log(explanation);
-      console.log(name);
+    if (
+      cmpName === name &&
+      cmpImage === changedImage &&
+      cmpExp === explanation &&
+      cmpFaci === facilities &&
+      cmpVideo === videoLink
+    ) {
+      Alert.alert('변동 사항이 없습니다.');
+      navigation.goBack();
     } else {
-      fetch('http://3.38.85.251:8080/api/change/campsite', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          token: userInfo.token,
-        },
-        body: JSON.stringify({
-          campsite_id,
-          explanation,
-          facilities,
-          images: changedImage,
-          name,
-          videoLink,
-        }),
-      })
-        .then(response => response.json())
-        .then(json => {
-          console.log(json);
-          if (json.success === true) {
-            if (userInfo.id === 'admin') {
-              console.log(changedImage);
-              console.log(explanation);
-              console.log(name);
-              selectedChabak_name(name);
-              Alert.alert('차박지가 수정되었습니다.');
-            } else
-              Alert.alert(
-                '감사합니다. 회원님의 차박지 수정 심사가 진행될 예정입니다.',
-              );
-            navigation.navigate('MyChabakjiInfo');
-          } else {
-            Alert.alert(json.msg);
-          }
+      if (changedImage === '' || explanation === '' || name === '') {
+        Alert.alert('입력되지 않은 정보가 있습니다.');
+      } else {
+        fetch('http://3.38.85.251:8080/api/change/campsite', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            token: userInfo.token,
+          },
+          body: JSON.stringify({
+            address,
+            campsite_id,
+            explanation,
+            facilities,
+            images: changedImage,
+            name,
+            videoLink,
+          }),
         })
-        .catch(e => {
-          console.log(e);
-        });
+          .then(response => response.json())
+          .then(json => {
+            console.log(json);
+            if (json.success === true) {
+              if (userInfo.id === 'admin') {
+                selectedChabak_name(name);
+                Alert.alert('차박지가 수정되었습니다.');
+              } else
+                Alert.alert(
+                  '감사합니다. 회원님의 차박지 수정 심사가 진행될 예정입니다.',
+                );
+              navigation.navigate('MyChabakjiInfo');
+            } else {
+              Alert.alert(json.msg);
+            }
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      }
     }
   };
 
