@@ -19,7 +19,7 @@ import SelectDropdown from 'react-native-select-dropdown';
 import Modal from '../Components/Modal';
 import Postcode from '@actbase/react-daum-postcode';
 import {UserContext} from '../Context/Context';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scroll-view';
 
 const screenWidth = Dimensions.get('window').width;
 
@@ -243,9 +243,8 @@ const ChabakjiEnrollment = ({navigation}) => {
     <SafeAreaView
       style={{
         flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
         backgroundColor: 'white',
+        alignItems: 'center',
       }}>
       <TextInput
         style={styles.name}
@@ -260,6 +259,7 @@ const ChabakjiEnrollment = ({navigation}) => {
         }}
         value={name}
       />
+
       <ScrollView
         style={{
           marginTop: '5%',
@@ -306,272 +306,282 @@ const ChabakjiEnrollment = ({navigation}) => {
             </View>
           )}
         /> */}
-        {showImage()}
-        <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <Text style={{marginTop: 20, fontWeight: '500', fontSize: 15}}>
-            정방형(정사각형) 사진을 추천드려요!
-          </Text>
-          <TouchableOpacity
-            style={styles.selectPhoto}
-            onPress={() => {
-              chooseImageFromLibrary();
-            }}>
-            <Text style={{color: 'white', fontSize: 15}}>사진 선택</Text>
-          </TouchableOpacity>
-        </View>
-        <View
-          style={{
-            marginTop: 30,
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
+        <KeyboardAwareScrollView>
+          {showImage()}
           <View style={{alignItems: 'center', justifyContent: 'center'}}>
-            <SelectDropdown
-              buttonStyle={{
-                borderColor: mainColor,
-                backgroundColor: 'white',
-                borderWidth: 2,
-                borderRadius: 8,
-                width: 120,
-                height: 50,
-              }}
-              buttonTextStyle={{fontSize: 17}}
-              data={['지역', '경기도', '강원도', '충청도', '전라도', '경상도']}
-              defaultValue={'지역'}
-              onSelect={(selectedItem, index) => {
-                setCategory(selectedItem);
-              }}
-              buttonTextAfterSelection={(selectedItem, index) => {
-                return selectedItem;
-              }}
-              rowTextForSelection={(item, index) => {
-                return item;
-              }}
-            />
+            <Text style={{marginTop: 20, fontWeight: '500', fontSize: 15}}>
+              정방형(정사각형) 사진을 추천드려요!
+            </Text>
+            <TouchableOpacity
+              style={styles.selectPhoto}
+              onPress={() => {
+                chooseImageFromLibrary();
+              }}>
+              <Text style={{color: 'white', fontSize: 15}}>사진 선택</Text>
+            </TouchableOpacity>
           </View>
           <View
             style={{
               marginTop: 30,
               alignItems: 'center',
               justifyContent: 'center',
-              borderWidth: 2,
-              borderColor: mainColor,
-              borderRadius: 8,
-              width: screenWidth - 40,
-              height: 40,
             }}>
-            <Text
+            <View style={{alignItems: 'center', justifyContent: 'center'}}>
+              <SelectDropdown
+                buttonStyle={{
+                  borderColor: mainColor,
+                  backgroundColor: 'white',
+                  borderWidth: 2,
+                  borderRadius: 8,
+                  width: 120,
+                  height: 50,
+                }}
+                buttonTextStyle={{fontSize: 17}}
+                data={[
+                  '지역',
+                  '경기도',
+                  '강원도',
+                  '충청도',
+                  '전라도',
+                  '경상도',
+                ]}
+                defaultValue={'지역'}
+                onSelect={(selectedItem, index) => {
+                  setCategory(selectedItem);
+                }}
+                buttonTextAfterSelection={(selectedItem, index) => {
+                  return selectedItem;
+                }}
+                rowTextForSelection={(item, index) => {
+                  return item;
+                }}
+              />
+            </View>
+            <View
+              style={{
+                marginTop: 30,
+                alignItems: 'center',
+                justifyContent: 'center',
+                borderWidth: 2,
+                borderColor: mainColor,
+                borderRadius: 8,
+                width: screenWidth - 40,
+                height: 40,
+              }}>
+              <Text
+                style={{
+                  fontSize: 18,
+                  fontWeight: '400',
+                }}>
+                {location}
+              </Text>
+            </View>
+          </View>
+          <View style={{alignItems: 'center', justifyContent: 'center'}}>
+            <TouchableOpacity
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                backgroundColor: mainColor,
+                width: 120,
+                height: 50,
+                borderRadius: 8,
+                marginHorizontal: 10,
+                marginTop: 30,
+              }}
+              onPress={() => {
+                setModifyVisible(true);
+              }}>
+              <Text style={{color: 'white', fontSize: 15}}>위치 검색하기</Text>
+            </TouchableOpacity>
+          </View>
+          <Modal visible={modifyVisible}>
+            <View
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                height: 650,
+                width: 310,
+                borderColor: mainColor,
+                borderWidth: 3,
+                borderRadius: 10,
+                backgroundColor: 'white',
+              }}>
+              <Postcode
+                style={{width: 300, height: 590}}
+                jsOptions={{animated: true, hideMapBtn: true}}
+                onSelected={data => {
+                  setLocation(data.address);
+                  console.log(data.address);
+                  setModifyVisible(false);
+                }}
+              />
+              <TouchableOpacity
+                style={{
+                  backgroundColor: mainColor,
+                  width: 100,
+                  height: 50,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  borderRadius: 10,
+                }}
+                onPress={() => {
+                  setModifyVisible(false);
+                }}>
+                <Text style={{color: 'white', fontSize: 18}}>닫기</Text>
+              </TouchableOpacity>
+            </View>
+          </Modal>
+          <View>
+            <TextInput
+              style={styles.description}
+              placeholder="차박지에 대한 설명을 입력하세요."
+              placeholderTextColor="#aaaaaa"
+              autoCapitalize="none"
+              autoCorrect={false}
+              multiline={true}
+              onChangeText={text => {
+                setDescription(text);
+              }}
+              value={description}
+            />
+          </View>
+          <View>
+            <TextInput
               style={{
                 fontSize: 18,
                 fontWeight: '400',
-              }}>
-              {location}
-            </Text>
+                marginTop: 30,
+                marginLeft: 30,
+                width: screenWidth - 60,
+                height: 40,
+                paddingLeft: 10,
+                borderWidth: 2,
+                borderColor: mainColor,
+                borderRadius: 8,
+              }}
+              placeholder="근처 편의시설(선택 사항)"
+              placeholderTextColor="#aaaaaa"
+              autoCapitalize="none"
+              autoCorrect={false}
+              multiline={true}
+              onChangeText={text => {
+                setComfort(text);
+              }}
+              value={comfort}
+            />
           </View>
-        </View>
-        <View style={{alignItems: 'center', justifyContent: 'center'}}>
-          <TouchableOpacity
-            style={{
-              alignItems: 'center',
-              justifyContent: 'center',
-              backgroundColor: mainColor,
-              width: 120,
-              height: 50,
-              borderRadius: 8,
-              marginHorizontal: 10,
-              marginTop: 30,
-            }}
-            onPress={() => {
-              setModifyVisible(true);
-            }}>
-            <Text style={{color: 'white', fontSize: 15}}>위치 검색하기</Text>
-          </TouchableOpacity>
-        </View>
-        <Modal visible={modifyVisible}>
+          <View>
+            <TextInput
+              style={{
+                fontSize: 18,
+                fontWeight: '400',
+                marginTop: 30,
+                marginLeft: 30,
+                width: screenWidth - 60,
+                height: 40,
+                paddingLeft: 10,
+                borderWidth: 2,
+                borderColor: mainColor,
+                borderRadius: 8,
+              }}
+              placeholder="관련 영상 링크(선택 사항)"
+              placeholderTextColor="#aaaaaa"
+              autoCapitalize="none"
+              autoCorrect={false}
+              multiline={true}
+              onChangeText={text => {
+                setVideoLink(text);
+              }}
+              value={videoLink}
+            />
+          </View>
           <View
             style={{
-              alignItems: 'center',
+              flexDirection: 'row',
+              marginTop: 30,
+              paddingBottom: 30,
               justifyContent: 'center',
-              height: 650,
-              width: 310,
-              borderColor: mainColor,
-              borderWidth: 3,
-              borderRadius: 10,
-              backgroundColor: 'white',
             }}>
-            <Postcode
-              style={{width: 300, height: 590}}
-              jsOptions={{animated: true, hideMapBtn: true}}
-              onSelected={data => {
-                setLocation(data.address);
-                console.log(data.address);
-                setModifyVisible(false);
-              }}
-            />
             <TouchableOpacity
-              style={{
-                backgroundColor: mainColor,
-                width: 100,
-                height: 50,
-                justifyContent: 'center',
-                alignItems: 'center',
-                borderRadius: 10,
-              }}
+              style={styles.Enroll}
               onPress={() => {
-                setModifyVisible(false);
+                if (
+                  image === '' ||
+                  location === '아래 버튼을 눌러 차박지를 검색해주세요.' ||
+                  description === '' ||
+                  name === ''
+                ) {
+                  Alert.alert('입력되지 않은 정보가 있습니다.');
+                } else if (category === '지역') {
+                  Alert.alert('지역을 선택하세요.');
+                } else {
+                  fetch('http://3.38.85.251:8080/api/camping/register', {
+                    method: 'POST',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      token: userInfo.token,
+                    },
+                    body: JSON.stringify({
+                      address: location,
+                      explanation: description,
+                      facilities: comfort,
+                      images: changedImage,
+                      name: name,
+                      region: category,
+                      videoLink: videoLink,
+                    }),
+                  })
+                    .then(response => response.json())
+                    .then(json => {
+                      console.log(json);
+                      if (json.success === true) {
+                        if (userInfo.id === 'admin')
+                          Alert.alert('차박지가 등록되었습니다.');
+                        else
+                          Alert.alert(
+                            '감사합니다. 회원님의 차박지 등록 심사가 진행될 예정입니다.',
+                          );
+                        scrollToTop();
+                        setImage('');
+                        setName('');
+                        setLocation('아래 버튼을 눌러 차박지를 검색해주세요.');
+                        setDescription('');
+                        setComfort('');
+                        setVideoLink('');
+                        setCategory('지역');
+                        setChangedImage('');
+                        getUserInfo();
+                        navigation.navigate('HomeScreen');
+                      } else {
+                        Alert.alert(json.msg);
+                      }
+                    })
+                    .catch(e => {
+                      console.log(e);
+                    });
+                }
               }}>
-              <Text style={{color: 'white', fontSize: 18}}>닫기</Text>
+              <Text style={{color: 'white', fontSize: 15}}>등록</Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={styles.Cancel}
+              onPress={() => {
+                scrollToTop();
+                setImage('');
+                setName('');
+                setLocation('아래 버튼을 눌러 차박지를 검색해주세요.');
+                setDescription('');
+                setComfort('');
+                setVideoLink('');
+                setCategory('지역');
+                setChangedImage('');
+                navigation.navigate('HomeScreen');
+              }}>
+              <Text style={{color: 'white', fontSize: 15}}>취소</Text>
             </TouchableOpacity>
           </View>
-        </Modal>
-        <View>
-          <TextInput
-            style={styles.description}
-            placeholder="차박지에 대한 설명을 입력하세요."
-            placeholderTextColor="#aaaaaa"
-            autoCapitalize="none"
-            autoCorrect={false}
-            multiline={true}
-            onChangeText={text => {
-              setDescription(text);
-            }}
-            value={description}
-          />
-        </View>
-        <View>
-          <TextInput
-            style={{
-              fontSize: 18,
-              fontWeight: '400',
-              marginTop: 30,
-              marginLeft: 30,
-              width: screenWidth - 60,
-              height: 40,
-              paddingLeft: 10,
-              borderWidth: 2,
-              borderColor: mainColor,
-              borderRadius: 8,
-            }}
-            placeholder="근처 편의시설(선택 사항)"
-            placeholderTextColor="#aaaaaa"
-            autoCapitalize="none"
-            autoCorrect={false}
-            multiline={true}
-            onChangeText={text => {
-              setComfort(text);
-            }}
-            value={comfort}
-          />
-        </View>
-        <View>
-          <TextInput
-            style={{
-              fontSize: 18,
-              fontWeight: '400',
-              marginTop: 30,
-              marginLeft: 30,
-              width: screenWidth - 60,
-              height: 40,
-              paddingLeft: 10,
-              borderWidth: 2,
-              borderColor: mainColor,
-              borderRadius: 8,
-            }}
-            placeholder="관련 영상 링크(선택 사항)"
-            placeholderTextColor="#aaaaaa"
-            autoCapitalize="none"
-            autoCorrect={false}
-            multiline={true}
-            onChangeText={text => {
-              setVideoLink(text);
-            }}
-            value={videoLink}
-          />
-        </View>
-        <View
-          style={{
-            flexDirection: 'row',
-            marginTop: 30,
-            justifyContent: 'center',
-          }}>
-          <TouchableOpacity
-            style={styles.Enroll}
-            onPress={() => {
-              if (
-                image === '' ||
-                location === '아래 버튼을 눌러 차박지를 검색해주세요.' ||
-                description === '' ||
-                name === ''
-              ) {
-                Alert.alert('입력되지 않은 정보가 있습니다.');
-              } else if (category === '지역') {
-                Alert.alert('지역을 선택하세요.');
-              } else {
-                fetch('http://3.38.85.251:8080/api/camping/register', {
-                  method: 'POST',
-                  headers: {
-                    'Content-Type': 'application/json',
-                    token: userInfo.token,
-                  },
-                  body: JSON.stringify({
-                    address: location,
-                    explanation: description,
-                    facilities: comfort,
-                    images: changedImage,
-                    name: name,
-                    region: category,
-                    videoLink: videoLink,
-                  }),
-                })
-                  .then(response => response.json())
-                  .then(json => {
-                    console.log(json);
-                    if (json.success === true) {
-                      if (userInfo.id === 'admin')
-                        Alert.alert('차박지가 등록되었습니다.');
-                      else
-                        Alert.alert(
-                          '감사합니다. 회원님의 차박지 등록 심사가 진행될 예정입니다.',
-                        );
-                      scrollToTop();
-                      setImage('');
-                      setName('');
-                      setLocation('아래 버튼을 눌러 차박지를 검색해주세요.');
-                      setDescription('');
-                      setComfort('');
-                      setVideoLink('');
-                      setCategory('지역');
-                      setChangedImage('');
-                      getUserInfo();
-                      navigation.navigate('HomeScreen');
-                    } else {
-                      Alert.alert(json.msg);
-                    }
-                  })
-                  .catch(e => {
-                    console.log(e);
-                  });
-              }
-            }}>
-            <Text style={{color: 'white', fontSize: 15}}>등록</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.Cancel}
-            onPress={() => {
-              scrollToTop();
-              setImage('');
-              setName('');
-              setLocation('아래 버튼을 눌러 차박지를 검색해주세요.');
-              setDescription('');
-              setComfort('');
-              setVideoLink('');
-              setCategory('지역');
-              setChangedImage('');
-              navigation.navigate('HomeScreen');
-            }}>
-            <Text style={{color: 'white', fontSize: 15}}>취소</Text>
-          </TouchableOpacity>
-        </View>
+        </KeyboardAwareScrollView>
       </ScrollView>
     </SafeAreaView>
   );
