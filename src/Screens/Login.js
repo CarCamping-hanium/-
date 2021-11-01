@@ -16,14 +16,13 @@ import {
 } from 'react-native';
 import SplashScreen from 'react-native-splash-screen';
 
-const screenHeight = Dimensions.get('window').height;
-const screenWidth = Dimensions.get('window').width;
 const Login = ({navigation}) => {
   const {mainColor, login} = useContext(UserContext);
   const [ID, setID] = useState('');
   const [password, setPassword] = useState('');
 
   useEffect(() => {
+    //빨리 로딩되어도 최소 2초간 기다림
     setTimeout(() => {
       SplashScreen.hide();
     }, 2000);
@@ -105,6 +104,7 @@ const Login = ({navigation}) => {
             alignItems: 'center',
           }}
           onPress={() => {
+            //TextInput에서 받은 값을 넘겨서 context에 선언된 login 함수 실행
             login(ID, password);
           }}>
           <Text style={{color: 'white', fontWeight: 'bold'}}>로그인</Text>
