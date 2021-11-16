@@ -1,11 +1,5 @@
 #import "AppDelegate.h"
 
-//rctbridge required dispatch_sync to load rctdevloadingview. this may lead to deadlocks
-#if RCT_DEV
-#import <React/RCTDevLoadingView.h>
-#endif
-//until here
-
 #import <React/RCTBridge.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
@@ -37,17 +31,6 @@ static void InitializeFlipper(UIApplication *application) {
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);
 #endif
-
-//rctbridge required dispatch_sync to load rctdevloadingview. this may lead to deadlocks
-NSURL *jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.js" fallbackResource:nil];
-
-  RCTBridge *bridge = [[RCTBridge alloc] initWithBundleURL:jsCodeLocation
-                                              moduleProvider:nil
-                                               launchOptions:launchOptions];
-  #if RCT_DEV
-   [bridge moduleForClass:[RCTDevLoadingView class]];
-  #endif
-//until
 
   RCTBridge *bridge = [[RCTBridge alloc] initWithDelegate:self launchOptions:launchOptions];
   RCTRootView *rootView = [[RCTRootView alloc] initWithBridge:bridge
